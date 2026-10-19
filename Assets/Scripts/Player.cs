@@ -11,9 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer; // 地面として認識するレイヤー
 
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
-
-    public float checkRadius = 0.3f; // 足元のCheck Sphereの大きさ
-    public bool onGround = false; // 地面に足がついているならtrue
+    private float checkRadius = 0.2f; // 足元のCheck Sphereの大きさ
+    private bool onGround = false; // 地面に足がついているならtrue
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
