@@ -6,36 +6,33 @@ public class EnemyA : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f; // 敵Aの移動速度
     [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
 
-    [SerializeField] private Transform groundCheck; // 敵Aの足元に置くCheck Sphere
-    [SerializeField] private LayerMask groundLayer; // 地面として認識するレイヤー
-
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
-    private float checkRadius = 0.2f; // 足元のCheck Sphereの大きさ
-    private bool onGround = false; // 地面に足がついているならtrue
+    private CheckOnGround checkOnGround; // 地面との当たり判定をする
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private bool isJump = false; // ジャンプするならtrue
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        checkOnGround = GetComponent<CheckOnGround>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Walk();
-        Jump();
+        if (Keyboard.current.kKey.wasPressedThisFrame && checkOnGround.onGround == true)
+        {
+            isJump = true;
+        }
     }
 
     void FixedUpdate()
     {
-        if (groundCheck != null)
-        {
-            onGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-        }
+        Jump();
     }
 
     /// <summary>
-    /// プレイヤーの移動処理
+    /// 敵Aの移動処理
     /// </summary>
     private void Walk()
     {
@@ -56,21 +53,10 @@ public class EnemyA : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if (Keyboard.current.kKey.wasPressedThisFrame && onGround == true)
+        if (isJump == true)
         {
+            isJump = false;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
-
-    /// <summary>
-    /// Unityエディタ上で敵Aの足元にあるCheck Sphereを赤い円で表示する
-    /// </summary>
-    private void OnDrawGizmosSelected()
-    {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
         }
     }
 }
