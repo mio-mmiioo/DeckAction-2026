@@ -1,26 +1,23 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DustBox : MonoBehaviour,IDropHandler
+/// <summary>
+/// ゴミ箱のスクリプト
+/// </summary>
+public class TrashBox : MonoBehaviour,IDropHandler
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// 上でカードが離されると捨てる
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnDrop(PointerEventData eventData)
     {
         GameObject droppedObject = eventData.pointerDrag;
         if (droppedObject != null)
         {   
             Debug.Log("カードを破棄しました");
+            Destroy(droppedObject);
         }
     }
 
