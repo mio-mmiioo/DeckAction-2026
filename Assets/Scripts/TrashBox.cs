@@ -16,8 +16,9 @@ public class TrashBox : MonoBehaviour,IDropHandler
         GameObject droppedObject = eventData.pointerDrag;
         if (droppedObject != null)
         {   
-            Debug.Log("カードを破棄しました");
-            Destroy(droppedObject);
+            BaseCard card = droppedObject.GetComponent<BaseCard>();
+            card.isTrash=true;
+            
         }
     }
 

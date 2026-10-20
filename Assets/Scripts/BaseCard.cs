@@ -8,13 +8,20 @@ using System.Collections.Generic;
 /// </summary>
 public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHandler
 {
-   private Vector3 defaultPosition;// カードの初期座標
+    private Vector3 defaultPosition;// カードの初期座標
+    public bool isUsed; //カードが使用済みかどうか true:使用 false:不使用
+    public bool isPassive; //常に存在するカードかどうか true:存在する false:使い切り
+    public bool isTrash;//捨てられたかどうか true:捨ててる false:捨ててない
+    public bool canTrash;//捨てられるかどうか true:捨てられる false:捨てられない
 
     [SerializeField]private float playCardZone;// カードの使用可能なゾーンのY座標
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        isUsed = false;
+        isPassive = false;
+        isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         defaultPosition = Camera.main.WorldToScreenPoint(transform.position);// 初期位置を入れる 
         playCardZone = 1;
@@ -52,16 +59,12 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
-        //if(transform.position.y > playCardZone)
-        //{
-        //    Debug.Log("カードを使用しました");
-        //}
-        //else
-        //{
-            
-        //}
         transform.position = defaultPosition; // 初期位置に戻す
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
+    void OnDestroy()
+    {
+        Debug.Log("BaseCard 破棄");
+    }
 }
