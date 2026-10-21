@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c55696c981b882445bafc01c0daa843e
+guid: d721efe96327b8d48b6cb5a1e2da0c17
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5189691121816951081
-    second: card_0
+      213: 8800188426778382115
+    second: chuuka_raimon_frame_t_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: card_0
+      name: chuuka_raimon_frame_t_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 918
-        height: 1391
+        width: 950
+        height: 1410
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 929d5e1449c750840800000000000000
-      internalID: 5189691121816951081
+      spriteID: 32f01aeafbc802a70800000000000000
+      internalID: 8800188426778382115
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      card_0: 5189691121816951081
+      chuuka_raimon_frame_t_0: 8800188426778382115
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

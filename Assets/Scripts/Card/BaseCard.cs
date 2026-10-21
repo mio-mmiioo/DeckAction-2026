@@ -6,13 +6,19 @@ using System.Collections.Generic;
 /// <summary>
 /// BaseCardクラス。基本的なカードの挙動を定義するクラス。
 /// </summary>
-public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHandler
+public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHandler,IPointerClickHandler,IPointerEnterHandler
 {
     private Vector3 defaultPosition;// カードの初期座標
+
+    // カードの状態を表すフラグ
     public bool isUsed; //カードが使用済みかどうか true:使用 false:不使用
     public bool isPassive; //常に存在するカードかどうか true:存在する false:使い切り
     public bool isTrash;//捨てられたかどうか true:捨ててる false:捨ててない
     public bool canTrash;//捨てられるかどうか true:捨てられる false:捨てられない
+    public bool isDrag;// カードがドラッグされているかどうか true:ドラッグ中 false:ドラッグしていない
+
+    private int clickCount;// クリックされた回数をカウントする
+
 
     [SerializeField]private float playCardZone;// カードの使用可能なゾーンのY座標
 
@@ -41,6 +47,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     {
         defaultPosition = transform.position; // ドラッグ開始時の位置を保存
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+        isDrag = true;
     }
 
 
@@ -61,10 +68,47 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     {
         transform.position = defaultPosition; // 初期位置に戻す
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        isDrag = false;
     }
+
+
 
     void OnDestroy()
     {
         Debug.Log("BaseCard 破棄");
+    }
+
+    /// <summary>
+    /// 一回のクリックで0.3秒後にダブルクリックかどうかを判定する関数
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        clickCount++;
+        Invoke("OnDoubleClick", 0.3f);
+    }
+
+    /// <summary>
+    /// ダブルクリックされた場合にカードを使用済みにする関数
+    /// </summary>
+    private void OnDoubleClick()
+    {
+        if(clickCount!=2)
+        {
+            clickCount = 0;
+        }
+
+        if (clickCount >= 2)
+        {
+            Debug.Log("カードがダブルクリックされました");
+            isUsed = true;
+            clickCount = 0;
+        }
+        
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.SetAsLastSibling(); // カードを最前面に表示
     }
 }

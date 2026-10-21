@@ -13,12 +13,15 @@ public class CardManager : MonoBehaviour
     [SerializeField] HorizontalLayoutGroup layoutGroup = null;// ダミーカード整列用HorizontallLayoutGroup
 
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
-    List<Transform> dummyHands = new List<Transform>();// ダミーカードのリスト
+    Queue<BaseCard> useCards=new Queue<BaseCard>();// 使用済みカードのリスト
 
+    List<Transform> dummyHands = new List<Transform>();// ダミーカードのリスト
+    private int labelCount;//カードの仮の数字
     
 
     void Start()
     {
+        labelCount = 1;
         AddHands(4,false);
         Debug.Log("CardManager OK");
         for(int i=0;i<hands.Count;i++)
@@ -30,13 +33,17 @@ public class CardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U))
+        // デバッグ用の手札増加処理
+        if (Input.GetKeyDown(KeyCode.U))
         {
             AddHands(1,false);
         }
 
+
+        // 手札の状態を確認するfor文
         for(int i=0;i<hands.Count;i++)
         {
+            // カードが破棄可能かつ破棄された場合の処理
             if (hands[i].isTrash && hands[i].canTrash)
             {
                 AddHands(1, hands[i].canTrash);
@@ -46,13 +53,18 @@ public class CardManager : MonoBehaviour
                 hands.RemoveAt(i);
                 Debug.Log("カードを破棄しました");
             }
-
-            //if (hands[i].isUsed)
-            //{
-
-            //}
+            // カードが使用されたの場合の処理
+            else if (hands[i].isUsed)
+           {
+               useCards.Enqueue(hands[i]);
+               dummyHands.RemoveAt(i);
+               hands.RemoveAt(i);
+            }
         }
     }
+
+
+
 
     /// <summary>
     /// 基本的な手札の増加関数　
@@ -66,7 +78,14 @@ public class CardManager : MonoBehaviour
         {
             GameObject dummyObj= Instantiate(dummyCardPrefab, playerHand);
             BaseCard obj = Instantiate(baseCard, dummyObj.transform);
-            if(trash)
+
+            CardLabel label = obj.GetComponent<CardLabel>();
+            string text = labelCount.ToString();
+            label.SetName(text);
+
+            labelCount++;
+
+            if (trash)
             {
                 obj.canTrash = false;
             }
@@ -88,6 +107,21 @@ public class CardManager : MonoBehaviour
     {
         layoutGroup.CalculateLayoutInputHorizontal();
         layoutGroup.SetLayoutHorizontal();
+    }
+
+    public BaseCard GetUseCard()
+    {
+        if(useCards.Count!=0)
+        {
+            BaseCard used = useCards.Dequeue();
+
+
+            return used;
+        }
+
+        return null;
+
+        
     }
 
 }
