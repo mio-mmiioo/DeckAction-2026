@@ -6,6 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// BaseCardクラス。基本的なカードの挙動を定義するクラス。
 /// </summary>
+
 public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHandler,IPointerClickHandler,IPointerEnterHandler
 {
     private Vector3 defaultPosition;// カードの初期座標
@@ -19,25 +20,27 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     private int clickCount;// クリックされた回数をカウントする
 
+    public int cardID;//カードの種類を決定するID
 
-    [SerializeField]private float playCardZone;// カードの使用可能なゾーンのY座標
+    [SerializeField] private CardDataBase cardDataBase;// 参照するカードのデータベース
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cardID = Random.Range(0, cardDataBase.CardData.Count);
+        CardData data = cardDataBase.CardData[cardID];
+
+        CardVisual cardVisual = GetComponent<CardVisual>();
+        cardVisual.SetCardImage(cardID);
+
+
         isUsed = false;
         isPassive = false;
         isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         defaultPosition = Camera.main.WorldToScreenPoint(transform.position);// 初期位置を入れる 
-        playCardZone = 1;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-      
-    }
 
     /// <summary>
     /// ドラッグ開始時にレイキャストの判定をオフにする

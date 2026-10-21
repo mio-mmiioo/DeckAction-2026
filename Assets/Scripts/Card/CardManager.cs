@@ -6,9 +6,10 @@ using static Unity.Collections.CollectionHelper;
 
 public class CardManager : MonoBehaviour
 {
-    [SerializeField] BaseCard baseCard;// BaseCardのプレハブ
-    [SerializeField] GameObject dummyCardPrefab;// DummyCardのプレハブ
-    [SerializeField] Transform playerHand;// プレイヤーの手札のTransform
+    [SerializeField] private BaseCard baseCard;// BaseCardのプレハブ
+    [SerializeField] private GameObject dummyCardPrefab;// DummyCardのプレハブ
+    [SerializeField] private Transform playerHand;// プレイヤーの手札のTransform
+    [SerializeField] private List<CardVisual> cardVisuals;
 
     [SerializeField] HorizontalLayoutGroup layoutGroup = null;// ダミーカード整列用HorizontallLayoutGroup
 
@@ -53,6 +54,7 @@ public class CardManager : MonoBehaviour
                 hands.RemoveAt(i);
                 Debug.Log("カードを破棄しました");
             }
+
             // カードが使用されたの場合の処理
             else if (hands[i].isUsed)
            {
@@ -109,17 +111,18 @@ public class CardManager : MonoBehaviour
         layoutGroup.SetLayoutHorizontal();
     }
 
-    public BaseCard GetUseCard()
+    public int GetUseCard()
     {
         if(useCards.Count!=0)
         {
-            BaseCard used = useCards.Dequeue();
+            BaseCard card = useCards.Dequeue();
 
+            int num = card.cardID;
 
-            return used;
+            return num;
         }
 
-        return null;
+        return 0;
 
         
     }

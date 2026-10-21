@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b5032dbe837b004d949be80f9d8780e, type: 3}
-  m_Name: CardData
+  m_Name: CARD_PHYSICAL
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  image: {fileID: 0}
-  ID: 0
-  name: 
-  stamina: 0
-  damage: 0
+  image: {fileID: 5189691121816951081, guid: c55696c981b882445bafc01c0daa843e, type: 3}
+  ID: 1
+  cardName: PHYSICAL
+  stamina: 5
+  damage: 5
+  rate: 0
