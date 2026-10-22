@@ -60,4 +60,15 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+
+    /// <summary>
+    /// プレイヤーの弱攻撃
+    /// </summary>
+    private void JubAttack()
+    {
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+
+        }
+    }
 }
