@@ -1,27 +1,33 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.Collections.CollectionHelper;
+
 
 public class CardManager : MonoBehaviour
 {
     [SerializeField] private BaseCard baseCard;// BaseCardのプレハブ
     [SerializeField] private GameObject dummyCardPrefab;// DummyCardのプレハブ
     [SerializeField] private Transform playerHand;// プレイヤーの手札のTransform
-    [SerializeField] private List<CardVisual> cardVisuals;
 
-    [SerializeField] HorizontalLayoutGroup layoutGroup = null;// ダミーカード整列用HorizontallLayoutGroup
+    [SerializeField] PlayerHands playerHands;
+
+    [SerializeField] CardDataBase cardDataBase;
 
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
     Queue<BaseCard> useCards=new Queue<BaseCard>();// 使用済みカードのリスト
 
     List<Transform> dummyHands = new List<Transform>();// ダミーカードのリスト
     private int labelCount;//カードの仮の数字
-    
+
+    private int MAX_USE_CARD;
+
 
     void Start()
     {
+        MAX_USE_CARD = 2;
         labelCount = 1;
         AddHands(4,false);
         Debug.Log("CardManager OK");
@@ -40,16 +46,20 @@ public class CardManager : MonoBehaviour
             AddHands(1,false);
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            testCardUP();
+        }
 
         // 手札の状態を確認するfor文
-        for(int i=0;i<hands.Count;i++)
+        for (int i=0;i<hands.Count;i++)
         {
             // カードが破棄可能かつ破棄された場合の処理
             if (hands[i].isTrash && hands[i].canTrash)
             {
                 AddHands(1, hands[i].canTrash);
                 Destroy(dummyHands[i].gameObject);
-                Destroy(hands[i]);
+                Destroy(hands[i].gameObject);
                 dummyHands.RemoveAt(i);
                 hands.RemoveAt(i);
                 Debug.Log("カードを破棄しました");
@@ -58,11 +68,26 @@ public class CardManager : MonoBehaviour
             // カードが使用されたの場合の処理
             else if (hands[i].isUsed)
            {
-               useCards.Enqueue(hands[i]);
-               dummyHands.RemoveAt(i);
-               hands.RemoveAt(i);
+                if (useCards.Count < MAX_USE_CARD)
+                {
+                    useCards.Enqueue(hands[i]);
+                    Destroy(dummyHands[i].gameObject);
+                    Destroy(hands[i].gameObject);
+                    dummyHands.RemoveAt(i);
+                    hands.RemoveAt(i);
+                    CardSort();
+                }
+                else
+                {
+                    hands[i].isUsed = false;
+                }
             }
+
+
+
         }
+
+        
     }
 
 
@@ -78,8 +103,7 @@ public class CardManager : MonoBehaviour
     {
         for(int i=0;i<value;i++)
         {
-            GameObject dummyObj= Instantiate(dummyCardPrefab, playerHand);
-            BaseCard obj = Instantiate(baseCard, dummyObj.transform);
+            BaseCard obj = Instantiate(baseCard, playerHand);
 
             CardLabel label = obj.GetComponent<CardLabel>();
             string text = labelCount.ToString();
@@ -95,22 +119,19 @@ public class CardManager : MonoBehaviour
             {
                 obj.canTrash = true;
             }
-            dummyHands.Add(dummyObj.transform);
             hands.Add(obj);
-            ApplyLayout();
         }
-        
+
+
+        CardSort();
+
     }
 
     /// <summary>
-	/// レイアウトの自動整列機能を即座に適用する
-	/// </summary>
-	public void ApplyLayout()
-    {
-        layoutGroup.CalculateLayoutInputHorizontal();
-        layoutGroup.SetLayoutHorizontal();
-    }
-
+    /// 使用されキューの先頭のカードIDを取り出す関数
+    /// 0は失敗
+    /// </summary>
+    /// <returns></returns>
     public int GetUseCard()
     {
         if(useCards.Count!=0)
@@ -122,9 +143,25 @@ public class CardManager : MonoBehaviour
             return num;
         }
 
-        return 0;
+        return cardDataBase.CardData.Count+1;
 
         
+    }
+
+    private void CardSort()
+    { 
+        hands.Sort((x,y) => x.cardID-y.cardID);
+      
+        playerHands.CardViewSort(hands);
+    }
+
+    private void testCardUP()
+    {
+        Vector3 pos = hands[0].transform.position;
+
+        pos.y += 10;
+        pos.x += -10;
+        hands[0].transform.position = pos;
     }
 
 }

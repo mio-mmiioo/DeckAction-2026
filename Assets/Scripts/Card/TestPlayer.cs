@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class TestPlayer : MonoBehaviour
 {
     [SerializeField] private CardManager cardManager;
+    [SerializeField] private TextMeshProUGUI nameText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,6 +14,10 @@ public class TestPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            int i=cardManager.GetUseCard();
+            nameText.text = i.ToString();
+        }
     }
 }

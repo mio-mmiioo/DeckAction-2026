@@ -27,13 +27,13 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cardID = Random.Range(0, cardDataBase.CardData.Count);
+        cardID = Random.Range(1, cardDataBase.CardData.Count);
         CardData data = cardDataBase.CardData[cardID];
 
         CardVisual cardVisual = GetComponent<CardVisual>();
         cardVisual.SetCardImage(cardID);
 
-
+        isDrag = false;
         isUsed = false;
         isPassive = false;
         isTrash = false;
@@ -59,7 +59,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// </summary>
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
-    { 
+    {
         transform.position = eventData.position;
     }
 
@@ -69,13 +69,15 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.position = defaultPosition; // 初期位置に戻す
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        transform.position = defaultPosition; // 初期位置に戻す
         isDrag = false;
     }
 
 
-
+    /// <summary>
+    /// デバッグ用破壊時のメッセージ
+    /// </summary>
     void OnDestroy()
     {
         Debug.Log("BaseCard 破棄");
@@ -112,6 +114,6 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.SetAsLastSibling(); // カードを最前面に表示
+        //transform.SetAsLastSibling(); // カードを最前面に表示
     }
 }
