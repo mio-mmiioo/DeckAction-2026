@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 688430363}
   - component: {fileID: 688430365}
   - component: {fileID: 688430366}
+  - component: {fileID: 688430367}
   - component: {fileID: 688430361}
   - component: {fileID: 688430360}
   - component: {fileID: 688430364}
@@ -323,6 +324,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703756b98b4ea834b8a86f294630eb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDestroyer
+  charaHp: {fileID: 688430367}
+--- !u!114 &688430367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688430358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598993d20772b834fb88e847e71d4bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharaHp
+  maxHp: 100
+  currentHp: 0
 --- !u!1 &820313646
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,6 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 5
   jumpForce: 3
+  isRight: 1
 --- !u!4 &1811253192
 Transform:
   m_ObjectHideFlags: 0
