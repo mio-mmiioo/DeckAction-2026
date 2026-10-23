@@ -31,7 +31,10 @@ public class Player : MonoBehaviour
         }
 
         // 攻撃
-        charaAttack.Attack();
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            charaAttack.Attack();
+        }
     }
 
     void FixedUpdate()
