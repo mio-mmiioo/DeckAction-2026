@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// BaseCardクラス。基本的なカードの挙動を定義するクラス。
 /// </summary>
 
-public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHandler,IPointerClickHandler,IPointerEnterHandler
+public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHandler,IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
 {
     private Vector3 defaultPosition;// カードの初期座標
 
@@ -24,15 +24,18 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     [SerializeField] private CardDataBase cardDataBase;// 参照するカードのデータベース
 
+    private Vector3 localScale;
+
+
+    void Awake()
+    {
+        cardID = Random.Range(1, cardDataBase.CardData.Count);
+        SetCardView(cardID);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cardID = Random.Range(1, cardDataBase.CardData.Count);
-        CardData data = cardDataBase.CardData[cardID];
-
-        CardVisual cardVisual = GetComponent<CardVisual>();
-        cardVisual.SetCardImage(cardID);
-
         isDrag = false;
         isUsed = false;
         isPassive = false;
@@ -114,6 +117,23 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //transform.SetAsLastSibling(); // カードを最前面に表示
+        
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        
+    }
+
+    /// <summary>
+    /// カードのビジュアルを決定する
+    /// </summary>
+    /// <param name="id"></param>
+    public void SetCardView(int id)
+    {
+        cardID = id;
+
+        CardVisual cardVisual = GetComponent<CardVisual>();
+        cardVisual.SetCardImage(cardID);
     }
 }

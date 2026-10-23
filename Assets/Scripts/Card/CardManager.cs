@@ -9,25 +9,25 @@ using static Unity.Collections.CollectionHelper;
 public class CardManager : MonoBehaviour
 {
     [SerializeField] private BaseCard baseCard;// BaseCardのプレハブ
-    [SerializeField] private GameObject dummyCardPrefab;// DummyCardのプレハブ
+    
     [SerializeField] private Transform playerHand;// プレイヤーの手札のTransform
 
-    [SerializeField] PlayerHands playerHands;
+    [SerializeField] PlayerHands playerHands;//プレイヤーの手札を並べる
 
-    [SerializeField] CardDataBase cardDataBase;
+    [SerializeField] CardDataBase cardDataBase;// カード情報のデーターベース
 
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
     Queue<BaseCard> useCards=new Queue<BaseCard>();// 使用済みカードのリスト
 
     List<Transform> dummyHands = new List<Transform>();// ダミーカードのリスト
-    private int labelCount;//カードの仮の数字
+    private int labelCount; //カードの仮の数字
 
-    private int MAX_USE_CARD;
+    private int MAX_USE_CARD; //カードを同時に使える最大枚数
 
 
     void Start()
     {
-        MAX_USE_CARD = 2;
+        MAX_USE_CARD = 4;
         labelCount = 1;
         AddHands(4,false);
         Debug.Log("CardManager OK");
@@ -51,17 +51,20 @@ public class CardManager : MonoBehaviour
             testCardUP();
         }
 
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            CardSort();
+        }
+
         // 手札の状態を確認するfor文
         for (int i=0;i<hands.Count;i++)
         {
             // カードが破棄可能かつ破棄された場合の処理
             if (hands[i].isTrash && hands[i].canTrash)
             {
-                AddHands(1, hands[i].canTrash);
-                Destroy(dummyHands[i].gameObject);
                 Destroy(hands[i].gameObject);
-                dummyHands.RemoveAt(i);
                 hands.RemoveAt(i);
+                AddHands(1, true);
                 Debug.Log("カードを破棄しました");
             }
 
@@ -71,9 +74,7 @@ public class CardManager : MonoBehaviour
                 if (useCards.Count < MAX_USE_CARD)
                 {
                     useCards.Enqueue(hands[i]);
-                    Destroy(dummyHands[i].gameObject);
                     Destroy(hands[i].gameObject);
-                    dummyHands.RemoveAt(i);
                     hands.RemoveAt(i);
                     CardSort();
                 }
@@ -121,10 +122,9 @@ public class CardManager : MonoBehaviour
             }
             hands.Add(obj);
         }
-
-
+        Debug.Log("CardSort呼び出し前");
         CardSort();
-
+        Debug.Log("CardSort呼び出し後");
     }
 
     /// <summary>
@@ -163,6 +163,7 @@ public class CardManager : MonoBehaviour
         pos.x += -10;
         hands[0].transform.position = pos;
     }
+
 
 }
 
