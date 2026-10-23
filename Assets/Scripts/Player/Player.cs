@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f; // プレイヤーの移動速度
     [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
+    [SerializeField] private CharaAttack charaAttack; // 攻撃の一つ
 
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
@@ -22,10 +23,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         Walk();
+
+        // ジャンプ
         if (Keyboard.current.spaceKey.wasPressedThisFrame && checkOnGround.onGround == true)
         {
             isJump = true;
         }
+
+        // 攻撃
+        charaAttack.Attack();
     }
 
     void FixedUpdate()
