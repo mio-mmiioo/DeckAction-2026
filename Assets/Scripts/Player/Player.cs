@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
 
     private bool isJump = false; // ジャンプするならtrue
+    public bool isRight = true; // 右方向を向いているならtrue
 
     void Start()
     {
@@ -41,12 +42,26 @@ public class Player : MonoBehaviour
         if (Keyboard.current.aKey.isPressed)
         {
             direction = -1.0f;
+            isRight = false;
         }
         else if (Keyboard.current.dKey.isPressed)
         {
             direction = 1.0f;
+            isRight = true;
         }
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
+
+        // 体の向きに関する部分
+        Vector3 scale = transform.localScale;
+        if (isRight == true)
+        {
+            scale.x = 1.0f;
+        }
+        else
+        {
+            scale.x = -1.0f;
+        }
+        transform.localScale = scale;
     }
 
     /// <summary>
