@@ -13,15 +13,28 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     private Vector3 defaultPosition;// カードの初期座標
 
     // カードの状態を表すフラグ
-    public bool isUsed; //カードが使用済みかどうか true:使用 false:不使用
-    public bool isPassive; //常に存在するカードかどうか true:存在する false:使い切り
-    public bool isTrash;//捨てられたかどうか true:捨ててる false:捨ててない
-    public bool canTrash;//捨てられるかどうか true:捨てられる false:捨てられない
-    public bool isDrag;// カードがドラッグされているかどうか true:ドラッグ中 false:ドラッグしていない
-    public bool isPick; //カードが選択状態かどうか true:選択中 false:未選択
+
+    [Tooltip("//カードが使用済みかどうか true:使用 false:不使用")]
+    public bool isUsed;
+
+    [Tooltip("常に存在するカードかどうか true:存在する false:使い切り")]
+    public bool isPassive;
+
+    [Tooltip("捨てられたかどうか true:捨ててる false:捨ててない")]
+    public bool isTrash;
+
+    [Tooltip("捨てられるかどうか true:捨てられる false:捨てられない")]
+    public bool canTrash;
+
+    [Tooltip("カードがドラッグされているかどうか true:ドラッグ中 false:ドラッグしていない")]
+    public bool isDrag;
+
+    [Tooltip("カードが選択状態かどうか true:選択中 false:未選択")]
+    public bool isPick;
 
     private int clickCount;// クリックされた回数をカウントする
 
+    [HideInInspector]
     public int cardID;//カードの種類を決定するID
 
     [SerializeField] private CardDataBase cardDataBase;// 参照するカードのデータベース
@@ -151,4 +164,6 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         CardVisual cardVisual = GetComponent<CardVisual>();
         cardVisual.SetCardImage(cardID);
     }
+
+    
 }

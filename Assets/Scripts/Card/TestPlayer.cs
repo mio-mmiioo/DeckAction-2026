@@ -14,12 +14,10 @@ public class TestPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
         if(Input.GetKeyDown(KeyCode.Y))
         {
             int i=cardManager.GetUseCard();
-            if (i == 6) return;
+            if (i == 0) return;
 
             nameText.text = i.ToString();
 

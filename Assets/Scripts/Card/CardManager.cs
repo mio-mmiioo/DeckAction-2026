@@ -8,21 +8,26 @@ using static Unity.Collections.CollectionHelper;
 
 public class CardManager : MonoBehaviour
 {
-    [SerializeField] private BaseCard baseCard;// BaseCardのプレハブ
-    
-    [SerializeField] private Transform playerHand;// プレイヤーの手札のTransform
+    [Tooltip("BaseCardのプレハブ")]
+    [SerializeField] private BaseCard baseCard;
 
-    [SerializeField] PlayerHands playerHands;//プレイヤーの手札を並べる
+    [Tooltip("プレイヤーの手札のTransform")]
+    [SerializeField] private Transform playerHand;
 
-    [SerializeField] CardDataBase cardDataBase;// カード情報のデーターベース
+    [Tooltip("カード情報のデーターベース")]
+    [SerializeField] CardDataBase cardDataBase;
+
+    [Tooltip("使用したカードの表示領域")]
+    [SerializeField] GameObject useCardView;
 
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
     Queue<BaseCard> useCards=new Queue<BaseCard>();// 使用済みカードのリスト
 
-    List<Transform> dummyHands = new List<Transform>();// ダミーカードのリスト
     private int labelCount; //カードの仮の数字
 
     private int MAX_USE_CARD; //カードを同時に使える最大枚数
+
+    private HandsSort handsSort;// プレイヤーの手札を並べる
 
     [SerializeField] private int nowPickCard;// 現在拡大中のカード
 
@@ -30,6 +35,7 @@ public class CardManager : MonoBehaviour
     {
         MAX_USE_CARD = 4;
         labelCount = 1;
+        handsSort = GetComponent<HandsSort>();
         AddHands(4,false);
         Debug.Log("CardManager OK");
         for(int i=0;i<hands.Count;i++)
@@ -38,6 +44,7 @@ public class CardManager : MonoBehaviour
         }
         nowPickCard = 0;
         hands[nowPickCard].isPick = true;
+
     }
 
     // Update is called once per frame
@@ -77,7 +84,7 @@ public class CardManager : MonoBehaviour
                 if (useCards.Count < MAX_USE_CARD)
                 {
                     useCards.Enqueue(hands[i]);
-                    Destroy(hands[i].gameObject);
+                    hands[i].transform.SetParent(useCardView.transform);
                     hands.RemoveAt(i);
                     CardSort();
                 }
@@ -142,6 +149,8 @@ public class CardManager : MonoBehaviour
 
             int num = card.cardID;
 
+            Destroy(card.gameObject);
+
             return num;
         }
 
@@ -154,7 +163,7 @@ public class CardManager : MonoBehaviour
     { 
         hands.Sort((x,y) => x.cardID-y.cardID);
       
-        playerHands.CardViewSort(hands);
+        handsSort.CardViewSort(hands);
     }
 
     private void testCardUP()

@@ -6,16 +6,25 @@ using System.Runtime.InteropServices.WindowsRuntime;
 /// <summary>
 /// 手札の表示とソートするクラス
 /// </summary>
-public class PlayerHands : MonoBehaviour
+public class HandsSort : MonoBehaviour
 {
-    [SerializeField] private BaseCard baseCard;// BaseCardのプレハブ
+    [Tooltip("BaseCardのプレハブ")]
+    [SerializeField] private BaseCard baseCard;
 
-    [SerializeField] private CardManager cardManager ;// 
+    [Tooltip("カードマネージャー")]
+    [SerializeField] private CardManager cardManager ;
 
-    [SerializeField] private float spacing = 60;// カードとカードの間の距離
-    [SerializeField] private float cardUpperLeft = 60;// 基準とする左端
-    [SerializeField] private float cardY = 20;// カード全体の高さ
-    [SerializeField] private float cardBaseX = 300; //中央のカードの位置
+    [Tooltip("カードとカードの間の距離")]
+    [SerializeField] private float spacing = 60;
+
+    [Tooltip("基準とする左端")]
+    [SerializeField] private float cardUpperLeft = 60;
+
+    [Tooltip("カード全体の高さ")]
+    [SerializeField] private float cardY = 20;
+
+    [Tooltip("中央のカードの位置")]
+    [SerializeField] private float cardBaseX = 300;
 
     Vector2 cardBasePos;
 
