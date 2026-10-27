@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
 
     [Tooltip("カードを使用するならtrue")]
-    [SerializeField] private bool isUseCard = true;
+    [SerializeField] private bool isUseCard = false;
 
 
     private PlayerAttack playerAttack; // 攻撃を管理する
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
         attackType.SetCardID(); // 攻撃の種類をセット
 
-        if (isUseCard == true)
+        if (isUseCard == false)
         {
             // 攻撃
             if (Keyboard.current.eKey.wasPressedThisFrame)

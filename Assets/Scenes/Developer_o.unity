@@ -185,7 +185,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -195,7 +195,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
 --- !u!1 &688430358
 GameObject:
@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 688430361}
   - component: {fileID: 688430360}
   - component: {fileID: 688430364}
+  - component: {fileID: 688430371}
   m_Layer: 7
   m_Name: EnemyA
   m_TagString: Enemy
@@ -297,7 +298,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 8325742305948304985, guid: 3c69f3436d9ca6f43ba94f82c6603202, type: 3}
   m_Color: {r: 0.51572317, g: 0.02108293, b: 0.02108293, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -317,7 +318,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.95, y: 1.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.8740351, y: 2.8740351, z: 2.8740351}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 36034912}
@@ -337,7 +338,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyA
   moveSpeed: 5
   jumpForce: 3
-  charaAttack: {fileID: 688430369}
 --- !u!70 &688430364
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -372,8 +372,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
+  m_Offset: {x: 0, y: -0.1}
+  m_Size: {x: 0.5, y: 0.5}
   m_Direction: 0
 --- !u!114 &688430365
 MonoBehaviour:
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharaAttack
   attackCollider: {fileID: 36034913}
-  animationLength: 0.3
+  time: 0.3
 --- !u!114 &688430370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,9 +433,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017ca44e963dde14ca665f0d35514aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDamagedPower
-  charaHp: {fileID: 688430367}
-  attackPower: 5
   playerAttackType: {fileID: 1811253202}
+--- !u!95 &688430371
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688430358}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9c2b2917d9932c42b8894b486eeef06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &820313646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 5
   jumpForce: 3
-  playerAttack: {fileID: 1811253203}
+  isUseCard: 0
   isRight: 1
 --- !u!4 &1811253192
 Transform:
@@ -1152,8 +1172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9572867d877a19f4a8015452c9361953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDamagedPower
-  charaHp: {fileID: 1811253197}
-  attackPower: 5
 --- !u!114 &1811253201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,7 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackType
   cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
-  cardID: 0
+  isUseCard: 0
 --- !u!114 &1811253203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,9 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   attackCollider: {fileID: 820313648}
-  animationLength: 0.3
-  stamina: {fileID: 1811253201}
-  playerAttackType: {fileID: 1811253202}
+  time: 0.3
 --- !u!1 &2027273437
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,8 +3,12 @@ using UnityEngine.InputSystem;
 
 public class EnemyA : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5.0f; // 敵Aの移動速度
-    [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
+    [Tooltip("移動速度を設定してください")]
+    [SerializeField] private float moveSpeed = 5.0f;
+
+    [Tooltip("ジャンプ力を設定してください")]
+    [SerializeField] private float jumpForce = 3.0f;
+
     private CharaAttack charaAttack; // 攻撃の一つ
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
