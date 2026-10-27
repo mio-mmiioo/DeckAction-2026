@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class CharaAttack : MonoBehaviour
 {
-    [SerializeField] private Collider2D attackCollider; // 攻撃範囲
-    [SerializeField] private float animationLength = 0.3f; // アニメーションの長さ
+    [Tooltip("攻撃範囲を指定してください")]
+    [SerializeField] private Collider2D attackCollider;
+
+    [Tooltip("攻撃範囲が有効な時間を指定してください")]
+    [SerializeField] private float time = 0.3f;
 
     void Start()
     {
@@ -16,7 +19,7 @@ public class CharaAttack : MonoBehaviour
     public void Attack()
     {
         attackCollider.enabled = true; // 攻撃範囲を有効にする
-        Invoke("SetOffEnabled", animationLength); // 指定秒数後に攻撃判定をオフにする
+        Invoke("SetOffEnabled", time); // 指定秒数後に攻撃判定をオフにする
     }
 
     /// <summary>

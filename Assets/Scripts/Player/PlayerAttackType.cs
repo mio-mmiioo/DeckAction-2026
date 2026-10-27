@@ -4,12 +4,18 @@ using UnityEngine.InputSystem;
 // 攻撃の種類と情報を管理するクラス
 public class PlayerAttackType : MonoBehaviour
 {
+    [Tooltip("CardDataBaseを設定してください")]
     [SerializeField] private CardDataBase cardDataBase; // カードの情報
-    [SerializeField] private int cardID; // カードのID
+
+    [Tooltip("CardManagerを設定して下い")]
     [SerializeField] private CardManager cardManager;
-    private PlayerAttack playerAttack;
-    private int currentID = 0;
-    private int prevID;
+
+    [Tooltip("カードを使用した攻撃判定をするならtrueにしてください")]
+    [SerializeField] private bool isUseCard = true;
+
+    private PlayerAttack playerAttack; // プレイヤーの攻撃処理
+    private int currentID = 0; // 現在のカードのID
+    private int prevID; // 前回のカードのID
 
     void Start()
     {
@@ -22,29 +28,31 @@ public class PlayerAttackType : MonoBehaviour
     /// </summary>
     public void SetCardID()
     {
-        currentID = cardManager.GetUseCard();
-        if (currentID == 0 && currentID == prevID)
+        if (isUseCard == true)
         {
-            prevID = currentID;
-            return;
+            // プレイヤーの攻撃力をセットする
+            if (Keyboard.current.zKey.wasPressedThisFrame)
+            {
+                currentID = 1;
+            }
+            if (Keyboard.current.xKey.wasPressedThisFrame)
+            {
+                currentID = 2;
+            }
+            if (Keyboard.current.cKey.wasPressedThisFrame)
+            {
+                currentID = 4;
+            }
         }
-        cardID = currentID;
-        prevID = currentID;
-        playerAttack.Attack();
-
-        //// プレイヤーの攻撃力をセットする
-        //if (Keyboard.current.zKey.wasPressedThisFrame)
-        //{
-        //    cardID = 1;
-        //}
-        //if (Keyboard.current.xKey.wasPressedThisFrame)
-        //{
-        //    cardID = 2;
-        //}
-        //if (Keyboard.current.cKey.wasPressedThisFrame)
-        //{
-        //    cardID = 4;
-        //}
+        else
+        {
+            currentID = cardManager.GetUseCard();
+            if (currentID != 0 && currentID != prevID)
+            {
+                playerAttack.Attack();
+            }
+            prevID = currentID;
+        }
     }
 
     /// <summary>
@@ -53,7 +61,7 @@ public class PlayerAttackType : MonoBehaviour
     /// <returns>カードのID</returns>
     public int GetCardID()
     {
-        return cardID;
+        return currentID;
     }
 
     /// <summary>
@@ -62,7 +70,7 @@ public class PlayerAttackType : MonoBehaviour
     /// <returns>ダメージ</returns>
     public int GetAttackPower()
     {
-        int ret = cardDataBase.CardData[cardID].damage;
+        int ret = cardDataBase.CardData[currentID].damage;
         // コンボの処理
 
 
@@ -80,6 +88,6 @@ public class PlayerAttackType : MonoBehaviour
     /// <returns>消費スタミナ</returns>
     public int GetUseStamina()
     {
-        return cardDataBase.CardData[cardID].stamina;
+        return cardDataBase.CardData[currentID].stamina;
     }
 }

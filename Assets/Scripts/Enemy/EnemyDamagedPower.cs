@@ -3,10 +3,15 @@ using UnityEngine.InputSystem;
 
 public class EnemyDamagedPower : MonoBehaviour
 {
-    [SerializeField] private CharaHp charaHp; // HPを管理するクラス
-    [SerializeField] private int attackPower = 5; // 攻撃力
-    [SerializeField] private PlayerAttackType playerAttackType; // プレイヤーの攻撃
+    private PlayerAttackType playerAttackType; // プレイヤーの攻撃
+    private CharaHp charaHp; // HPを管理するクラス
+    private int attackPower = 5; // 攻撃力
 
+    void Start()
+    {
+        charaHp = GetComponent<CharaHp>();
+        playerAttackType = GetComponent<PlayerAttackType>();
+    }
     // 攻撃力をセットする
     // 移動させる
     void Update()

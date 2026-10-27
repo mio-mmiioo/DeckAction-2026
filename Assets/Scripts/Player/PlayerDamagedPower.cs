@@ -3,8 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerDamagedPower : MonoBehaviour
 {
-    [SerializeField] private CharaHp charaHp; // HPを管理するクラス
-    [SerializeField] private int attackPower = 5; // 攻撃力
+
+    private CharaHp charaHp; // HPを管理するクラス
+    private int attackedPower = 5; // 攻撃力
+
+    void Start()
+    {
+        charaHp = GetComponent<CharaHp>();
+    }
 
     //void Update()
     //{
@@ -15,8 +21,8 @@ public class PlayerDamagedPower : MonoBehaviour
     {
         if (other.CompareTag("EnemyAttack"))
         {
-            Debug.Log(attackPower);
-            charaHp.TakeDamage(attackPower);
+            Debug.Log("プレイヤーは敵から" + attackedPower + "の攻撃を受けた");
+            charaHp.TakeDamage(attackedPower);
         }
     }
 }

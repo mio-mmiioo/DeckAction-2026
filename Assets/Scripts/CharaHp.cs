@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class CharaHp : MonoBehaviour
 {
-    [SerializeField] private int maxHP = 100; // 最大の体力
+    [Tooltip("最大の体力を設定してください")]
+    [SerializeField] private int maxHP = 100;
+
+    [Tooltip("現在の体力")]
     [SerializeField] private int currentHP; // 現在の体力
 
     void Start()

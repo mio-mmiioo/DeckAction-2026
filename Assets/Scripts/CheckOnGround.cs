@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class CheckOnGround : MonoBehaviour
 {
-    [SerializeField] private LayerMask groundLayer; // 地面として認識するレイヤー
-    [SerializeField] private float rayLength = 1.0f; // レイの長さ
-    [SerializeField] private Transform t; // 確認したいオブジェクトのtransform
+    [Tooltip("地面として認識するレイヤー GroundLayerを設定してください")]
+    [SerializeField] private LayerMask groundLayer;
+    
+    [Tooltip("レイの長さ 足元から少し出るくらいに設定してください")]
+    [SerializeField] private float rayLength = 1.0f;
+
+    [Tooltip("transform 確認したいオブジェクトのtransformを設定してください")]
+    [SerializeField] private Transform t;
 
     [HideInInspector] public bool onGround = false; // 地面に足がついているならtrue
 

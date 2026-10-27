@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class Stamina : MonoBehaviour
 {
-    [SerializeField] private int maxStamina = 100; // 最大のスタミナ
-    [SerializeField] private int currentStamina; // 現在のスタミナ
+    [Tooltip("最大のスタミナ値を設定してください")]
+    [SerializeField] private int maxStamina = 100;
+
+    [Tooltip("現在のスタミナ値")]
+    [SerializeField] private int currentStamina;
 
     void Start()
     {

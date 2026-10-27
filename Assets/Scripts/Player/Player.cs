@@ -4,10 +4,17 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5.0f; // プレイヤーの移動速度
-    [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
-    [SerializeField] private PlayerAttack playerAttack; // 攻撃を管理する
+    [Tooltip("プレイヤーの移動速度を設定してください")]
+    [SerializeField] private float moveSpeed = 5.0f;
 
+    [Tooltip("プレイヤーのジャンプ力を設定してください")]
+    [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
+
+    [Tooltip("カードを使用するならtrue")]
+    [SerializeField] private bool isUseCard = true;
+
+
+    private PlayerAttack playerAttack; // 攻撃を管理する
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private PlayerAttackType attackType; // 攻撃の種類
@@ -17,6 +24,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        playerAttack = GetComponent<PlayerAttack>();
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         attackType = GetComponent<PlayerAttackType>();
@@ -34,10 +42,13 @@ public class Player : MonoBehaviour
 
         attackType.SetCardID(); // 攻撃の種類をセット
 
-        // 攻撃
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (isUseCard == true)
         {
-            playerAttack.Attack();
+            // 攻撃
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                playerAttack.Attack();
+            }
         }
     }
 
