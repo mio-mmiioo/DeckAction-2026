@@ -19,7 +19,7 @@ public class TestPlayer : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Y))
         {
             int i=cardManager.GetUseCard();
-            if (i == 5) return;
+            if (i == 6) return;
 
             nameText.text = i.ToString();
 

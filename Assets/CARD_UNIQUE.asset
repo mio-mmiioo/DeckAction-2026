@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b5032dbe837b004d949be80f9d8780e, type: 3}
-  m_Name: CARD_SP
+  m_Name: CARD_UNIQUE
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  image: {fileID: 1523523337861121371, guid: 72478c8dc073a1e46b6f28da9073d1df, type: 3}
-  ID: 2
-  cardName: Special
+  image: {fileID: -8566626792118560811, guid: 6c28c91249b307f49bcacc6a27b2a452, type: 3}
+  ID: 3
+  cardName: Unique
   stamina: 0
-  damage: 100
+  damage: 0
   rate: 0
