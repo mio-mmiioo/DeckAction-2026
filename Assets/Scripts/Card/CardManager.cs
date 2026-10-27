@@ -24,6 +24,7 @@ public class CardManager : MonoBehaviour
 
     private int MAX_USE_CARD; //カードを同時に使える最大枚数
 
+    [SerializeField] private int nowPickCard;// 現在拡大中のカード
 
     void Start()
     {
@@ -35,6 +36,8 @@ public class CardManager : MonoBehaviour
         {
             hands[i].isPassive = true;
         }
+        nowPickCard = 0;
+        hands[nowPickCard].isPick = true;
     }
 
     // Update is called once per frame
@@ -84,10 +87,9 @@ public class CardManager : MonoBehaviour
                 }
             }
 
+         }
 
-
-        }
-
+        PickUpCard();
         
     }
 
@@ -143,7 +145,7 @@ public class CardManager : MonoBehaviour
             return num;
         }
 
-        return cardDataBase.CardData.Count+1;
+        return 0;
 
         
     }
@@ -163,6 +165,33 @@ public class CardManager : MonoBehaviour
         pos.x += -10;
         hands[0].transform.position = pos;
     }
+
+    private void PickUpCard()
+    {
+        int nextPick;
+        nextPick = nowPickCard;
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if(nowPickCard>0)
+            nextPick=nowPickCard--;
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (nowPickCard < hands.Count)
+                nextPick=nowPickCard++;
+        }
+
+        if (nowPickCard != nextPick)
+        {
+            hands[nextPick].isPick = true;
+            hands[nowPickCard].isPick = false;
+
+            nowPickCard = nextPick;
+        }
+
+    }
+
 
 
 }

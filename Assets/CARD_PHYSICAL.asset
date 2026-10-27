@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   image: {fileID: 5189691121816951081, guid: c55696c981b882445bafc01c0daa843e, type: 3}
   ID: 1
-  cardName: PHYSICAL
+  cardName: Physical
   stamina: 5
   damage: 5
   rate: 0

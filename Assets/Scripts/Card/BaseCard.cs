@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// BaseCardクラス。基本的なカードの挙動を定義するクラス。
@@ -17,6 +18,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     public bool isTrash;//捨てられたかどうか true:捨ててる false:捨ててない
     public bool canTrash;//捨てられるかどうか true:捨てられる false:捨てられない
     public bool isDrag;// カードがドラッグされているかどうか true:ドラッグ中 false:ドラッグしていない
+    public bool isPick; //カードが選択状態かどうか true:選択中 false:未選択
 
     private int clickCount;// クリックされた回数をカウントする
 
@@ -25,6 +27,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     [SerializeField] private CardDataBase cardDataBase;// 参照するカードのデータベース
 
     private Vector3 localScale;
+    private Outline uiOutline;
 
 
     void Awake()
@@ -42,8 +45,20 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         defaultPosition = Camera.main.WorldToScreenPoint(transform.position);// 初期位置を入れる 
+        uiOutline = GetComponent<Outline>();
     }
 
+    void Update()
+    {
+        if(isPick)
+        {
+            uiOutline.enabled = true;
+        }
+        else
+        {
+            uiOutline.enabled = false;
+        }
+    }
 
     /// <summary>
     /// ドラッグ開始時にレイキャストの判定をオフにする
