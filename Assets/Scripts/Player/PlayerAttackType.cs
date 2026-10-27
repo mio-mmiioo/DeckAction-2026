@@ -6,22 +6,45 @@ public class PlayerAttackType : MonoBehaviour
 {
     [SerializeField] private CardDataBase cardDataBase; // カードの情報
     [SerializeField] private int cardID; // カードのID
+    [SerializeField] private CardManager cardManager;
+    private PlayerAttack playerAttack;
+    private int currentID = 0;
+    private int prevID;
 
+    void Start()
+    {
+        prevID = currentID;
+        playerAttack = GetComponent<PlayerAttack>();
+    }
+
+    /// <summary>
+    /// 使用したカードのIDを設定する
+    /// </summary>
     public void SetCardID()
     {
-        // プレイヤーの攻撃力をセットする
-        if (Keyboard.current.zKey.wasPressedThisFrame)
+        currentID = cardManager.GetUseCard();
+        if (currentID == 0 && currentID == prevID)
         {
-            cardID = 1;
+            prevID = currentID;
+            return;
         }
-        if (Keyboard.current.xKey.wasPressedThisFrame)
-        {
-            cardID = 2;
-        }
-        if (Keyboard.current.cKey.wasPressedThisFrame)
-        {
-            cardID = 3;
-        }
+        cardID = currentID;
+        prevID = currentID;
+        playerAttack.Attack();
+
+        //// プレイヤーの攻撃力をセットする
+        //if (Keyboard.current.zKey.wasPressedThisFrame)
+        //{
+        //    cardID = 1;
+        //}
+        //if (Keyboard.current.xKey.wasPressedThisFrame)
+        //{
+        //    cardID = 2;
+        //}
+        //if (Keyboard.current.cKey.wasPressedThisFrame)
+        //{
+        //    cardID = 4;
+        //}
     }
 
     /// <summary>
@@ -39,7 +62,16 @@ public class PlayerAttackType : MonoBehaviour
     /// <returns>ダメージ</returns>
     public int GetAttackPower()
     {
-        return cardDataBase.CardData[cardID].damage;
+        int ret = cardDataBase.CardData[cardID].damage;
+        // コンボの処理
+
+
+
+        // 最終的なダメージ
+        
+        
+        
+        return ret;
     }
 
     /// <summary>
