@@ -6,10 +6,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f; // プレイヤーの移動速度
     [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
-    [SerializeField] private CharaAttack charaAttack; // 攻撃の一つ
+    [SerializeField] private PlayerAttack playerAttack; // 攻撃を管理する
 
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
+    private PlayerAttackType attackType; // 攻撃の種類
 
     private bool isJump = false; // ジャンプするならtrue
     public bool isRight = true; // 右方向を向いているならtrue
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
+        attackType = GetComponent<PlayerAttackType>();
     }
 
     void Update()
@@ -30,10 +32,12 @@ public class Player : MonoBehaviour
             isJump = true;
         }
 
+        attackType.SetCardID(); // 攻撃の種類をセット
+
         // 攻撃
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            charaAttack.Attack();
+            playerAttack.Attack();
         }
     }
 

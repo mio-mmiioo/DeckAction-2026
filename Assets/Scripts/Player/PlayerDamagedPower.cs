@@ -13,7 +13,10 @@ public class PlayerDamagedPower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(attackPower);
-        charaHp.TakeDamage(attackPower);
+        if (other.CompareTag("EnemyAttack"))
+        {
+            Debug.Log(attackPower);
+            charaHp.TakeDamage(attackPower);
+        }
     }
 }

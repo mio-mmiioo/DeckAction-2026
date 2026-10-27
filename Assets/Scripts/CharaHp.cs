@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class CharaHp : MonoBehaviour
 {
-    [SerializeField] private int maxHp = 100; // 最大の体力
-    [SerializeField] private int currentHp; // 現在の体力
+    [SerializeField] private int maxHP = 100; // 最大の体力
+    [SerializeField] private int currentHP; // 現在の体力
 
     void Start()
     {
-        currentHp = maxHp;
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp); // 体力の最小と最大の値を決める
+        currentHP = maxHP;
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP); // 体力の最小と最大の値を決める
     }
 
     /// <summary>
@@ -21,12 +21,21 @@ public class CharaHp : MonoBehaviour
         {
             return;
         }
-        currentHp -= damage;
+        currentHP -= damage;
 
         // 体力がなくなったら消す
-        if (currentHp <= 0)
+        if (currentHP <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// 体力を加算する
+    /// </summary>
+    /// <param name="hp">加算される体力</param>
+    public void AddHP(int hp)
+    {
+        currentHP += hp;
     }
 }
