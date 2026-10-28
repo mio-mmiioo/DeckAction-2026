@@ -40,6 +40,8 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     [SerializeField] private CardDataBase cardDataBase;// 参照するカードのデータベース
 
     private Vector3 localScale;
+    private Vector2 localPosition;
+    private int prevSiblingIndex;
     private Outline uiOutline;
 
 
@@ -59,6 +61,8 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         Debug.Log("BaseCard OK");// 確認用ログ
         defaultPosition = Camera.main.WorldToScreenPoint(transform.position);// 初期位置を入れる 
         uiOutline = GetComponent<Outline>();
+        localScale = transform.localScale;
+        
     }
 
     void Update()
@@ -145,12 +149,31 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(!isUsed)
+        {
+            localPosition = transform.position;
+            Vector2 checkPos =new Vector2(localPosition.x, localPosition.y*2.0f);
+            
+            if (!Input.GetMouseButton(0))
+            {
+                transform.localScale = localScale * 1.3f;
+                transform.position = checkPos;
+                prevSiblingIndex = transform.GetSiblingIndex();
+                transform.SetAsLastSibling();
+            }
+            
+        }
         
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        
+        if (!isUsed)
+        {
+            transform.localScale = localScale;
+            transform.position = localPosition;
+            transform.SetSiblingIndex(prevSiblingIndex);
+        }
     }
 
     /// <summary>
