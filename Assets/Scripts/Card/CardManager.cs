@@ -23,27 +23,40 @@ public class CardManager : MonoBehaviour
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
     Queue<BaseCard> useCards=new Queue<BaseCard>();// 使用済みカードのリスト
 
+
+    [Tooltip("手札の最大枚数")]
+    [SerializeField] private int maxHands;
+
     private int labelCount; //カードの仮の数字
 
     private int MAX_USE_CARD; //カードを同時に使える最大枚数
 
     private HandsSort handsSort;// プレイヤーの手札を並べる
 
-    [SerializeField] private int nowPickCard;// 現在拡大中のカード
+    [SerializeField] private int currentPickCard;// 現在拡大中のカード
+
+    private float drawCooldown;//ドローのクールダウン時間(秒)
+
+    private float cooldownElapsedTime;//経過時間
 
     void Start()
     {
+        drawCooldown = 10f;
+        cooldownElapsedTime = 0;
+        maxHands = 4;
         MAX_USE_CARD = 4;
         labelCount = 1;
         handsSort = GetComponent<HandsSort>();
-        AddHands(4,false);
+        AddHands(maxHands,false);
         Debug.Log("CardManager OK");
+
         for(int i=0;i<hands.Count;i++)
         {
             hands[i].isPassive = true;
         }
-        nowPickCard = 0;
-        hands[nowPickCard].isPick = true;
+
+        //currentPickCard = 0;
+        hands[currentPickCard].isPick = true;
 
     }
 
@@ -65,6 +78,18 @@ public class CardManager : MonoBehaviour
         {
             CardSort();
         }
+
+        if(hands.Count<maxHands)
+        {
+            cooldownElapsedTime += Time.deltaTime;
+            Debug.Log("一秒経過");
+            if(cooldownElapsedTime>=drawCooldown)
+            {
+                AddHands(1, false);
+                cooldownElapsedTime = 0f;
+            }
+        }
+
 
         // 手札の状態を確認するfor文
         for (int i=0;i<hands.Count;i++)
@@ -95,6 +120,11 @@ public class CardManager : MonoBehaviour
             }
 
          }
+
+
+
+
+
 
         PickUpCard();
         
@@ -159,6 +189,9 @@ public class CardManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 手札のリストをソートして表示もソートする
+    /// </summary>
     private void CardSort()
     { 
         hands.Sort((x,y) => x.cardID-y.cardID);
@@ -178,25 +211,25 @@ public class CardManager : MonoBehaviour
     private void PickUpCard()
     {
         int nextPick;
-        nextPick = nowPickCard;
+        nextPick = currentPickCard;
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if(nowPickCard>0)
-            nextPick=nowPickCard--;
+            if(currentPickCard > 0)
+            nextPick= currentPickCard--;
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (nowPickCard < hands.Count)
-                nextPick=nowPickCard++;
+            if (currentPickCard < hands.Count)
+                nextPick= currentPickCard++;
         }
 
-        if (nowPickCard != nextPick)
+        if (currentPickCard != nextPick)
         {
             hands[nextPick].isPick = true;
-            hands[nowPickCard].isPick = false;
+            hands[currentPickCard].isPick = false;
 
-            nowPickCard = nextPick;
+            currentPickCard = nextPick;
         }
 
     }
