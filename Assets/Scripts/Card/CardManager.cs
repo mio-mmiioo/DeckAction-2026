@@ -130,9 +130,6 @@ public class CardManager : MonoBehaviour
         
     }
 
-
-
-
     /// <summary>
     /// 基本的な手札の増加関数　
     /// value 増やしたい手札の枚数 
