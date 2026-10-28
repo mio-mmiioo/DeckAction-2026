@@ -31,6 +31,7 @@ public class PlayerAttackType : MonoBehaviour
         if (isUseCard == true)
         {
             //currentID = cardManager.GetUseCard();
+
             //if (currentID != 0 && currentID != prevID)
             //{
             //    playerAttack.Attack();

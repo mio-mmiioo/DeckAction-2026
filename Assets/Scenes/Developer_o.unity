@@ -185,7 +185,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.1}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -195,7 +195,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.4, y: 0.4}
+  m_Size: {x: 0.3, y: 0.25}
   m_EdgeRadius: 0
 --- !u!1 &688430358
 GameObject:
@@ -299,7 +299,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8325742305948304985, guid: 3c69f3436d9ca6f43ba94f82c6603202, type: 3}
-  m_Color: {r: 0.51572317, g: 0.02108293, b: 0.02108293, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -317,7 +317,7 @@ Transform:
   m_GameObject: {fileID: 688430358}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.95, y: 1.3, z: 0}
+  m_LocalPosition: {x: 0.93, y: 1.2, z: 0}
   m_LocalScale: {x: 2.8740351, y: 2.8740351, z: 2.8740351}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyA
   moveSpeed: 5
-  jumpForce: 3
+  jumpForce: 5
 --- !u!70 &688430364
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -372,8 +372,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.1}
-  m_Size: {x: 0.5, y: 0.5}
+  m_Offset: {x: 0, y: 0.05}
+  m_Size: {x: 0.35, y: 0.35}
   m_Direction: 0
 --- !u!114 &688430365
 MonoBehaviour:
@@ -1047,7 +1047,6 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 3
   isUseCard: 0
-  isRight: 1
 --- !u!4 &1811253192
 Transform:
   m_ObjectHideFlags: 0
@@ -1300,7 +1299,7 @@ Transform:
   m_GameObject: {fileID: 2027273437}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.53, y: -3.3, z: 0}
+  m_LocalPosition: {x: 0.18, y: 3.13, z: 0}
   m_LocalScale: {x: 11.6716, y: 0.9200401, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private PlayerAttackType attackType; // 攻撃の種類
 
     private bool isJump = false; // ジャンプするならtrue
-    public bool isRight = true; // 右方向を向いているならtrue
+    private bool isRight = true; // 右方向を向いているならtrue
 
     void Start()
     {
