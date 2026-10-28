@@ -9,14 +9,17 @@ public class EnemyA : MonoBehaviour
     [Tooltip("ジャンプ力を設定してください")]
     [SerializeField] private float jumpForce = 3.0f;
 
-    private CharaAttack charaAttack; // 攻撃の一つ
+    private SpriteRenderer spriteRenderer; // 描画関連の情報が
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
+    private CharaAttack charaAttack; // 攻撃の一つ
 
     private bool isJump = false; // ジャンプするならtrue
+    private bool isRight = false; // 右方向を向いているならtrue
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         charaAttack = GetComponent<CharaAttack>();
@@ -54,12 +57,24 @@ public class EnemyA : MonoBehaviour
         if (Keyboard.current.jKey.isPressed)
         {
             direction = -1.0f;
+            isRight = false;
         }
         else if (Keyboard.current.lKey.isPressed)
         {
             direction = 1.0f;
+            isRight = true;
         }
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
+
+        // 移動方向によって画像を反転させる
+        if (isRight == true)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
     /// <summary>

@@ -21,6 +21,9 @@ public class EnemyDamagedPower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        charaHp.TakeDamage(attackPower);
+        if (other.CompareTag("PlayerAttack"))
+        {
+            charaHp.TakeDamage(attackPower);
+        }
     }
 }
