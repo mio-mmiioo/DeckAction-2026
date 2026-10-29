@@ -37,6 +37,8 @@ public class PlayerAttackType : MonoBehaviour
             //    playerAttack.Attack();
             //}
             //prevID = currentID;
+
+
         }
         else
         {

@@ -5,13 +5,17 @@ public class TestPlayer : MonoBehaviour
 {
     [SerializeField] private CardManager cardManager;
     [SerializeField] private TextMeshProUGUI nameText;
+
+    private PlayerCombo combo;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        combo = GetComponent<PlayerCombo>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// デバッグ用のプレイヤー
+    /// </summary>
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Y))
@@ -22,5 +26,10 @@ public class TestPlayer : MonoBehaviour
             nameText.text = i.ToString();
 
         }
+
+
+        nameText.text = combo.comboCount.ToString();
+
+
     }
 }

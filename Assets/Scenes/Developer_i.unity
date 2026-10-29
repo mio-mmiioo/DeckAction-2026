@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 504698406}
   - component: {fileID: 504698405}
   - component: {fileID: 504698404}
+  - component: {fileID: 504698407}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Untagged
@@ -420,6 +421,21 @@ Transform:
   - {fileID: 1525114436}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &504698407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504698403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a030263913346ab49a274284df94681b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombo
+  cardManager: {fileID: 547390938}
+  cardSetTime: 0
+  comboCount: 0
 --- !u!1 &547390936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,8 +1116,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 60, y: 120}
-  m_Spacing: {x: 30, y: 0}
+  m_CellSize: {x: 50, y: 100}
+  m_Spacing: {x: 40, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1517192830

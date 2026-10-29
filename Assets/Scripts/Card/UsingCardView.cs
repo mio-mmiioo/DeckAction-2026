@@ -21,6 +21,7 @@ public class UsingCardView : MonoBehaviour
         
     }
 
+    
     public void CardViewSort(List<BaseCard> cards)
     {
         int count = cards.Count;

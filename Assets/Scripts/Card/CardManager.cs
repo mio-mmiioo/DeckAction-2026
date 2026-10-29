@@ -39,6 +39,9 @@ public class CardManager : MonoBehaviour
 
     private float cooldownElapsedTime;//経過時間
 
+    /// <summary>
+    /// 変数の初期化
+    /// </summary>
     void Start()
     {
         drawCooldown = 10f;
@@ -60,25 +63,12 @@ public class CardManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// カードの状態を確認する
+    /// </summary>
     void Update()
     {
-        // デバッグ用の手札増加処理
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            AddHands(1,false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            testCardUP();
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            CardSort();
-        }
-
+        //時間経過でカードを引く
         if(hands.Count<maxHands)
         {
             cooldownElapsedTime += Time.deltaTime;
@@ -89,7 +79,6 @@ public class CardManager : MonoBehaviour
                 cooldownElapsedTime = 0f;
             }
         }
-
 
         // 手札の状態を確認するfor文
         for (int i=0;i<hands.Count;i++)
@@ -120,13 +109,6 @@ public class CardManager : MonoBehaviour
             }
 
          }
-
-
-
-
-
-
-        PickUpCard();
         
     }
 
@@ -164,7 +146,7 @@ public class CardManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 使用されキューの先頭のカードIDを取り出す関数
+    /// 使用されたキューの先頭のカードIDを取り出す関数
     /// 0は失敗
     /// </summary>
     /// <returns></returns>
@@ -195,43 +177,5 @@ public class CardManager : MonoBehaviour
       
         handsSort.CardViewSort(hands);
     }
-
-    private void testCardUP()
-    {
-        Vector3 pos = hands[0].transform.position;
-
-        pos.y += 10;
-        pos.x += -10;
-        hands[0].transform.position = pos;
-    }
-
-    private void PickUpCard()
-    {
-        int nextPick;
-        nextPick = currentPickCard;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if(currentPickCard > 0)
-            nextPick= currentPickCard--;
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (currentPickCard < hands.Count)
-                nextPick= currentPickCard++;
-        }
-
-        if (currentPickCard != nextPick)
-        {
-            hands[nextPick].isPick = true;
-            hands[currentPickCard].isPick = false;
-
-            currentPickCard = nextPick;
-        }
-
-    }
-
-
-
 }
 
