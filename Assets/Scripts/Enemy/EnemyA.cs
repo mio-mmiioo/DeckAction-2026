@@ -6,16 +6,14 @@ public class EnemyA : MonoBehaviour
     //[Tooltip("移動速度を設定してください")]
     //[SerializeField] public float moveSpeed = 5.0f;
 
-    [Tooltip("ジャンプ力を設定してください")]
-    [SerializeField] private float jumpForce = 3.0f;
+    //[Tooltip("ジャンプ力を設定してください")]
+    //[SerializeField] private float jumpForce = 3.0f;
 
     private SpriteRenderer spriteRenderer; // 描画関連の情報が
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private CharaAttack charaAttack; // 攻撃の一つ
     private EnemyAStateContext stateContext; // EnemyAのStateを管理する
-
-    private bool isJump = false; // ジャンプするならtrue
     
     void Start()
     {
@@ -24,7 +22,7 @@ public class EnemyA : MonoBehaviour
         checkOnGround = GetComponent<CheckOnGround>();
         charaAttack = GetComponent<CharaAttack>();
         stateContext = GetComponent<EnemyAStateContext>();
-        stateContext.Init(this, ENEMY_A_STATE.E_A_STATE_WALK);
+        stateContext.Init(this, ENEMY_A_STATE.E_A_STATE_MOVE);
     }
 
     void Update()
@@ -47,22 +45,22 @@ public class EnemyA : MonoBehaviour
 
     }
 
-    void FixedUpdate()
-    {
-        Jump();
-    }
+    //void FixedUpdate()
+    //{
+    //    Jump();
+    //}
 
     /// <summary>
     /// 敵Aのジャンプ処理
     /// </summary>
-    private void Jump()
-    {
-        if (isJump == true)
-        {
-            isJump = false;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
+    //private void Jump()
+    //{
+    //    if (isJump == true)
+    //    {
+    //        isJump = false;
+    //        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    //    }
+    //}
 
     private void Attack()
     {

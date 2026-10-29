@@ -21,7 +21,7 @@ public interface IEnemyAState
 public enum ENEMY_A_STATE
 {
     E_A_STATE_IDLE,
-    E_A_STATE_WALK,
     E_A_STATE_ATTACK,
+    E_A_STATE_MOVE,
     MAX_E_A_STATE
 }
