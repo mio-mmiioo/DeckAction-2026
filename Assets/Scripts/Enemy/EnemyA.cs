@@ -3,89 +3,67 @@ using UnityEngine.InputSystem;
 
 public class EnemyA : MonoBehaviour
 {
-    [Tooltip("移動速度を設定してください")]
-    [SerializeField] private float moveSpeed = 5.0f;
+    //[Tooltip("移動速度を設定してください")]
+    //[SerializeField] public float moveSpeed = 5.0f;
 
-    [Tooltip("ジャンプ力を設定してください")]
-    [SerializeField] private float jumpForce = 3.0f;
+    //[Tooltip("ジャンプ力を設定してください")]
+    //[SerializeField] private float jumpForce = 3.0f;
 
     private SpriteRenderer spriteRenderer; // 描画関連の情報が
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private CharaAttack charaAttack; // 攻撃の一つ
-
-    private bool isJump = false; // ジャンプするならtrue
-    private bool isRight = false; // 右方向を向いているならtrue
-
+    private EnemyAStateContext stateContext; // EnemyAのStateを管理する
+    
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         charaAttack = GetComponent<CharaAttack>();
+        stateContext = GetComponent<EnemyAStateContext>();
+        stateContext.Init(this, ENEMY_A_STATE.E_A_STATE_MOVE);
     }
 
     void Update()
     {
-        Walk();
+        stateContext.Update();
 
-        // ジャンプ
-        if (Keyboard.current.kKey.wasPressedThisFrame && checkOnGround.onGround == true)
-        {
-            isJump = true;
-        }
+        //Walk();
 
-        // 攻撃
-        if (Keyboard.current.oKey.wasPressedThisFrame)
-        {
-            charaAttack.Attack();
-        }
+        //// ジャンプ
+        //if (Keyboard.current.kKey.wasPressedThisFrame && checkOnGround.onGround == true)
+        //{
+        //    isJump = true;
+        //}
+
+        //// 攻撃
+        //if (Keyboard.current.oKey.wasPressedThisFrame)
+        //{
+        //    charaAttack.Attack();
+        //}
 
     }
 
-    void FixedUpdate()
-    {
-        Jump();
-    }
-
-    /// <summary>
-    /// 敵Aの移動処理
-    /// </summary>
-    private void Walk()
-    {
-        float direction = 0.0f;
-        if (Keyboard.current.jKey.isPressed)
-        {
-            direction = -1.0f;
-            isRight = false;
-        }
-        else if (Keyboard.current.lKey.isPressed)
-        {
-            direction = 1.0f;
-            isRight = true;
-        }
-        rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
-
-        // 移動方向によって画像を反転させる
-        if (isRight == true)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
-    }
+    //void FixedUpdate()
+    //{
+    //    Jump();
+    //}
 
     /// <summary>
     /// 敵Aのジャンプ処理
     /// </summary>
-    private void Jump()
+    //private void Jump()
+    //{
+    //    if (isJump == true)
+    //    {
+    //        isJump = false;
+    //        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    //    }
+    //}
+
+    private void Attack()
     {
-        if (isJump == true)
-        {
-            isJump = false;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
+        stateContext.ChangeState(ENEMY_A_STATE.E_A_STATE_ATTACK);
     }
 }

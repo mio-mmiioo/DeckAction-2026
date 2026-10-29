@@ -22,10 +22,16 @@ public class EnemyAStateContext : MonoBehaviour
 
         Dictionary<ENEMY_A_STATE, IEnemyAState> table = new()
         {
-            { ENEMY_A_STATE.E_A_STATE_IDLE, new EnemyAStateIdle(enemyA) }
+            { ENEMY_A_STATE.E_A_STATE_IDLE, new EnemyAStateIdle(enemyA) },
+            { ENEMY_A_STATE.E_A_STATE_ATTACK, new EnemyAStateAttack(enemyA) },
+            { ENEMY_A_STATE.E_A_STATE_MOVE, new EnemyAStateMove(enemyA) }
         };
         stateTable = table;
-        ChangeState(initState);
+
+        var nextState = stateTable[initState];
+        prevState = currentState;
+        currentState = nextState;
+        currentState.Entry();
     }
 
     public void ChangeState(ENEMY_A_STATE next)
@@ -37,6 +43,19 @@ public class EnemyAStateContext : MonoBehaviour
         if (currentState == null || currentState.state == next)
         {
             return;
+        }
+
+        var nextState = stateTable[next];
+        prevState = currentState;
+        currentState = nextState;
+        currentState.Entry();
+    }
+
+    public void Update()
+    {
+        if (currentState != null)
+        {
+            currentState.Update();
         }
     }
 }

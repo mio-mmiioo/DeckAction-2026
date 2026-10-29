@@ -13,7 +13,6 @@ public class EnemyAStateIdle : IEnemyAState
 
     public void Update()
     {
-
     }
 
     public void Exit()
