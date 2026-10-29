@@ -22,5 +22,6 @@ public enum ENEMY_A_STATE
 {
     E_A_STATE_IDLE,
     E_A_STATE_WALK,
+    E_A_STATE_ATTACK,
     MAX_E_A_STATE
 }
