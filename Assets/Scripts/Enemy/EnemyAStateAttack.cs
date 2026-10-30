@@ -8,11 +8,12 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Entry()
     {
-
+        Debug.Log("攻撃範囲に入りました");
     }
 
     public void Update()
     {
+
 
     }
 

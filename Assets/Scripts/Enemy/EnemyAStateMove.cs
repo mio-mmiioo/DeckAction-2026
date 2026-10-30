@@ -10,6 +10,7 @@ public class EnemyAStateMove : IEnemyAState
     private Rigidbody2D rigidbody2D; // 敵Aのrigidbody2D
     private SpriteRenderer spriteRenderer; // 敵AのspriteRenderer
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
+    private CheckDistancePlayer checkDistancePlayer; // プレイヤーとの距離を確認
     private GameObject player; // プレイヤーオブジェクト
 
     private bool isRight = true; // 右を向いているならtrue
@@ -34,10 +35,19 @@ public class EnemyAStateMove : IEnemyAState
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
         checkOnGround = enemyA.GetComponent<CheckOnGround>();
+        checkDistancePlayer = enemyA.GetComponent<CheckDistancePlayer>();
     }
 
     public void Update()
     {
+        // 遷移の条件を確認
+        // 攻撃可能範囲内にいるなら、状態を攻撃に変える
+        if (checkDistancePlayer.IsPlayerInAttackArea() == true)
+        {
+            enemyA.Attack();
+            return;
+        }
+
         // 着地直後の場合
         if (checkOnGround.onGround == true)
         {
