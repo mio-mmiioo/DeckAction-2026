@@ -22,7 +22,6 @@ public class EnemyAStateContext : MonoBehaviour
 
         Dictionary<ENEMY_A_STATE, IEnemyAState> table = new()
         {
-            { ENEMY_A_STATE.E_A_STATE_IDLE, new EnemyAStateIdle(enemyA) },
             { ENEMY_A_STATE.E_A_STATE_ATTACK, new EnemyAStateAttack(enemyA) },
             { ENEMY_A_STATE.E_A_STATE_MOVE, new EnemyAStateMove(enemyA) }
         };

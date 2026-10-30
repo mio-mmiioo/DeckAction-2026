@@ -6,7 +6,6 @@ public class EnemyAStateMove : IEnemyAState
 
     private EnemyA enemyA;
     public ENEMY_A_STATE state => ENEMY_A_STATE.E_A_STATE_MOVE;
-    public EnemyAStateMove(EnemyA e) => enemyA = e;
 
     private Rigidbody2D rigidbody2D; // 敵Aのrigidbody2D
     private SpriteRenderer spriteRenderer; // 敵AのspriteRenderer
@@ -19,6 +18,15 @@ public class EnemyAStateMove : IEnemyAState
     private float moveSpeed = 0.2f; // 移動速度
     private float jumpForce = 3.0f; // ジャンプ力
     private float waitTimer = WAIT_TIME; // 着地後に止まる時間を管理するタイマー
+
+    /// <summary>
+    /// 敵を設定
+    /// </summary>
+    /// <param name="e">EnemyA</param>
+    public EnemyAStateMove(EnemyA e)
+    {
+        enemyA = e;
+    }
 
     public void Entry()
     {
