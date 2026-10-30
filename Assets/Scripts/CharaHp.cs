@@ -41,4 +41,22 @@ public class CharaHp : MonoBehaviour
     {
         currentHP += hp;
     }
+
+    /// <summary>
+    /// 現在の体力を返す
+    /// </summary>
+    /// <returns></returns>
+    public int GetHP()
+    {
+        return currentHP;
+    }
+
+    /// <summary>
+    /// 最大体力を返す
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxHP()
+    {
+        return maxHP;
+    }
 }

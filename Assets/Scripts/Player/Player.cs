@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
                 playerAttack.Attack();
             }
         }
+
+        
     }
 
     void FixedUpdate()
