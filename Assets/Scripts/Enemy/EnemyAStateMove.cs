@@ -15,9 +15,10 @@ public class EnemyAStateMove : IEnemyAState
 
     private bool isRight = true; // 右を向いているならtrue
     private bool isJump = false; // ジャンプするならtrue
+    private bool isPrevOnGround = false;
     private float moveSpeed = 0.2f; // 移動速度
     private float jumpForce = 3.0f; // ジャンプ力
-    private float waitTimer = 0.0f; // 着地後に止まる時間を管理するタイマー
+    private float waitTimer = WAIT_TIME; // 着地後に止まる時間を管理するタイマー
 
     public void Entry()
     {
@@ -29,22 +30,31 @@ public class EnemyAStateMove : IEnemyAState
 
     public void Update()
     {
-        // 地面に足がついていて、ジャンプしていない場合
-        if (checkOnGround.onGround == true && isJump == false)
+        // 着地直後の場合
+        if (checkOnGround.onGround == true)
         {
-            waitTimer += Time.deltaTime;
-            if (waitTimer >= WAIT_TIME)
+            if (isPrevOnGround == false)
             {
-                Debug.Log("停止解除");
-                isJump = true;
-                waitTimer -= WAIT_TIME;
+                waitTimer = WAIT_TIME;
+                rigidbody2D.linearVelocity = new Vector2(0.0f, rigidbody2D.linearVelocity.y);
             }
         }
-        else
+        isPrevOnGround = checkOnGround.onGround;
+
+        // ジャンプ後の停止中の処理
+        if (waitTimer > 0.0f)
         {
-            Jump(); // ジャンプ
-            Walk(); // 移動処理
+            waitTimer -= Time.deltaTime;
+            if (waitTimer <= 0.0f)
+            {
+                isJump = true;
+            }
+            return;
         }
+
+        // 移動処理
+        Jump();
+        Walk();
     }
 
     public void Exit()
@@ -84,6 +94,9 @@ public class EnemyAStateMove : IEnemyAState
         }
     }
 
+    /// <summary>
+    /// 敵Aのジャンプ処理
+    /// </summary>
     private void Jump()
     {
         if (isJump == true)
