@@ -18,13 +18,13 @@ public class HandsSort : MonoBehaviour
     [SerializeField] private float spacing = 60;
 
     [Tooltip("基準とする左端")]
-    [SerializeField] private float cardUpperLeft = 60;
-
+    [SerializeField] private float cardUpperLeft = 350;
+    
     [Tooltip("カード全体の高さ")]
     [SerializeField] private float cardY = 20;
 
     [Tooltip("中央のカードの位置")]
-    [SerializeField] private float cardBaseX = 300;
+    [SerializeField] private float cardBaseX = 30;
 
     Vector2 cardBasePos;
 
