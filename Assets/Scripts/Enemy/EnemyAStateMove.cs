@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyAStateMove : IEnemyAState
 {
     private const float WAIT_TIME = 3.0f; // 着地後に止まる時間
+    private const float MOVE_SPEED = 0.2f; // 移動速度
+    private const float JUMP_HEIGHT = 3.0f; // ジャンプ力
 
     private EnemyA enemyA;
     public ENEMY_A_STATE state => ENEMY_A_STATE.E_A_STATE_MOVE;
@@ -16,8 +18,6 @@ public class EnemyAStateMove : IEnemyAState
     private bool isRight = true; // 右を向いているならtrue
     private bool isJump = false; // ジャンプするならtrue
     private bool isPrevOnGround = false;
-    private float moveSpeed = 0.2f; // 移動速度
-    private float jumpForce = 3.0f; // ジャンプ力
     private float waitTimer = WAIT_TIME; // 着地後に止まる時間を管理するタイマー
 
     /// <summary>
@@ -99,7 +99,7 @@ public class EnemyAStateMove : IEnemyAState
             direction = -1.0f;
             isRight = false;
         }
-        rigidbody2D.linearVelocity = new Vector2(direction * moveSpeed, rigidbody2D.linearVelocity.y);
+        rigidbody2D.linearVelocity = new Vector2(direction * MOVE_SPEED, rigidbody2D.linearVelocity.y);
 
         // 移動方向によって画像を反転させる
         if (isRight == true)
@@ -120,7 +120,7 @@ public class EnemyAStateMove : IEnemyAState
         if (isJump == true)
         {
             isJump = false;
-            rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rigidbody2D.AddForce(Vector2.up * JUMP_HEIGHT, ForceMode2D.Impulse);
         }
     }
 }
