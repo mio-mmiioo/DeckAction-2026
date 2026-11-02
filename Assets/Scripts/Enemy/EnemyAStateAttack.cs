@@ -40,18 +40,19 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Update()
     {
-        SetSpriteFlip();
+        //SetSpriteFlip();
 
         // 攻撃前のため
         if (chargeTimer > 0.0f)
         {
             chargeTimer -= Time.deltaTime;
-            float t = chargeTimer / CHARGE_TIME;
-            spriteRenderer.color = Color.Lerp(normalColor, chargeColor, t);
+            float t = (1.0f - chargeTimer / CHARGE_TIME); // 割合
+            spriteRenderer.color = Color.Lerp(normalColor, chargeColor, t); // 変化前, 変化後, 割合
+
             if (chargeTimer <= 0.0f)
             {
-                AttackJump();
                 ResetColor();
+                AttackJump();
             }
             return;
         }
@@ -69,6 +70,7 @@ public class EnemyAStateAttack : IEnemyAState
         // 攻撃が終了した場合、状態を移動へ遷移する
         if (isEndAttack == true)
         {
+            SetSpriteFlip();
             enemyA.Move();
         }
     }
