@@ -7,8 +7,8 @@ public class EnemyAStateAttack : IEnemyAState
     public EnemyAStateAttack(EnemyA e) => enemyA = e;
 
     private GameObject player;
-    private Vector3 playerPosition; // 呼ばれた時のプレイヤーの位置
     private Rigidbody2D rigidbody2D;
+    private SpriteRenderer spriteRenderer;
 
     private bool isEndAttack = false; // 攻撃が終了しているならtrue
 
@@ -21,13 +21,17 @@ public class EnemyAStateAttack : IEnemyAState
     private float chargeTimer = 0.0f; // 攻撃の前のため
     private float jumpTime; // ジャンプの時間
 
+    // 色関連
+    private Color normalColor = Color.white; // 通常時の色
+    private Color chargeColor = Color.yellow; // 攻撃前のための色
+
 
     public void Entry()
     {
         Debug.Log("敵A：Attack開始");
         player = GameObject.FindGameObjectWithTag("Player");
-        playerPosition = player.transform.position; // プレイヤーの位置を取得
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
+        spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
         chargeTimer = CHARGE_TIME;
 
         // 数値を設定する
@@ -36,13 +40,18 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Update()
     {
+        SetSpriteFlip();
+
         // 攻撃前のため
         if (chargeTimer > 0.0f)
         {
             chargeTimer -= Time.deltaTime;
+            float t = chargeTimer / CHARGE_TIME;
+            spriteRenderer.color = Color.Lerp(normalColor, chargeColor, t);
             if (chargeTimer <= 0.0f)
             {
                 AttackJump();
+                ResetColor();
             }
             return;
         }
@@ -79,23 +88,12 @@ public class EnemyAStateAttack : IEnemyAState
     /// </summary>
     private void CheckVelocity()
     {
-        playerPosition = playerPosition + Vector3.up * PLAYER_OFFSET; // プレイヤーの頭付近
-        //float gravity = Physics2D.gravity.y * rigidbody2D.gravityScale;
-        float absGravity = Mathf.Abs(Physics2D.gravity.y * rigidbody2D.gravityScale);
-        Debug.Log(absGravity);
+        Vector3 playerPosition = player.transform.position + Vector3.up * PLAYER_OFFSET; // プレイヤーの位置を取得
+        float gravity = Mathf.Abs(Physics2D.gravity.y * rigidbody2D.gravityScale); // 重力の取得
         float heightDistance = playerPosition.y - enemyA.transform.position.y; // 着地点と高さの距離
 
-        float verticalSpeed = Mathf.Sqrt(2.0f * absGravity * jumpHeight); // 垂直方向の初速度
-
-        float check = (verticalSpeed * verticalSpeed) - (2.0f * absGravity * heightDistance);
-        if (check < 0)
-        {
-            Debug.Log("ルートの中身がマイナス");
-        }
-
-
-        // ジャンプの時間
-        jumpTime = (verticalSpeed + Mathf.Sqrt(verticalSpeed * verticalSpeed - 2.0f * absGravity * heightDistance)) / absGravity;
+        float verticalSpeed = Mathf.Sqrt(2.0f * gravity * jumpHeight); // 垂直方向の初速度
+        jumpTime = (verticalSpeed + Mathf.Sqrt(verticalSpeed * verticalSpeed - 2.0f * gravity * heightDistance)) / gravity; // ジャンプの時間
 
         // 水平方向の移動速度
         float distance = Mathf.Abs(playerPosition.x - enemyA.transform.position.x);
@@ -103,5 +101,28 @@ public class EnemyAStateAttack : IEnemyAState
 
         // 移動方向
         direction = Mathf.Sign(playerPosition.x - enemyA.transform.position.x);
+    }
+
+    /// <summary>
+    /// プレイヤーの位置から画像の向きを設定する
+    /// </summary>
+    private void SetSpriteFlip()
+    {
+        Vector3 playerPos = player.transform.position; // プレイヤーの位置を取得
+        // プレイヤーの左側にいる場合
+        if (enemyA.transform.position.x < playerPos.x)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
+
+    // 通常の色に戻す
+    public void ResetColor()
+    {
+        spriteRenderer.color = normalColor;
     }
 }

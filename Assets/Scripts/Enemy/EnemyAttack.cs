@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 本体の当たり判定をする子オブジェクトのコンポーネントとして使用する
+/// </summary>
 public class EnemyAttack : MonoBehaviour
 {
     [Tooltip("攻撃力を設定してください")]
@@ -9,9 +12,8 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("プレイヤーに当たってはいる");
             CharaHp charaHp = other.GetComponent<CharaHp>();
-            Debug.Log("プレイヤーは敵から" + attackPower + "の攻撃を受けた");
+            Debug.Log("プレイヤーは" + attackPower + "の攻撃を受けた");
             charaHp.TakeDamage(attackPower);
         }
     }
