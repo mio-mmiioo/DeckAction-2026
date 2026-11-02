@@ -14,7 +14,7 @@ public class EnemyAStateAttack : IEnemyAState
 
     private float jumpHeight = 7.0f; // ジャンプ力
     private const float PLAYER_OFFSET = 1.5f; // プレイヤーの頭付近に着地点を調整するための補正値
-    private float direction;
+    private float direction; // 移動方向
     private float moveSpeed; // 移動速度
 
     private const float CHARGE_TIME = 5.0f; // 攻撃前のための時間
@@ -24,6 +24,7 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Entry()
     {
+        Debug.Log("敵A：Attack開始");
         player = GameObject.FindGameObjectWithTag("Player");
         playerPosition = player.transform.position; // プレイヤーの位置を取得
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
@@ -46,15 +47,15 @@ public class EnemyAStateAttack : IEnemyAState
             return;
         }
 
+        jumpTime -= Time.deltaTime;
         if (jumpTime > 0.0f)
         {
-            jumpTime -= Time.deltaTime;
             rigidbody2D.linearVelocity = new Vector2(direction * moveSpeed, rigidbody2D.linearVelocity.y);
-            if (jumpTime <= 0.0f)
-            {
-                isEndAttack = true;
-                rigidbody2D.linearVelocity = new Vector2(0.0f, rigidbody2D.linearVelocity.y);
-            }
+        }
+        else
+        {
+            isEndAttack = true;
+            rigidbody2D.linearVelocity = new Vector2(0.0f, rigidbody2D.linearVelocity.y);
         }
         // 攻撃が終了した場合、状態を移動へ遷移する
         if (isEndAttack == true)
@@ -65,7 +66,7 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Exit()
     {
-
+        Debug.Log("敵A：Attack終了");
     }
 
     private void AttackJump()
@@ -79,13 +80,22 @@ public class EnemyAStateAttack : IEnemyAState
     private void CheckVelocity()
     {
         playerPosition = playerPosition + Vector3.up * PLAYER_OFFSET; // プレイヤーの頭付近
-        float gravity = rigidbody2D.gravityScale;
+        //float gravity = Physics2D.gravity.y * rigidbody2D.gravityScale;
+        float absGravity = Mathf.Abs(Physics2D.gravity.y * rigidbody2D.gravityScale);
+        Debug.Log(absGravity);
         float heightDistance = playerPosition.y - enemyA.transform.position.y; // 着地点と高さの距離
 
-        float verticalSpeed = Mathf.Sqrt(2.0f * gravity * jumpHeight); // 垂直方向の初速度
+        float verticalSpeed = Mathf.Sqrt(2.0f * absGravity * jumpHeight); // 垂直方向の初速度
+
+        float check = (verticalSpeed * verticalSpeed) - (2.0f * absGravity * heightDistance);
+        if (check < 0)
+        {
+            Debug.Log("ルートの中身がマイナス");
+        }
+
 
         // ジャンプの時間
-        jumpTime = (verticalSpeed + Mathf.Sqrt(verticalSpeed * verticalSpeed - 2.0f * gravity * heightDistance)) / gravity;
+        jumpTime = (verticalSpeed + Mathf.Sqrt(verticalSpeed * verticalSpeed - 2.0f * absGravity * heightDistance)) / absGravity;
 
         // 水平方向の移動速度
         float distance = Mathf.Abs(playerPosition.x - enemyA.transform.position.x);

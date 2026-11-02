@@ -47,6 +47,7 @@ public class EnemyAStateContext : MonoBehaviour
         var nextState = stateTable[next];
         prevState = currentState;
         currentState = nextState;
+        prevState.Exit();
         currentState.Entry();
     }
 

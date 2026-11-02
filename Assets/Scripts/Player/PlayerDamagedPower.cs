@@ -1,16 +1,11 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerDamagedPower : MonoBehaviour
 {
-
-    private CharaHp charaHp; // HPを管理するクラス
+    [Tooltip("プレイヤーのCharaHpを設定してください")]
+    [SerializeField] private CharaHp charaHp;
+    
     private int attackedPower = 5; // 攻撃力
-
-    void Start()
-    {
-        charaHp = GetComponent<CharaHp>();
-    }
 
     //void Update()
     //{

@@ -31,6 +31,7 @@ public class EnemyAStateMove : IEnemyAState
 
     public void Entry()
     {
+        Debug.Log("敵A：Move開始");
         player = GameObject.FindGameObjectWithTag("Player");
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
@@ -77,7 +78,7 @@ public class EnemyAStateMove : IEnemyAState
 
     public void Exit()
     {
-
+        Debug.Log("敵A：Move終了");
     }
 
     /// <summary>
