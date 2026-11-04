@@ -13,8 +13,12 @@ public class PlayField : MonoBehaviour,IDropHandler
         if (droppedObject != null)
         {
             BaseCard card = droppedObject.GetComponent<BaseCard>();
-            card.isUsed = true;
-            Debug.Log("カードが使用されました");
+            if(card!=null)
+            {
+                card.isUsed = true;
+                Debug.Log("カードが使用されました");
+            }
+            
         }
     }
 }

@@ -31,7 +31,7 @@ public class PlayerAttackType : MonoBehaviour
     {
         if (isUseCard == true)
         {
-
+            
 
         }
         else

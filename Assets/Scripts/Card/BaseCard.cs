@@ -43,10 +43,18 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     private Vector2 localPosition;// 位置
     private int prevSiblingIndex;// 表示順
 
+
+
+    Vector2 startPos;
+
     void Awake()
     {
         cardID = Random.Range(1, cardDataBase.CardData.Count);
         SetCardView(cardID);
+
+
+        startPos = new Vector2(transform.position.x, transform.position.y);
+        transform.position=new Vector2(startPos.x, startPos.y+100);
     }
 
     /// <summary>
@@ -60,6 +68,12 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         localScale = transform.localScale;
+
+        while(transform.position.y>startPos.y)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, startPos, 10f);
+        }
+
         
     }
 
@@ -122,7 +136,8 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     public void OnPointerClick(PointerEventData eventData)
     {
         clickCount++;
-        Invoke("OnDoubleClick", 0.3f);
+        float clickTime = 0.3f;
+        Invoke("OnDoubleClick", clickTime);
     }
 
     /// <summary>

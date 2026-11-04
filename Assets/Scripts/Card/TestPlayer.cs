@@ -28,7 +28,7 @@ public class TestPlayer : MonoBehaviour
         }
 
 
-        nameText.text = combo.comboCount.ToString();
+       // nameText.text = combo.comboCount.ToString();
 
 
     }

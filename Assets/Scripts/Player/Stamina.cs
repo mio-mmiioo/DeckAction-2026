@@ -35,4 +35,14 @@ public class Stamina : MonoBehaviour
     {
         currentStamina += stamina;
     }
+
+    public int GetMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    public int GetCurrentStamina()
+    {
+        return currentStamina;
+    }
 }

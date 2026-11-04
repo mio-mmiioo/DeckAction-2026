@@ -24,8 +24,9 @@ public class PlayerCombo : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public (int cardID,int comboCount) ComboSet()
     {
+
         if(currentCardID==0||cardSetTime<=cardSetElapsedTime)
         {
             ComboJudge();
@@ -39,6 +40,7 @@ public class PlayerCombo : MonoBehaviour
             cardSetElapsedTime += Time.deltaTime;
         }
 
+        return (currentCardID,comboCount);
 
     }
 
@@ -58,7 +60,6 @@ public class PlayerCombo : MonoBehaviour
             comboCount = 0;
 
         }
-
         return 0;
 
     }

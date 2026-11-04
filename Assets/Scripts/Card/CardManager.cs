@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using static Unity.Collections.CollectionHelper;
 
 
@@ -167,6 +168,7 @@ public class CardManager : MonoBehaviour
 
         
     }
+
 
     /// <summary>
     /// 手札のリストをソートして表示もソートする
