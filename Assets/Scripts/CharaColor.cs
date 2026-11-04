@@ -8,9 +8,27 @@ public class CharaColor : MonoBehaviour
     private Color chargeColor = Color.yellow; // 攻撃前のための色
     private Color damageColor = Color.red; // 攻撃されたときの色
 
+    private const float BLINK_TIME = 1.0f; // 点滅時の切り替えの時間
+    private float blinkTimer = 0.0f; // 点滅時のタイマー
+    private float invincibleTimer = 0.0f;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        if (invincibleTimer > 0.0f)
+        {
+            invincibleTimer -= Time.deltaTime;
+            blinkTimer -= Time.deltaTime;
+            if (blinkTimer >= 0.0f)
+            {
+                blinkTimer += BLINK_TIME;
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+            }
+        }
     }
 
     /// <summary>
@@ -31,6 +49,15 @@ public class CharaColor : MonoBehaviour
     public void Attacked()
     {
         spriteRenderer.color = damageColor;
+    }
+
+    /// <summary>
+    /// 攻撃されたときに点滅する処理の開始
+    /// </summary>
+    /// <param name="invincibleTime">点滅時間( 無敵時間 )</param>
+    public void StartDamageBlink(float invincibleTime)
+    {
+        invincibleTimer = invincibleTime;
     }
 
     // 通常の色に戻す

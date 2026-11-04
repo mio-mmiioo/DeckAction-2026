@@ -51,7 +51,8 @@ public class CharaHp : MonoBehaviour
 
         // 攻撃された
         currentHP -= damage; // HPを減らす
-        invincibleTimer = invincibleTime; // 無敵時間を設定 
+        invincibleTimer = invincibleTime; // 無敵時間を設定
+        charaColor.StartDamageBlink(invincibleTime); // 点滅処理の開始
         charaColor.Attacked(); // 色を変化させる
 
         // 体力がなくなったら消す

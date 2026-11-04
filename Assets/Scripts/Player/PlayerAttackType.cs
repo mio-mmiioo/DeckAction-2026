@@ -10,12 +10,18 @@ public class PlayerAttackType : MonoBehaviour
     [Tooltip("カードを使用した攻撃判定をするならtrueにしてください")]
     [SerializeField] private bool isUseCard = false;
 
+    [Tooltip("物理攻撃のオブジェクトを設定してください")]
+    [SerializeField] private GameObject physicalAttackObject; // 物理攻撃
+
+    private PlayerAttack physicalAttack;
+
     private int currentID = 2; // 現在のカードのID
     private int prevID; // 前回のカードのID
 
     void Start()
     {
         prevID = currentID;
+        physicalAttack = physicalAttackObject.GetComponent<PlayerAttack>();
     }
 
     /// <summary>
@@ -44,6 +50,8 @@ public class PlayerAttackType : MonoBehaviour
                 currentID = 4;
             }
         }
+
+        SetAttackPower(); // 攻撃力を設定
     }
 
     /// <summary>
@@ -56,21 +64,18 @@ public class PlayerAttackType : MonoBehaviour
     }
 
     /// <summary>
-    /// 使用されたカードのダメージを取得する
+    /// 使用されたカードによってダメージをセットする
     /// </summary>
-    /// <returns>ダメージ</returns>
-    public int GetAttackPower()
+    public void SetAttackPower()
     {
-        int ret = cardDataBase.CardData[currentID].damage;
-        // コンボの処理
+        int damage = cardDataBase.CardData[currentID].damage;
+        // コンボの処理　攻撃を計算する処理
 
 
 
         // 最終的なダメージ
-        
-        
-        
-        return ret;
+
+        physicalAttack.SetAttackPower(damage);
     }
 
     /// <summary>

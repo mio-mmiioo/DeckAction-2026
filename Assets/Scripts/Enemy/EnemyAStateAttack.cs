@@ -37,8 +37,6 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Update()
     {
-        //SetSpriteFlip();
-
         // 攻撃前のため
         if (chargeTimer > 0.0f)
         {

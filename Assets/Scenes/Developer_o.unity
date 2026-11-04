@@ -214,7 +214,6 @@ GameObject:
   - component: {fileID: 688430363}
   - component: {fileID: 688430365}
   - component: {fileID: 688430367}
-  - component: {fileID: 688430370}
   - component: {fileID: 688430372}
   - component: {fileID: 688430373}
   - component: {fileID: 688430375}
@@ -324,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 688430358}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.84, y: -2.88, z: 0}
+  m_LocalPosition: {x: -0.71, y: -2.88, z: 0}
   m_LocalScale: {x: 2.8740351, y: 2.8740351, z: 2.8740351}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -377,19 +376,6 @@ MonoBehaviour:
   currentHP: 0
   invincibleTime: 4
   invincibleTimer: 0
---- !u!114 &688430370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 688430358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017ca44e963dde14ca665f0d35514aa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamagedPower
-  playerAttackType: {fileID: 1811253202}
 --- !u!95 &688430371
 Animator:
   serializedVersion: 7
@@ -577,7 +563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d5a85cfc9bfdeb42ae42d5f996088ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  attackPower: 10
 --- !u!1 &1110794411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,7 +2128,7 @@ Transform:
   m_GameObject: {fileID: 1811253189}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.35, y: -2.27, z: 0}
+  m_LocalPosition: {x: -4.35, y: -2.78, z: 0}
   m_LocalScale: {x: 1.26, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2276,6 +2261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackType
   cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
   isUseCard: 0
+  physicalAttackObject: {fileID: 820313646}
 --- !u!114 &1811253204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2300,6 +2286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661ec102c5503564bbc71dcdc089286c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnableAttack
+  attackCollider: {fileID: 820313648}
   time: 0.3
 --- !u!1 &2027273437
 GameObject:

@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [Tooltip("攻撃力を設定してください")]
-    [SerializeField] private int attackPower;
+    private int attackPower;
+
+    /// <summary>
+    /// 攻撃力をセットする
+    /// </summary>
+    /// <param name="power">攻撃力</param>
+    public void SetAttackPower(int power)
+    {
+        attackPower = power;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
