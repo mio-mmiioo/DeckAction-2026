@@ -9,6 +9,7 @@ public class EnemyAStateAttack : IEnemyAState
     private GameObject player;
     private Rigidbody2D rigidbody2D;
     private SpriteRenderer spriteRenderer;
+    private CharaColor charaColor; // 色を変化させる
 
     private bool isEndAttack = false; // 攻撃が終了しているならtrue
 
@@ -21,17 +22,13 @@ public class EnemyAStateAttack : IEnemyAState
     private float chargeTimer = 0.0f; // 攻撃の前のため
     private float jumpTime; // ジャンプの時間
 
-    // 色関連
-    private Color normalColor = Color.white; // 通常時の色
-    private Color chargeColor = Color.yellow; // 攻撃前のための色
-
-
     public void Entry()
     {
         Debug.Log("敵A：Attack開始");
         player = GameObject.FindGameObjectWithTag("Player");
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
+        charaColor = enemyA.GetComponent<CharaColor>();
         chargeTimer = CHARGE_TIME;
 
         // 数値を設定する
@@ -46,12 +43,12 @@ public class EnemyAStateAttack : IEnemyAState
         if (chargeTimer > 0.0f)
         {
             chargeTimer -= Time.deltaTime;
-            float t = (1.0f - chargeTimer / CHARGE_TIME); // 割合
-            spriteRenderer.color = Color.Lerp(normalColor, chargeColor, t); // 変化前, 変化後, 割合
+            float rate = (1.0f - chargeTimer / CHARGE_TIME); // 割合
+            charaColor.ChargeAttack(rate); // ための時に色を変化させる
 
             if (chargeTimer <= 0.0f)
             {
-                ResetColor();
+                charaColor.ResetColor();
                 AttackJump();
             }
             return;
@@ -120,11 +117,5 @@ public class EnemyAStateAttack : IEnemyAState
         {
             spriteRenderer.flipX = false;
         }
-    }
-
-    // 通常の色に戻す
-    public void ResetColor()
-    {
-        spriteRenderer.color = normalColor;
     }
 }

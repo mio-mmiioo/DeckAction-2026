@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 688430370}
   - component: {fileID: 688430372}
   - component: {fileID: 688430373}
+  - component: {fileID: 688430375}
   - component: {fileID: 688430361}
   - component: {fileID: 688430360}
   - component: {fileID: 688430374}
@@ -374,6 +375,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharaHp
   maxHP: 100
   currentHP: 0
+  invincibleTime: 4
+  invincibleTimer: 0
 --- !u!114 &688430370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +474,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.05}
   m_Size: {x: 0.35, y: 0.35}
   m_Direction: 0
+--- !u!114 &688430375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688430358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b9d12f6a7312a4d9e95e6e722bcd75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharaColor
 --- !u!1 &820313646
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 820313647}
   - component: {fileID: 820313648}
+  - component: {fileID: 820313649}
   m_Layer: 8
   m_Name: PlayerAttackArea
   m_TagString: PlayerAttack
@@ -549,6 +565,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &820313649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820313646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5a85cfc9bfdeb42ae42d5f996088ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  attackPower: 10
 --- !u!1 &1110794411
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +692,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.066037714, g: 0.007787465, b: 0.007787465, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -938,7 +967,7 @@ SpriteRenderer:
   m_SortingOrder: -10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.03773582, g: 0.003025986, b: 0.003025986, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2016,10 +2045,11 @@ GameObject:
   - component: {fileID: 1811253192}
   - component: {fileID: 1811253191}
   - component: {fileID: 1811253195}
-  - component: {fileID: 1811253203}
   - component: {fileID: 1811253197}
   - component: {fileID: 1811253201}
   - component: {fileID: 1811253202}
+  - component: {fileID: 1811253205}
+  - component: {fileID: 1811253204}
   - component: {fileID: 1811253190}
   - component: {fileID: 1811253193}
   - component: {fileID: 1811253194}
@@ -2080,7 +2110,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.03773582, g: 0.00231399, b: 0.00231399, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2216,6 +2246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharaHp
   maxHP: 100
   currentHP: 0
+  invincibleTime: 2
+  invincibleTimer: 0
 --- !u!114 &1811253201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2244,7 +2276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackType
   cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
   isUseCard: 0
---- !u!114 &1811253203
+--- !u!114 &1811253204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2253,10 +2285,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1811253189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5a85cfc9bfdeb42ae42d5f996088ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 60b9d12f6a7312a4d9e95e6e722bcd75, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  attackCollider: {fileID: 820313648}
+  m_EditorClassIdentifier: Assembly-CSharp::CharaColor
+--- !u!114 &1811253205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811253189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661ec102c5503564bbc71dcdc089286c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEnableAttack
   time: 0.3
 --- !u!1 &2027273437
 GameObject:

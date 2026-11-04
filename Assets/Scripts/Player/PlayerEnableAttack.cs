@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class CharaAttack : MonoBehaviour
+// プレイヤーの攻撃を有効にする
+public class PlayerEnableAttack : MonoBehaviour
 {
-    [Tooltip("攻撃範囲を指定してください")]
+    [Tooltip("攻撃の当たり判定の範囲を指定してください")]
     [SerializeField] private Collider2D attackCollider;
 
-    [Tooltip("攻撃範囲が有効な時間を指定してください")]
+    [Tooltip("攻撃判定が有効な時間")]
     [SerializeField] private float time = 0.3f;
 
     void Start()
@@ -14,7 +15,7 @@ public class CharaAttack : MonoBehaviour
     }
 
     /// <summary>
-    /// 攻撃の処理を行う
+    /// 攻撃可能にする 一定時間経過後不可になる
     /// </summary>
     public void Attack()
     {

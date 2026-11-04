@@ -7,20 +7,15 @@ public class PlayerAttackType : MonoBehaviour
     [Tooltip("CardDataBaseを設定してください")]
     [SerializeField] private CardDataBase cardDataBase; // カードの情報
 
-    //[Tooltip("CardManagerを設定して下い")]
-    //[SerializeField] private CardManager cardManager;
-
     [Tooltip("カードを使用した攻撃判定をするならtrueにしてください")]
     [SerializeField] private bool isUseCard = false;
 
-    private PlayerAttack playerAttack; // プレイヤーの攻撃処理
     private int currentID = 2; // 現在のカードのID
     private int prevID; // 前回のカードのID
 
     void Start()
     {
         prevID = currentID;
-        playerAttack = GetComponent<PlayerAttack>();
     }
 
     /// <summary>
@@ -30,13 +25,6 @@ public class PlayerAttackType : MonoBehaviour
     {
         if (isUseCard == true)
         {
-            //currentID = cardManager.GetUseCard();
-
-            //if (currentID != 0 && currentID != prevID)
-            //{
-            //    playerAttack.Attack();
-            //}
-            //prevID = currentID;
 
 
         }

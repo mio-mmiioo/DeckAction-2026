@@ -14,20 +14,23 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isUseCard = false;
 
 
-    private PlayerAttack playerAttack; // 攻撃を管理する
+    private PlayerEnableAttack enableAttack; // 攻撃を管理する
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
-    private PlayerAttackType attackType; // 攻撃の種類
+    private PlayerAttackType playerAttackType; // 攻撃の種類
+
+    private Stamina stamina; // スタミナ
 
     private bool isJump = false; // ジャンプするならtrue
     private bool isRight = true; // 右方向を向いているならtrue
 
     void Start()
     {
-        playerAttack = GetComponent<PlayerAttack>();
+        enableAttack = GetComponent<PlayerEnableAttack>();
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
-        attackType = GetComponent<PlayerAttackType>();
+        playerAttackType = GetComponent<PlayerAttackType>();
+        stamina = GetComponent<Stamina>();
     }
 
     void Update()
@@ -40,14 +43,15 @@ public class Player : MonoBehaviour
             isJump = true;
         }
 
-        attackType.SetCardID(); // 攻撃の種類をセット
+        playerAttackType.SetCardID(); // 攻撃の種類をセット
 
         if (isUseCard == false)
         {
             // 攻撃
             if (Keyboard.current.eKey.wasPressedThisFrame)
             {
-                playerAttack.Attack();
+                enableAttack.Attack();
+                stamina.UseStamina(playerAttackType.GetUseStamina()); // スタミナを消費
             }
         }
 
