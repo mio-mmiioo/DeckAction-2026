@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAStateMove : IEnemyAState
@@ -11,12 +12,15 @@ public class EnemyAStateMove : IEnemyAState
 
     private Rigidbody2D rigidbody2D; // 敵Aのrigidbody2D
     private SpriteRenderer spriteRenderer; // 敵AのspriteRenderer
+    private Animator animator;
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private CheckDistancePlayer checkDistancePlayer; // プレイヤーとの距離を確認
+    private EnemyCheckFall enemyCheckFall;
     private GameObject player; // プレイヤーオブジェクト
 
     private bool isRight = true; // 右を向いているならtrue
     private bool isJump = false; // ジャンプするならtrue
+    private bool isFalling = false;
     private bool isPrevOnGround = false;
     private float waitTimer = WAIT_TIME; // 着地後に止まる時間を管理するタイマー
 
@@ -31,12 +35,14 @@ public class EnemyAStateMove : IEnemyAState
 
     public void Entry()
     {
-        Debug.Log("敵A：Move開始");
+        //Debug.Log("敵A：Move開始");
         player = GameObject.FindGameObjectWithTag("Player");
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
+        animator = enemyA.GetComponent<Animator>();
         checkOnGround = enemyA.GetComponent<CheckOnGround>();
         checkDistancePlayer = enemyA.GetComponent<CheckDistancePlayer>();
+        enemyCheckFall = enemyA.GetComponent<EnemyCheckFall>();
     }
 
     public void Update()
@@ -52,10 +58,12 @@ public class EnemyAStateMove : IEnemyAState
         // 着地直後の場合
         if (checkOnGround.onGround == true)
         {
+            isFalling = false;
             if (isPrevOnGround == false)
             {
                 waitTimer = WAIT_TIME;
                 rigidbody2D.linearVelocity = new Vector2(0.0f, rigidbody2D.linearVelocity.y);
+                animator.SetTrigger("Idle");
             }
         }
         isPrevOnGround = checkOnGround.onGround;
@@ -74,11 +82,22 @@ public class EnemyAStateMove : IEnemyAState
         // 移動処理
         Jump();
         Walk();
+
+        if (checkOnGround.onGround == false && isFalling == false)
+        {
+            Debug.Log("着地判定中");
+            if (rigidbody2D.linearVelocity.y < 0.0f)
+            {
+                Debug.Log("着地");
+                isFalling = true;
+                animator.SetTrigger("Landing");
+            }
+        }
     }
 
     public void Exit()
     {
-        Debug.Log("敵A：Move終了");
+        //Debug.Log("敵A：Move終了");
     }
 
     /// <summary>
@@ -121,7 +140,9 @@ public class EnemyAStateMove : IEnemyAState
         if (isJump == true)
         {
             isJump = false;
+            isFalling = false;
             rigidbody2D.AddForce(Vector2.up * JUMP_HEIGHT, ForceMode2D.Impulse);
+            animator.SetTrigger("Jump");
         }
     }
 }

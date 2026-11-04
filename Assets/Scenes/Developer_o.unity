@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 688430367}
   - component: {fileID: 688430372}
   - component: {fileID: 688430373}
+  - component: {fileID: 688430376}
   - component: {fileID: 688430375}
   - component: {fileID: 688430361}
   - component: {fileID: 688430360}
@@ -472,6 +473,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b9d12f6a7312a4d9e95e6e722bcd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharaColor
+--- !u!114 &688430376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688430358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bee2ec6146513a428d922cb5538b958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCheckFall
+  charaTransform: {fileID: 688430362}
 --- !u!1 &820313646
 GameObject:
   m_ObjectHideFlags: 0

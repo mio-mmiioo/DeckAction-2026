@@ -9,7 +9,10 @@ public class EnemyAStateAttack : IEnemyAState
     private GameObject player;
     private Rigidbody2D rigidbody2D;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private CharaColor charaColor; // 色を変化させる
+    private EnemyCheckFall enemyCheckFall;
+
 
     private bool isEndAttack = false; // 攻撃が終了しているならtrue
 
@@ -21,18 +24,23 @@ public class EnemyAStateAttack : IEnemyAState
     private const float CHARGE_TIME = 5.0f; // 攻撃前のための時間
     private float chargeTimer = 0.0f; // 攻撃の前のため
     private float jumpTime; // ジャンプの時間
+    private float highestY; // ジャンプ時の最高到達点
+    private bool isFalling = false;
 
     public void Entry()
     {
-        Debug.Log("敵A：Attack開始");
+        //Debug.Log("敵A：Attack開始");
         player = GameObject.FindGameObjectWithTag("Player");
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
+        animator = enemyA.GetComponent<Animator>();
         charaColor = enemyA.GetComponent<CharaColor>();
+        enemyCheckFall = enemyA.GetComponent<EnemyCheckFall>();
         chargeTimer = CHARGE_TIME;
 
         // 数値を設定する
         CheckVelocity();
+        animator.SetTrigger("Charge");
     }
 
     public void Update()
@@ -48,6 +56,7 @@ public class EnemyAStateAttack : IEnemyAState
             {
                 charaColor.ResetColor();
                 AttackJump();
+                animator.SetTrigger("Jump");
             }
             return;
         }
@@ -56,6 +65,15 @@ public class EnemyAStateAttack : IEnemyAState
         if (jumpTime > 0.0f)
         {
             rigidbody2D.linearVelocity = new Vector2(direction * moveSpeed, rigidbody2D.linearVelocity.y);
+            if (isFalling == false)
+            {
+                if (rigidbody2D.linearVelocity.y < 0.0f)
+                {
+                    Debug.Log("着地");
+                    isFalling = true;
+                    animator.SetTrigger("Landing");
+                }
+            }
         }
         else
         {
@@ -72,7 +90,7 @@ public class EnemyAStateAttack : IEnemyAState
 
     public void Exit()
     {
-        Debug.Log("敵A：Attack終了");
+        //Debug.Log("敵A：Attack終了");
     }
 
     private void AttackJump()
@@ -98,6 +116,10 @@ public class EnemyAStateAttack : IEnemyAState
 
         // 移動方向
         direction = Mathf.Sign(playerPosition.x - enemyA.transform.position.x);
+
+        // 最高到達点
+        float maxHeight = (verticalSpeed * verticalSpeed) / (2.0f * gravity);
+        highestY = enemyA.transform.position.y + maxHeight;
     }
 
     /// <summary>
