@@ -21,7 +21,7 @@ public class EnemyAStateAttack : IEnemyAState
     private float direction; // 移動方向
     private float moveSpeed; // 移動速度
 
-    private const float CHARGE_TIME = 5.0f; // 攻撃前のための時間
+    private const float CHARGE_TIME = 1.0f; // 攻撃前のための時間
     private float chargeTimer = 0.0f; // 攻撃の前のため
     private float jumpTimer; // ジャンプの時間
     private bool isFalling = false; // 落下しているならtrue

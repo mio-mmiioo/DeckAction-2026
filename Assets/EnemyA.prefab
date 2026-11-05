@@ -36,7 +36,7 @@ Transform:
   m_GameObject: {fileID: 2527810663538078344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.88, y: -3, z: 0}
+  m_LocalPosition: {x: -1.62321, y: -3.34, z: 0}
   m_LocalScale: {x: 2.8740351, y: 2.8740351, z: 2.8740351}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -372,6 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8727953545521420717}
   - component: {fileID: 5425422169375433464}
+  - component: {fileID: 5979479885440155941}
   m_Layer: 7
   m_Name: Slider
   m_TagString: Untagged
@@ -451,6 +452,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5979479885440155941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6664196175465229896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b63e3d864d27d4fa1f190ba590f12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChraHealthBar
 --- !u!1 &7581616697441772913
 GameObject:
   m_ObjectHideFlags: 0
