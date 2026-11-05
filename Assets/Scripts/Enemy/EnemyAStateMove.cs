@@ -15,7 +15,6 @@ public class EnemyAStateMove : IEnemyAState
     private Animator animator;
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private CheckDistancePlayer checkDistancePlayer; // プレイヤーとの距離を確認
-    private EnemyCheckFall enemyCheckFall;
     private GameObject player; // プレイヤーオブジェクト
 
     private bool isRight = true; // 右を向いているならtrue
@@ -23,6 +22,8 @@ public class EnemyAStateMove : IEnemyAState
     private bool isFalling = false;
     private bool isPrevOnGround = false;
     private float waitTimer = WAIT_TIME; // 着地後に止まる時間を管理するタイマー
+
+    private bool isStartMove; // 動いていいならtrue
 
     /// <summary>
     /// 敵を設定
@@ -35,18 +36,31 @@ public class EnemyAStateMove : IEnemyAState
 
     public void Entry()
     {
-        //Debug.Log("敵A：Move開始");
         player = GameObject.FindGameObjectWithTag("Player");
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
         animator = enemyA.GetComponent<Animator>();
         checkOnGround = enemyA.GetComponent<CheckOnGround>();
         checkDistancePlayer = enemyA.GetComponent<CheckDistancePlayer>();
-        enemyCheckFall = enemyA.GetComponent<EnemyCheckFall>();
+
+        isStartMove = false;
+        waitTimer = WAIT_TIME;
     }
 
     public void Update()
     {
+        // 移動処理を開始してよいかの判断
+        {
+            if (checkOnGround.onGround == true)
+            {
+                isStartMove = true;
+            }
+            if (isStartMove == false)
+            {
+                return;
+            }
+        }
+
         // 遷移の条件を確認
         // 攻撃可能範囲内にいるなら、状態を攻撃に変える
         if (checkDistancePlayer.IsPlayerInAttackArea() == true)
@@ -83,12 +97,12 @@ public class EnemyAStateMove : IEnemyAState
         Jump();
         Walk();
 
+
+        // 着地アニメーションに切り替える判定
         if (checkOnGround.onGround == false && isFalling == false)
         {
-            Debug.Log("着地判定中");
             if (rigidbody2D.linearVelocity.y < 0.0f)
             {
-                Debug.Log("着地");
                 isFalling = true;
                 animator.SetTrigger("Landing");
             }
@@ -97,7 +111,7 @@ public class EnemyAStateMove : IEnemyAState
 
     public void Exit()
     {
-        //Debug.Log("敵A：Move終了");
+        animator.SetTrigger("Idle");
     }
 
     /// <summary>
