@@ -25,7 +25,7 @@ public class ChraHealthBar : MonoBehaviour
     void LateUpdate()
     {
         // キャラクターが反転したときに向きをそのままにするため、マイナスを入れる
-        if(transform.parent.parent.localScale.x<0)
+        if (transform.parent.parent.localScale.x<0)
         {
             rectTransform.localScale = new Vector3(originalScale.x*-1, originalScale.y, originalScale.z);
         }

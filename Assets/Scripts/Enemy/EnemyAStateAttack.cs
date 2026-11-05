@@ -11,36 +11,35 @@ public class EnemyAStateAttack : IEnemyAState
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private CharaColor charaColor; // 色を変化させる
-    private EnemyCheckFall enemyCheckFall;
-
 
     private bool isEndAttack = false; // 攻撃が終了しているならtrue
+    private const float END_TIME = 1.0f; // 終了後の待機時間
+    private float endTimer = 0.0f; // 終了後の待機時間を管理するタイマー
 
     private float jumpHeight = 7.0f; // ジャンプ力
     private const float PLAYER_OFFSET = 1.5f; // プレイヤーの頭付近に着地点を調整するための補正値
     private float direction; // 移動方向
     private float moveSpeed; // 移動速度
 
-    private const float CHARGE_TIME = 5.0f; // 攻撃前のための時間
+    private const float CHARGE_TIME = 1.0f; // 攻撃前のための時間
     private float chargeTimer = 0.0f; // 攻撃の前のため
-    private float jumpTime; // ジャンプの時間
-    private float highestY; // ジャンプ時の最高到達点
-    private bool isFalling = false;
+    private float jumpTimer; // ジャンプの時間
+    private bool isFalling = false; // 落下しているならtrue
 
     public void Entry()
     {
-        //Debug.Log("敵A：Attack開始");
         player = GameObject.FindGameObjectWithTag("Player");
         rigidbody2D = enemyA.GetComponent<Rigidbody2D>();
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
         animator = enemyA.GetComponent<Animator>();
         charaColor = enemyA.GetComponent<CharaColor>();
-        enemyCheckFall = enemyA.GetComponent<EnemyCheckFall>();
         chargeTimer = CHARGE_TIME;
 
-        // 数値を設定する
-        CheckVelocity();
+        CheckVelocity(); // 数値を設定する
+        SetSpriteFlip(); // 向きを設定する
         animator.SetTrigger("Charge");
+        endTimer += END_TIME;
+        isFalling = false;
     }
 
     public void Update()
@@ -55,21 +54,20 @@ public class EnemyAStateAttack : IEnemyAState
             if (chargeTimer <= 0.0f)
             {
                 charaColor.ResetColor();
-                AttackJump();
+                rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
                 animator.SetTrigger("Jump");
             }
             return;
         }
 
-        jumpTime -= Time.deltaTime;
-        if (jumpTime > 0.0f)
+        jumpTimer -= Time.deltaTime;
+        if (jumpTimer > 0.0f)
         {
             rigidbody2D.linearVelocity = new Vector2(direction * moveSpeed, rigidbody2D.linearVelocity.y);
             if (isFalling == false)
             {
                 if (rigidbody2D.linearVelocity.y < 0.0f)
                 {
-                    Debug.Log("着地");
                     isFalling = true;
                     animator.SetTrigger("Landing");
                 }
@@ -80,22 +78,24 @@ public class EnemyAStateAttack : IEnemyAState
             isEndAttack = true;
             rigidbody2D.linearVelocity = new Vector2(0.0f, rigidbody2D.linearVelocity.y);
         }
-        // 攻撃が終了した場合、状態を移動へ遷移する
+
+
+        // 攻撃が終了した場合、一定時間経過後に状態を移動へ遷移する
         if (isEndAttack == true)
         {
+            animator.SetTrigger("Idle");
             SetSpriteFlip();
-            enemyA.Move();
+            endTimer -= Time.deltaTime;
+            if (endTimer <= 0.0f)
+            {
+                enemyA.Move();
+            }
         }
     }
 
     public void Exit()
     {
-        //Debug.Log("敵A：Attack終了");
-    }
-
-    private void AttackJump()
-    {
-        rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+        //animator.SetTrigger("Idle");
     }
 
     /// <summary>
@@ -108,18 +108,14 @@ public class EnemyAStateAttack : IEnemyAState
         float heightDistance = playerPosition.y - enemyA.transform.position.y; // 着地点と高さの距離
 
         float verticalSpeed = Mathf.Sqrt(2.0f * gravity * jumpHeight); // 垂直方向の初速度
-        jumpTime = (verticalSpeed + Mathf.Sqrt(verticalSpeed * verticalSpeed - 2.0f * gravity * heightDistance)) / gravity; // ジャンプの時間
+        jumpTimer = (verticalSpeed + Mathf.Sqrt(verticalSpeed * verticalSpeed - 2.0f * gravity * heightDistance)) / gravity; // ジャンプの時間
 
         // 水平方向の移動速度
         float distance = Mathf.Abs(playerPosition.x - enemyA.transform.position.x);
-        moveSpeed = distance / jumpTime;
+        moveSpeed = distance / jumpTimer;
 
         // 移動方向
         direction = Mathf.Sign(playerPosition.x - enemyA.transform.position.x);
-
-        // 最高到達点
-        float maxHeight = (verticalSpeed * verticalSpeed) / (2.0f * gravity);
-        highestY = enemyA.transform.position.y + maxHeight;
     }
 
     /// <summary>
