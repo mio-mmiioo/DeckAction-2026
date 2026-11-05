@@ -15,13 +15,22 @@ public class PlayerAttackType : MonoBehaviour
 
     private PlayerAttack physicalAttack;
 
+    private PlayerCombo playerCombo;
+
+    private Stamina stamina;
+
+    private PlayerEnableAttack playerEnableAttack;
+
     private int currentID = 2; // 現在のカードのID
-    private int prevID; // 前回のカードのID
+    private int comboCount; // 現在のコンボ数
+    private bool isAttack; // 
 
     void Start()
     {
-        prevID = currentID;
         physicalAttack = physicalAttackObject.GetComponent<PlayerAttack>();
+        playerCombo= GetComponent<PlayerCombo>();
+        playerEnableAttack =GetComponent<PlayerEnableAttack>();
+        stamina = GetComponent<Stamina>();
     }
 
     /// <summary>
@@ -32,7 +41,6 @@ public class PlayerAttackType : MonoBehaviour
         if (isUseCard == true)
         {
             
-
         }
         else
         {
@@ -51,7 +59,17 @@ public class PlayerAttackType : MonoBehaviour
             }
         }
 
-        SetAttackPower(); // 攻撃力を設定
+
+        (currentID,comboCount,isAttack)= playerCombo.ComboSet();
+
+        if(isAttack)
+        {
+            SetAttackPower(); // 攻撃力を設定
+            playerEnableAttack.Attack();
+            stamina.UseStamina(currentID);
+            isAttack= false; // 
+        }
+        
     }
 
     /// <summary>

@@ -36,8 +36,6 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     [HideInInspector]
     public int cardID;//カードの種類を決定するID
 
-    [SerializeField] private CardDataBase cardDataBase;// 参照するカードのデータベース
-
     // カードの配置を記憶しておく変数
     private Vector3 localScale;// サイズ
     private Vector2 localPosition;// 位置
@@ -49,10 +47,6 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     void Awake()
     {
-        cardID = Random.Range(1, cardDataBase.CardData.Count);
-        SetCardView(cardID);
-
-
         startPos = new Vector2(transform.position.x, transform.position.y);
         transform.position=new Vector2(startPos.x, startPos.y+100);
     }
@@ -202,7 +196,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// カードのビジュアルを決定する
     /// </summary>
     /// <param name="id"></param>
-    public void SetCardView(int id)
+    public void SetCardType(int id)
     {
         cardID = id;
 

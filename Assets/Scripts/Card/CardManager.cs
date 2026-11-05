@@ -22,8 +22,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] GameObject useCardView;
 
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
-    Queue<BaseCard> useCards=new Queue<BaseCard>();// 使用済みカードのリスト
-
+    Queue<BaseCard> useCards = new Queue<BaseCard>();// 使用済みカードのリスト
 
     [Tooltip("手札の最大枚数")]
     [SerializeField] private int maxHands;
@@ -40,21 +39,27 @@ public class CardManager : MonoBehaviour
 
     private float cooldownElapsedTime;//経過時間
 
+
+    [SerializeField]private float[] cardPopRate;// カードの出現率
+
+    private float maxRate;
+
     /// <summary>
     /// 変数の初期化
     /// </summary>
     void Start()
     {
+        SetCardRate();
         drawCooldown = 10f;
         cooldownElapsedTime = 0;
         maxHands = 4;
         MAX_USE_CARD = 4;
         labelCount = 1;
         handsSort = GetComponent<HandsSort>();
-        AddHands(maxHands,false);
+        AddHands(maxHands, false);
         Debug.Log("CardManager OK");
 
-        for(int i=0;i<hands.Count;i++)
+        for (int i = 0; i < hands.Count; i++)
         {
             hands[i].isPassive = true;
         }
@@ -70,19 +75,24 @@ public class CardManager : MonoBehaviour
     void Update()
     {
         //時間経過でカードを引く
-        if(hands.Count<maxHands)
+        if (hands.Count < maxHands)
         {
             cooldownElapsedTime += Time.deltaTime;
             Debug.Log("一秒経過");
-            if(cooldownElapsedTime>=drawCooldown)
+            if (cooldownElapsedTime >= drawCooldown)
             {
                 AddHands(1, false);
                 cooldownElapsedTime = 0f;
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            AddHands(1, false);
+        }
+
         // 手札の状態を確認するfor文
-        for (int i=0;i<hands.Count;i++)
+        for (int i = 0; i < hands.Count; i++)
         {
             // カードが破棄可能かつ破棄された場合の処理
             if (hands[i].isTrash && hands[i].canTrash)
@@ -95,7 +105,7 @@ public class CardManager : MonoBehaviour
 
             // カードが使用されたの場合の処理
             else if (hands[i].isUsed)
-           {
+            {
                 if (useCards.Count < MAX_USE_CARD)
                 {
                     useCards.Enqueue(hands[i]);
@@ -109,8 +119,8 @@ public class CardManager : MonoBehaviour
                 }
             }
 
-         }
-        
+        }
+
     }
 
     /// <summary>
@@ -121,9 +131,11 @@ public class CardManager : MonoBehaviour
     /// <param name="value"></param>
     public void AddHands(int value, bool trash)
     {
-        for(int i=0;i<value;i++)
+        for (int i = 0; i < value; i++)
         {
             BaseCard obj = Instantiate(baseCard, playerHand);
+
+            obj.SetCardType(DetermineCardType());
 
             CardLabel label = obj.GetComponent<CardLabel>();
             string text = labelCount.ToString();
@@ -153,7 +165,7 @@ public class CardManager : MonoBehaviour
     /// <returns></returns>
     public int GetUseCard()
     {
-        if(useCards.Count!=0)
+        if (useCards.Count != 0)
         {
             BaseCard card = useCards.Dequeue();
 
@@ -166,7 +178,7 @@ public class CardManager : MonoBehaviour
 
         return 0;
 
-        
+
     }
 
 
@@ -174,10 +186,38 @@ public class CardManager : MonoBehaviour
     /// 手札のリストをソートして表示もソートする
     /// </summary>
     private void CardSort()
-    { 
-        hands.Sort((x,y) => x.cardID-y.cardID);
-      
+    {
+        hands.Sort((x, y) => x.cardID - y.cardID);
+
         handsSort.CardViewSort(hands);
+    }
+
+ 
+    private int DetermineCardType()
+    {
+        int cardID = 0;
+        float random = Random.Range(0,maxRate);
+        for(int i=0;i<cardPopRate.Length;i++)
+        {
+            if (random < cardPopRate[i])
+            {
+                cardID = i;
+            }
+        }
+
+        return cardID;
+        
+    }
+
+    private void SetCardRate()
+    {
+        maxRate=0;
+        cardPopRate = new float[cardDataBase.CardData.Count-1];
+        for (int i=1;i<cardDataBase.CardData.Count;i++)
+        {
+            maxRate+= cardDataBase.CardData[i].rate;
+            cardPopRate[i-1] = maxRate;
+        }
     }
 }
 

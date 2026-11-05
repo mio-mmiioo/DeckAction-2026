@@ -17,4 +17,4 @@ MonoBehaviour:
   cardName: Magic
   stamina: 10
   damage: 20
-  rate: 0
+  rate: 40
