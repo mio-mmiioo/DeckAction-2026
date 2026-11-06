@@ -9,7 +9,7 @@ public class CharaHp : MonoBehaviour
     [SerializeField] private int currentHP;
 
     [Tooltip("無敵時間を設定してください")]
-    [SerializeField] private float invincibleTime = 4.0f;
+    [SerializeField] public float invincibleTime = 4.0f;
 
     [Tooltip("無敵時間のタイマー")]
     [SerializeField] private float invincibleTimer;
