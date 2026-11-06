@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class EnemyAStateMove : IEnemyAState
 {
-    private const float WAIT_TIME = 3.0f; // 着地後に止まる時間
+    private const float WAIT_TIME = 1.0f; // 着地後に止まる時間
     private const float MOVE_SPEED = 0.2f; // 移動速度
-    private const float JUMP_HEIGHT = 3.0f; // ジャンプ力
+    private const float JUMP_HEIGHT = 4.0f; // ジャンプ力
 
     private EnemyA enemyA;
     public ENEMY_A_STATE state => ENEMY_A_STATE.E_A_STATE_MOVE;
