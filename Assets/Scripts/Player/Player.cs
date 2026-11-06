@@ -85,11 +85,11 @@ public class Player : MonoBehaviour
         Vector3 scale = transform.localScale;
         if (isRight == true)
         {
-            scale.x = 1.0f;
+            scale.x = Mathf.Abs(scale.x);
         }
         else
         {
-            scale.x = -1.0f;
+            scale.x = Mathf.Abs(scale.x) * -1.0f;
         }
         transform.localScale = scale;
     }
