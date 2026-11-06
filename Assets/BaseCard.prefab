@@ -112,7 +112,6 @@ MonoBehaviour:
   isDrag: 0
   isPick: 0
   cardID: 0
-  cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
 --- !u!114 &2322959807441065537
 MonoBehaviour:
   m_ObjectHideFlags: 0

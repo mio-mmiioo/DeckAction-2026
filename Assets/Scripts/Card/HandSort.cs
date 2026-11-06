@@ -15,22 +15,27 @@ public class HandsSort : MonoBehaviour
     [SerializeField] private CardManager cardManager ;
 
     [Tooltip("カードとカードの間の距離")]
-    [SerializeField] private float spacing = 100;
+    [SerializeField] private float spacing =10;
 
     [Tooltip("基準とする左端")]
-    [SerializeField] private float cardUpperLeft = 350;
+    [SerializeField] private float cardUpperLeft;
     
     [Tooltip("カード全体の高さ")]
     [SerializeField] private float cardY = 20;
 
-    [Tooltip("中央のカードの位置")]
-    [SerializeField] private float cardBaseX = 30;
+    
+    private float cardBaseX;
+
+    private float centerX;
 
     Vector2 cardBasePos;
 
-    private void Start()
+    private void Awake()
     {
-        cardBasePos = new Vector2(cardBaseX, cardY);
+        centerX = Screen.width / 2f;
+        cardBasePos = new Vector2(centerX, cardY);
+        cardBaseX = centerX;
+        cardUpperLeft = centerX;
     }
 
     /// <summary>
@@ -51,7 +56,7 @@ public class HandsSort : MonoBehaviour
 
             if (card == null) continue;
 
-            Transform pos = card.GetComponent<Transform>();
+            RectTransform pos = card.GetComponent<RectTransform>();
 
             pos.position= new Vector2(
                 cardUpperLeft + i * spacing,
@@ -70,74 +75,49 @@ public class HandsSort : MonoBehaviour
     /// <param name="cards"></param>
     public void CardViewSortMedian(List<BaseCard> cards)
     {
+        int count = cards.Count;
 
-        int count = cards.Count;// カードの枚数
-        if (count == 0) return;
-        int handCenter=0;// 中央のカード
-        int handSecondCenter = 0;// 偶数の場合の二枚目のカード
-        if (count % 2 != 0)
+        if (count == 0) return;//ゼロの時は返す
+
+        //カードが一枚の時は中央に配置する
+        if (count==1)
         {
-            handCenter= count-1 / 2;
+            cards[0].transform.position = cardBasePos;
+        }
+
+
+        else if(count%2==0)
+        {
+            for(int i=0;i<count;i++)
+            {
+                BaseCard card = cards[i];
+                if (card == null) continue;
+                RectTransform pos = card.GetComponent<RectTransform>();
+                pos.position= new Vector2(
+                    cardBaseX + (i - count / 2) * spacing,
+                    cardY
+                );
+                pos.SetAsLastSibling();
+                pos.localRotation = Quaternion.identity;
+            }
+
         }
         else
         {
-            handCenter= count+1 / 2;
-            handSecondCenter = handCenter+1;
+            for(int i= 0; i < count; i++)
+            {
+                BaseCard card = cards[i];
+                if (card == null) continue;
+                RectTransform pos = card.GetComponent<RectTransform>();
+                pos.position= new Vector2(
+                    cardBaseX + (i - count / 2f) * spacing,
+                    cardY
+                );
+                pos.SetAsLastSibling();
+                pos.localRotation = Quaternion.identity;
+            }
         }
 
-
-        float totalWidth = (count - 1) * spacing;
-
-
-        Debug.Log($"ソート対象のカード数: {cards.Count}");
-
-        BaseCard card = cards[handCenter];
-        Transform cardPos = card.GetComponent<Transform>();
-        card.transform.SetSiblingIndex(handCenter);
-        cardPos.position = cardBasePos;
-
-        if(handCenter!=0)
-        {
-
-        }
-
-
-        for (int i = 0; i < handCenter; i++)
-        {
-            card = cards[i];
-            if (card == null) continue;
-
-            Transform pos =card.GetComponent<Transform>();
-
-            pos.position = new Vector2(
-                cardBaseX - (handCenter-i) * spacing,
-                cardY
-            );
-
-            pos.localRotation = Quaternion.identity;
-
-            card.transform.SetSiblingIndex(i);
-        }
-
-        for(int i=handCenter+1;i<cards.Count;i++)
-        {
-            card = cards[i];
-            if (card == null) continue;
-            if (i == handSecondCenter) continue;
-
-            Transform rect = card.GetComponent<Transform>();
-
-            rect.position = new Vector2(
-                cardBaseX + (i-handCenter) * spacing,
-                cardY
-            );
-
-            rect.localRotation = Quaternion.identity;
-            card.transform.SetSiblingIndex(i);
-        }
-
-        
     }
-
  
 }

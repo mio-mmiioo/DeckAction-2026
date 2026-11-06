@@ -44,6 +44,12 @@ public class CardManager : MonoBehaviour
 
     private float maxRate;
 
+    private void Awake()
+    {
+            
+    }
+
+
     /// <summary>
     /// 変数の初期化
     /// </summary>
@@ -133,7 +139,7 @@ public class CardManager : MonoBehaviour
     {
         for (int i = 0; i < value; i++)
         {
-            BaseCard obj = Instantiate(baseCard, playerHand);
+            BaseCard obj = Instantiate(baseCard, playerHand,false);
 
             obj.SetCardType(DetermineCardType());
 
@@ -189,7 +195,7 @@ public class CardManager : MonoBehaviour
     {
         hands.Sort((x, y) => x.cardID - y.cardID);
 
-        handsSort.CardViewSort(hands);
+        handsSort.CardViewSortMedian(hands);
     }
 
  
