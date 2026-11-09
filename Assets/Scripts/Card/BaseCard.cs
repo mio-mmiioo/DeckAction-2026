@@ -33,7 +33,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     private int clickCount;// クリックされた回数をカウントする
 
-    [HideInInspector]
+    //[HideInInspector]
     public int cardID;//カードの種類を決定するID
 
     // カードの配置を記憶しておく変数
