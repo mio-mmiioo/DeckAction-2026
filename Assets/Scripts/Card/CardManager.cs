@@ -201,28 +201,30 @@ public class CardManager : MonoBehaviour
  
     private int DetermineCardType()
     {
-        int cardID = 0;
         float random = Random.Range(0,maxRate);
         for(int i=0;i<cardPopRate.Length;i++)
         {
             if (random < cardPopRate[i])
             {
-                cardID = i;
+                return  i;
             }
         }
 
-        return cardID;
+        return 0;
         
     }
 
+    /// <summary>
+    /// カードの確率を事前に計算する
+    /// </summary>
     private void SetCardRate()
     {
         maxRate=0;
-        cardPopRate = new float[cardDataBase.CardData.Count-1];
+        cardPopRate = new float[cardDataBase.CardData.Count];
         for (int i=1;i<cardDataBase.CardData.Count;i++)
         {
             maxRate+= cardDataBase.CardData[i].rate;
-            cardPopRate[i-1] = maxRate;
+            cardPopRate[i] = maxRate;
         }
     }
 }
