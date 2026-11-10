@@ -21,6 +21,7 @@ public class PlayerEnableAttack : MonoBehaviour
     /// </summary>
     public void Attack()
     {
+        SetOffEnabled();
         attackCollider.enabled = true; // 攻撃範囲を有効にする
         spriteRenderer.enabled = true; // 描画を有効にする
         Invoke("SetOffEnabled", time); // オフにする

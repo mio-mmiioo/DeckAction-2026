@@ -15,6 +15,8 @@ public class PlayerAttackType : MonoBehaviour
 
     private PlayerCombo playerCombo;
 
+    private ComboCount comboCountText;
+
     private Stamina stamina;
 
     private int currentID = 2; // 現在のカードのID
@@ -25,6 +27,7 @@ public class PlayerAttackType : MonoBehaviour
     {
         playerCombo = GetComponent<PlayerCombo>();
         stamina = GetComponent<Stamina>();
+        comboCountText=GetComponent<ComboCount>();
     }
 
     /// <summary>
@@ -32,7 +35,7 @@ public class PlayerAttackType : MonoBehaviour
     /// </summary>
     public void SetCardID()
     {
-        (currentID,comboCount,isAttack)= playerCombo.ComboSet();
+        (currentID,comboCount,isAttack)= playerCombo.ComboGet();
 
         if(isAttack)
         {
@@ -50,6 +53,12 @@ public class PlayerAttackType : MonoBehaviour
             }
             stamina.UseStamina(currentID);
             isAttack= false; // 
+            comboCountText.SetComboCount(comboCount);
+        }
+
+        if(comboCount==0)
+        {
+            comboCountText.SetComboCount(comboCount);
         }
         
     }
