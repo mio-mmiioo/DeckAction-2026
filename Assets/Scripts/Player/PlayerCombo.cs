@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -7,8 +6,10 @@ public class PlayerCombo : MonoBehaviour
 {
     [SerializeField] CardManager cardManager;// カードマネージャ
 
-    private const float ATTACK_TIME=1.0f; // 攻撃の秒数制限
+    private const float ATTACK_TIME=0.0f; // 攻撃の秒数制限
+    private const float COMBO_TIME = 3.0f; // コンボの秒数制限
     [SerializeField] private float attackTimer;// 次の攻撃までのタイマー
+    [SerializeField] private float comboTimer;// 次の攻撃までのタイマー
 
     private int prevCardID;// 前回のカード
     private int currentCardID;// 現在のカード
@@ -21,6 +22,7 @@ public class PlayerCombo : MonoBehaviour
     void Start()
     {
         attackTimer = ATTACK_TIME;
+        comboTimer= COMBO_TIME;
         currentCardID = 0;
         prevCardID = 0;
     }
@@ -29,7 +31,7 @@ public class PlayerCombo : MonoBehaviour
     /// 攻撃可能か、数値を返す関数
     /// </summary>
     /// <returns></returns>
-    public (int cardID,int comboCount,bool isAttack) ComboSet()
+    public (int cardID,int comboCount,bool isAttack) ComboGet()
     {
         isAttack = false;
 
@@ -38,12 +40,18 @@ public class PlayerCombo : MonoBehaviour
         {
             ComboJudge();
             attackTimer = ATTACK_TIME;
-
         }
         else
         {
             attackTimer -= Time.deltaTime;
         }
+
+        if(comboTimer>0)
+        {
+            comboTimer -= Time.deltaTime;
+
+        }
+
         return (currentCardID,comboCount,isAttack);
     }
 
@@ -57,23 +65,25 @@ public class PlayerCombo : MonoBehaviour
         // コンボ判定
         if (currentCardID != 0)
         {
-            if(currentCardID!=prevCardID)
+            if (currentCardID == prevCardID || prevCardID == 0)
+            {
+                comboCount++;
+                comboTimer = COMBO_TIME; // コンボタイマーをリセット
+            }
+            else if (currentCardID != prevCardID)
             {
                 comboCount = 0;
             }
-            else if(currentCardID==prevCardID)
-            {
-                comboCount++;
-            }
-
+            
             
             prevCardID = currentCardID;
             isAttack = true;
         }
-        else
+        else if (comboTimer <= 0)
         {
             comboCount = 0;
+            prevCardID = 0;
         }
-
+       
     }
 }

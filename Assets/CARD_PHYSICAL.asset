@@ -16,5 +16,5 @@ MonoBehaviour:
   ID: 1
   cardName: Physical
   stamina: 5
-  damage: 5
-  rate: 40
+  damage: 30
+  rate: 50

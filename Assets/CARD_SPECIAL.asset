@@ -17,4 +17,4 @@ MonoBehaviour:
   cardName: Special
   stamina: 0
   damage: 100
-  rate: 15
+  rate: 0
