@@ -10,11 +10,6 @@ public class Player : MonoBehaviour
     [Tooltip("プレイヤーのジャンプ力を設定してください")]
     [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
 
-    [Tooltip("カードを使用するならtrue")]
-    [SerializeField] private bool isUseCard = false;
-
-
-    private PlayerEnableAttack enableAttack; // 攻撃を管理する
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private PlayerAttackType playerAttackType; // 攻撃の種類
@@ -26,7 +21,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        enableAttack = GetComponent<PlayerEnableAttack>();
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         playerAttackType = GetComponent<PlayerAttackType>();
@@ -43,19 +37,7 @@ public class Player : MonoBehaviour
             isJump = true;
         }
 
-        playerAttackType.SetCardID(); // 攻撃の種類をセット
-
-        if (isUseCard == false)
-        {
-            // 攻撃
-            if (Keyboard.current.eKey.wasPressedThisFrame)
-            {
-                enableAttack.Attack();
-                stamina.UseStamina(playerAttackType.GetUseStamina()); // スタミナを消費
-            }
-        }
-
-        
+        playerAttackType.SetCardID(); // 攻撃の種類をセット        
     }
 
     void FixedUpdate()

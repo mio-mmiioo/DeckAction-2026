@@ -3,17 +3,16 @@ using UnityEngine;
 // プレイヤーの攻撃を有効にする
 public class PlayerEnableAttack : MonoBehaviour
 {
-    [Tooltip("攻撃の当たり判定の範囲を指定してください")]
-    [SerializeField] private Collider2D attackCollider;
-
-    [Tooltip("攻撃が有効時の画像を設定してください")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
-
     [Tooltip("攻撃判定が有効な時間")]
     [SerializeField] private float time = 0.3f;
 
+    private SpriteRenderer spriteRenderer;
+    private Collider2D attackCollider;
+
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        attackCollider = GetComponent<Collider2D>();
         SetOffEnabled();
     }
 
