@@ -60,7 +60,6 @@ public class EnemyAStateMove : IEnemyAState
                 return;
             }
         }
-
         // 遷移の条件を確認
         // 攻撃可能範囲内にいるなら、状態を攻撃に変える
         if (checkDistancePlayer.IsPlayerInAttackArea() == true && checkOnGround.onGround == true)

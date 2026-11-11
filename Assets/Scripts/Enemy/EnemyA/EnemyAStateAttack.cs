@@ -11,6 +11,7 @@ public class EnemyAStateAttack : IEnemyAState
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private CharaColor charaColor; // 色を変化させる
+    private CheckOnGround checkOnGround;
 
     private bool isEndAttack = false; // 攻撃が終了しているならtrue
     private const float END_TIME = 1.0f; // 終了後の待機時間
@@ -33,6 +34,7 @@ public class EnemyAStateAttack : IEnemyAState
         spriteRenderer = enemyA.GetComponent<SpriteRenderer>();
         animator = enemyA.GetComponent<Animator>();
         charaColor = enemyA.GetComponent<CharaColor>();
+        checkOnGround = enemyA.GetComponent<CheckOnGround>();
         chargeTimer = CHARGE_TIME;
 
         CheckVelocity(); // 数値を設定する
@@ -81,7 +83,7 @@ public class EnemyAStateAttack : IEnemyAState
 
 
         // 攻撃が終了した場合、一定時間経過後に状態を移動へ遷移する
-        if (isEndAttack == true)
+        if (isEndAttack == true && checkOnGround.onGround == true)
         {
             animator.SetTrigger("Idle");
             SetSpriteFlip();
