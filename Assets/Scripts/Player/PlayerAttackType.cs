@@ -23,11 +23,10 @@ public class PlayerAttackType : MonoBehaviour
 
     private int currentID = 2; // 現在のカードのID
     private int comboCount; // 現在のコンボ数
-    private bool isAttack; // 
+    private bool isAttack; // 攻撃する場合true
 
     void Start()
     {
-        //transform = GetComponent<Transform>();
         playerCombo = GetComponent<PlayerCombo>();
         stamina = GetComponent<Stamina>();
         comboCountText=GetComponent<ComboCount>();
@@ -57,7 +56,7 @@ public class PlayerAttackType : MonoBehaviour
                     break;
             }
             stamina.UseStamina(currentID);
-            isAttack= false; // 
+            isAttack= false;
             comboCountText.SetComboCount(comboCount);
         }
 

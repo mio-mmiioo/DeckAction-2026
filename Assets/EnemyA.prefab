@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharaHp
   maxHP: 50
   currentHP: 0
-  invincibleTime: 0
+  invincibleTime: 0.1
   invincibleTimer: 0
 --- !u!114 &3181751889296328275
 MonoBehaviour:

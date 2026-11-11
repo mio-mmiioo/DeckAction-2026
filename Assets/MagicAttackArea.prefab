@@ -48,8 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d5a85cfc9bfdeb42ae42d5f996088ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  destroyOnHit: 1
-  attackObject: {fileID: 7063996651527846862}
 --- !u!114 &3718326716107975114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01837f39f7f590242a28556c00115031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagicAttack
-  speed: 6
+  speed: 10
 --- !u!61 &3760250814969840049
 BoxCollider2D:
   m_ObjectHideFlags: 0
