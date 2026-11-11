@@ -43,19 +43,17 @@ public class PlayerAttackType : MonoBehaviour
 
         if(isAttack)
         {
-            SetAttackPower(); // 攻撃力を設定
-
             switch (currentID)
             {
                 case 1:
+                    physicalAttackObject.GetComponent<PlayerAttack>().SetAttackPower(SetAttackPower());
                     physicalAttackObject.GetComponent<PlayerEnableAttack>().Attack();
                     break;
 
                 case 2:
                     // 魔法攻撃を生成する
-                    Instantiate(magicAttackObject, magicPosition.GetCreatePosition());
-                    SetAttackPower();
-                    //magicAttackObject.GetComponent<PlayerEnableAttack>().Attack();
+                    GameObject magic = Instantiate(magicAttackObject, magicPosition.GetCreatePosition().position, Quaternion.identity);
+                    magic.GetComponent<MagicAttack>().SetAttackPower(SetAttackPower());
                     break;
             }
             stamina.UseStamina(currentID);
@@ -82,24 +80,13 @@ public class PlayerAttackType : MonoBehaviour
     /// <summary>
     /// 使用されたカードによってダメージをセットする
     /// </summary>
-    public void SetAttackPower()
+    public int SetAttackPower()
     {
         int damage = cardDataBase.CardData[currentID].damage;
+        
         // コンボの処理　攻撃を計算する処理
 
-
-
-        // 最終的なダメージ
-        switch (currentID)
-        {
-            case 1:
-                physicalAttackObject.GetComponent<PlayerAttack>().SetAttackPower(damage);
-                break;
-
-            case 2:
-                magicAttackObject.GetComponent<PlayerAttack>().SetAttackPower(damage);
-                break;
-        }
+        return damage;
     }
 
     /// <summary>

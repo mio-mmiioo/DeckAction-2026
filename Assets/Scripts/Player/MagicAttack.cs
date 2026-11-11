@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class MagicAttack : MonoBehaviour
 {
+    [Tooltip("魔法攻撃の移動速度を設定してください")]
     [SerializeField] float speed = 3.0f;
+
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    private SpriteRenderer sr; 
+
+    private int attackPower = 5; // 攻撃力
 
     void Start()
     {
@@ -18,6 +22,27 @@ public class MagicAttack : MonoBehaviour
         // カメラに映らなくなった場合
         if (sr.isVisible == false)
         {
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// 攻撃力をセットする
+    /// </summary>
+    /// <param name="power">攻撃力</param>
+    public void SetAttackPower(int power)
+    {
+        Debug.Log("魔法攻撃力が" + power + "になった");
+        attackPower = power;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            CharaHp charaHp = other.gameObject.GetComponent<CharaHp>();
+            charaHp.TakeDamage(attackPower);
+            Debug.Log("敵に" + attackPower + "のダメージを与えた");
             Destroy(gameObject);
         }
     }
