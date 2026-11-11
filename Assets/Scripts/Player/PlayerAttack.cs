@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private int attackPower;
+    [Tooltip("攻撃が衝突時、攻撃のオブジェクトを消すならtrue")]
+    [SerializeField] private bool destroyOnHit = false;
 
+    [Tooltip("攻撃のオブジェクト")]
+    [SerializeField] private GameObject attackObject;
+    
+    private int attackPower; // 攻撃力
+    
     /// <summary>
     /// 攻撃力をセットする
     /// </summary>
@@ -20,6 +26,11 @@ public class PlayerAttack : MonoBehaviour
             CharaHp charaHp = other.GetComponent<CharaHp>();
             Debug.Log("敵は" + attackPower + "の攻撃を受けた");
             charaHp.TakeDamage(attackPower);
+
+            if (destroyOnHit == true)
+            {
+                Destroy(attackObject);
+            }
         }
     }
 }

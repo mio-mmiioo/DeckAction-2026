@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 // 攻撃の種類と情報を管理するクラス
 public class PlayerAttackType : MonoBehaviour
@@ -13,6 +13,8 @@ public class PlayerAttackType : MonoBehaviour
     [Tooltip("魔法攻撃のオブジェクトを設定してください")]
     [SerializeField] private GameObject magicAttackObject; // 魔法攻撃
 
+    private SetMagicAttackPosition magicPosition; // 魔法攻撃を生成する位置
+
     private PlayerCombo playerCombo;
 
     private ComboCount comboCountText;
@@ -25,9 +27,11 @@ public class PlayerAttackType : MonoBehaviour
 
     void Start()
     {
+        //transform = GetComponent<Transform>();
         playerCombo = GetComponent<PlayerCombo>();
         stamina = GetComponent<Stamina>();
         comboCountText=GetComponent<ComboCount>();
+        magicPosition = GetComponent<SetMagicAttackPosition>();
     }
 
     /// <summary>
@@ -48,7 +52,10 @@ public class PlayerAttackType : MonoBehaviour
                     break;
 
                 case 2:
-                    magicAttackObject.GetComponent<PlayerEnableAttack>().Attack();
+                    // 魔法攻撃を生成する
+                    Instantiate(magicAttackObject, magicPosition.GetCreatePosition());
+                    SetAttackPower();
+                    //magicAttackObject.GetComponent<PlayerEnableAttack>().Attack();
                     break;
             }
             stamina.UseStamina(currentID);

@@ -13,6 +13,7 @@ public class PlayerEnableAttack : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         attackCollider = GetComponent<Collider2D>();
+
         SetOffEnabled();
     }
 
