@@ -1,23 +1,24 @@
 using UnityEngine;
 
-public interface IBoss1State 
+public interface IBoss1State
 {
 
-    ENEMY_BOSS1_STATE state { get; }
+    BOSS_1_STATE state { get; }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    void Entry();
 
-    }
+    void Update();
 
-    public enum ENEMY_BOSS1_STATE
-    { 
-        B_1_STATE_JUMP,
-        B_1_STATE_IDLE
+    void Exit();
+}
 
-
-    }
-
+/// <summary>
+/// ボス１の状態
+/// </summary>
+public enum BOSS_1_STATE
+{
+    B_1_STATE_JUMP,
+    B_1_STATE_IDLE,
+    B_1_STATE_TARGET
 
 }
