@@ -58,7 +58,10 @@ public class CharaHp : MonoBehaviour
         // 体力がなくなったら消す
         if (currentHP <= 0)
         {
-            Destroy(gameObject);
+            if (gameObject.tag != "Player")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

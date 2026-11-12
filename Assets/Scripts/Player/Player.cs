@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private PlayerAttackType playerAttackType; // 攻撃の種類
+    private CharaHp charaHp; // 体力を管理する
 
     private Stamina stamina; // スタミナ
 
@@ -24,11 +25,17 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         playerAttackType = GetComponent<PlayerAttackType>();
+        charaHp = GetComponent<CharaHp>();
         stamina = GetComponent<Stamina>();
     }
 
     void Update()
     {
+        if (charaHp.GetHP() <= 0)
+        {
+            return;
+        }
+
         Walk();
 
         // ジャンプ
