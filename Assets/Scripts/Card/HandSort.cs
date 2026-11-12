@@ -8,14 +8,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 /// </summary>
 public class HandsSort : MonoBehaviour
 {
-    [Tooltip("BaseCardのプレハブ")]
-    [SerializeField] private BaseCard baseCard;
-
     [Tooltip("カードマネージャー")]
     [SerializeField] private CardManager cardManager ;
 
     [Tooltip("カードとカードの間の距離")]
-    [SerializeField] private float spacing =70.0f;
+    [SerializeField] private float spacing =100.0f;
 
     [Tooltip("基準とする左端")]
     [SerializeField] private float cardUpperLeft;

@@ -56,7 +56,7 @@ public class CardManager : MonoBehaviour
     void Start()
     {
         SetCardRate();
-        drawCooldown = 10f;
+        drawCooldown = 3f;
         cooldownElapsedTime = 0;
         maxHands = 4;
         MAX_USE_CARD = 4;
@@ -145,7 +145,7 @@ public class CardManager : MonoBehaviour
 
             CardLabel label = obj.GetComponent<CardLabel>();
             string text = labelCount.ToString();
-            label.SetName(text);
+            //label.SetName(text);
 
             labelCount++;
 
