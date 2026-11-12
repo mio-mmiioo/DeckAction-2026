@@ -3714,7 +3714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackType
   cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
   physicalAttackObject: {fileID: 736762940}
-  magicAttackObject: {fileID: 0}
+  magicAttackObject: {fileID: 7063996651527846862, guid: 5fb721c43db928d42abc8d3388981548, type: 3}
 --- !u!114 &2000325229
 MonoBehaviour:
   m_ObjectHideFlags: 0
