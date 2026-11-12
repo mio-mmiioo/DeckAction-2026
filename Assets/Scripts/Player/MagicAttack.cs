@@ -5,20 +5,33 @@ public class MagicAttack : MonoBehaviour
     [Tooltip("魔法攻撃の移動速度を設定してください")]
     [SerializeField] float speed = 3.0f;
 
-    private Rigidbody2D rb;
-    private SpriteRenderer sr; 
+    private GameObject player;
 
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+
+    private float direction; // 攻撃を飛ばす方向
     private int attackPower = 5; // 攻撃力
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        player = GameObject.Find("Player");
+        if (player.GetComponent<Transform>().localScale.x > 0)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
     }
 
     void Update()
     {
-        rb.linearVelocity = new Vector2(speed, 0.0f); // 移動方向に力を加える
+        rb.linearVelocity = new Vector2(direction * speed, 0.0f); // 移動方向に力を加える
         // カメラに映らなくなった場合
         if (sr.isVisible == false)
         {
