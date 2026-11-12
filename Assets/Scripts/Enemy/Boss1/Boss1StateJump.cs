@@ -15,13 +15,14 @@ public class Boss1StateJump : IBoss1State
     private Vector2 jumpingPoint;
     private float cameraOutHeight = 10.0f;//カメラの外に出れる高さ
 
-    private const float CHARGE_TIME = 12f; // 攻撃前のための時間
+    private const float CHARGE_TIME = 5.0f; // 攻撃前のための時間
     private float chargeTimer;
     private const float JUMP_SPEED = 0.03f;//ジャンプの時間
     private float jumpSpeed;
 
     private bool isEndJump = false;
-
+    private bool isJumping = false;
+    private bool isLanding = false;
 
     public Boss1StateJump(Boss1 b) => boss1 = b;
 
@@ -84,14 +85,15 @@ public class Boss1StateJump : IBoss1State
     private void Jump()
     {
         animator.SetTrigger("Jump");
-        if (boss1.transform.position.y!=cameraOutHeight)
+        if (boss1.transform.position.y!=cameraOutHeight&& !isJumping)
         {
+            isJumping = true;
             boss1.transform.position =Vector2.MoveTowards(boss1.transform.position, jumpingPoint, jumpSpeed);
         }
-        else
+        
+        if(boss1.transform.position.y==cameraOutHeight)
         {
             Landing();
-
         }
 
 
@@ -100,17 +102,15 @@ public class Boss1StateJump : IBoss1State
 
     private void Landing()
     {
-        if(boss1.transform.position.y!=landingPoint.y)
+        if(boss1.transform.position.y!=landingPoint.y && !isLanding)
         {
-            //落下中
+            isLanding = true;
             animator.SetTrigger("Idle");
-            boss1.transform.position = Vector2.MoveTowards(jumpingPoint, landingPoint, jumpSpeed);
+            boss1.transform.position = Vector2.MoveTowards(boss1.transform.position, landingPoint, jumpSpeed);
         }
-        else
+
+        if(boss1.transform.position.y==landingPoint.y)
         {
-            //着地
-            boss1.transform.position = landingPoint;
-            
             isEndJump = true;
         }
     }
