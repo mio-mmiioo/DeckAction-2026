@@ -2072,7 +2072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70b35de5d0efc148b3f0ccfefca3b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStaminaBar
-  playerStamina: {fileID: 0}
+  playerStamina: {fileID: 1441917117}
 --- !u!114 &1370546554
 MonoBehaviour:
   m_ObjectHideFlags: 0
