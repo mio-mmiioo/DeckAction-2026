@@ -8,7 +8,9 @@ public class CardData : ScriptableObject
     [Header("カードID")] public int ID;
     [Header("カード名")] public string cardName;
     [Header("消費スタミナ")] public int stamina;
-    [Header("ダメージ")] public int damage;
+    [Header("最大ダメージ")] public int maxDamage;
+    [Header("最低ダメージ")] public int minDamage;
+    [Header("基礎ダメージ")] public int damage;
     [Header("出現率")] public float rate;
 
 }
