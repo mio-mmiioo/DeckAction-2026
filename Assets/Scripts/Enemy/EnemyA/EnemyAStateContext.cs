@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
 //参考にしているページ
 //https://takap-tech.com/entry/2023/07/23/174149

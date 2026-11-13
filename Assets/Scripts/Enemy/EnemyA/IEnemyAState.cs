@@ -14,7 +14,6 @@ public interface IEnemyAState
     void Exit();
 }
 
-
 /// <summary>
 /// 敵Aの状態
 /// </summary>
