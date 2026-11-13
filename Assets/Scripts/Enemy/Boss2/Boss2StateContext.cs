@@ -13,6 +13,7 @@ public class Boss2StateContext : MonoBehaviour
         // 初期化されている場合は戻る
         if (stateTable != null)
         {
+            Debug.Log("ボス2のステートの初期化がすでに行われている");
             return;
         }
 
@@ -22,7 +23,7 @@ public class Boss2StateContext : MonoBehaviour
             { BOSS_2_STATE.B_2_STATE_ATTACK_1, new Boss2StateAttack1(boss2) }
         };
         stateTable = table;
-
+        Debug.Log("ボス2のステートの初期化");
         var nextState = stateTable[initState];
         prevState = currentState;
         currentState = nextState;

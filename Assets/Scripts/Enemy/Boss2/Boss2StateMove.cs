@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Boss2StateMove : IBoss2State
 {
@@ -33,6 +34,11 @@ public class Boss2StateMove : IBoss2State
         float x = Mathf.Sin(Time.time * MOVE_SPEED * HORIZONTAL_SPEED_FACTOR) * FLOAT_WIDTH;
 
         boss2.transform.position = startPosition + new Vector3(x, y, 0.0f);
+
+        if (Keyboard.current.nKey.wasPressedThisFrame)
+        {
+            boss2.Attack1();
+        }
     }
 
     public void Exit()
