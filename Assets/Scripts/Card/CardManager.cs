@@ -1,10 +1,11 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using static Unity.Collections.CollectionHelper;
+using Random = UnityEngine.Random;
+
+
 
 
 public class CardManager : MonoBehaviour
@@ -42,6 +43,10 @@ public class CardManager : MonoBehaviour
 
     [SerializeField]private float[] cardPopRate;// カードの出現率
 
+    [SerializeField] private float[] cardRarityRate= { 55, 30, 10, 5 };// カードのレアリティの出現率
+
+    private float maxRarityRate;// カードのレアリティの最大値
+
     private float maxRate;
 
     private void Awake()
@@ -56,6 +61,7 @@ public class CardManager : MonoBehaviour
     void Start()
     {
         SetCardRate();
+        SetCardRarity();
         drawCooldown = 3f;
         cooldownElapsedTime = 0;
         maxHands = 4;
@@ -142,7 +148,8 @@ public class CardManager : MonoBehaviour
             BaseCard obj = Instantiate(baseCard, playerHand,false);
 
             obj.SetCardType(DetermineCardType());
-
+            obj.SetCardDamage(SetCardRandomDamage(obj.cardID));
+            obj.SetCardRarity(DetermineCardRarity());
             CardLabel label = obj.GetComponent<CardLabel>();
             string text = labelCount.ToString();
             //label.SetName(text);
@@ -225,6 +232,36 @@ public class CardManager : MonoBehaviour
         {
             maxRate+= cardDataBase.CardData[i].rate;
             cardPopRate[i] = maxRate;
+        }
+    }
+
+    private int SetCardRandomDamage(int cardType)
+    {
+        int random = Random.Range(cardDataBase.CardData[cardType].minDamage, cardDataBase.CardData[cardType].maxDamage);
+        return random;
+    }
+
+
+    private int DetermineCardRarity()
+    {
+        float random = Random.Range(0, maxRarityRate);
+        for (int i = 0; i < cardRarityRate.Length; i++)
+        {
+            if (random < cardRarityRate[i])
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private void SetCardRarity()
+    {
+        maxRarityRate = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            maxRarityRate += cardRarityRate[i];
+            cardRarityRate[i] = maxRarityRate;
         }
     }
 }

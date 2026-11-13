@@ -16,5 +16,7 @@ MonoBehaviour:
   ID: 2
   cardName: Special
   stamina: 0
+  maxDamage: 262
+  minDamage: 237
   damage: 100
   rate: 0

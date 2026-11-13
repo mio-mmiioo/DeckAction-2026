@@ -3,6 +3,7 @@ using UnityEngine.Rendering;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using JetBrains.Annotations;
 
 /// <summary>
 /// BaseCardクラス。基本的なカードの挙動を定義するクラス。
@@ -35,6 +36,16 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     //[HideInInspector]
     public int cardID;//カードの種類を決定するID
+
+    [SerializeField]
+    public float cardDamage;//カードの攻撃力を決定する変数
+
+    public int cardAbility;//カードの特殊能力を決定する変数
+
+    [SerializeField]
+    public int cardRarity;//カードのレアリティを決定する変数
+
+
 
     // カードの配置を記憶しておく変数
     private Vector3 localScale;// サイズ
@@ -204,5 +215,19 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         cardVisual.SetCardImage(cardID);
     }
 
-    
+
+    /// <summary>
+    /// カードの攻撃力を決定する
+    /// </summary>
+    /// <param name="damage"></param>
+    public void SetCardDamage(float damage)
+    {
+        cardDamage = damage;
+    }
+
+    public void SetCardRarity(int rarity)
+    {
+        cardRarity = rarity;
+    }
+
 }

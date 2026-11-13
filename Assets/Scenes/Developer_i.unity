@@ -202,6 +202,110 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackPower: 7
+--- !u!1 &83422199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 83422200}
+  - component: {fileID: 83422202}
+  - component: {fileID: 83422201}
+  m_Layer: 0
+  m_Name: shadow_demo_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &83422200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83422199}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.18093032, z: 0}
+  m_LocalScale: {x: 0.0094175525, y: 0.017681235, z: 0.055528026}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1070675605}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &83422201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83422199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4373af529db5e4e99adc08ac42776d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Boss1Shadow
+--- !u!212 &83422202
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83422199}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -4704109464824320795, guid: 48dde7d4ea191914d901f7a4e2f926e2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 24.508854, y: 2.19}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &89493856
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,8 +494,8 @@ GameObject:
   - component: {fileID: 152249656}
   - component: {fileID: 152249659}
   - component: {fileID: 152249658}
-  - component: {fileID: 152249655}
   - component: {fileID: 152249660}
+  - component: {fileID: 152249661}
   m_Layer: 5
   m_Name: Hands
   m_TagString: Untagged
@@ -399,25 +503,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &152249655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152249654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5608bef5f0194634d97806e82b33496d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardManager
-  baseCard: {fileID: 9022132023511262334, guid: 5e4d812bf3540e746b4f53a943eca822, type: 3}
-  playerHand: {fileID: 152249656}
-  cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
-  useCardView: {fileID: 1212814739}
-  maxHands: 0
-  currentPickCard: 0
-  cardPopRate: []
 --- !u!224 &152249656
 RectTransform:
   m_ObjectHideFlags: 0
@@ -487,10 +572,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaf7e1bc675c2a4c8a895602b7087f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandsSort
-  cardManager: {fileID: 152249655}
+  cardManager: {fileID: 0}
   spacing: 70
   cardUpperLeft: 0
   cardY: 25
+--- !u!114 &152249661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152249654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5608bef5f0194634d97806e82b33496d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardManager
+  baseCard: {fileID: 9022132023511262334, guid: 5e4d812bf3540e746b4f53a943eca822, type: 3}
+  playerHand: {fileID: 152249656}
+  cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
+  useCardView: {fileID: 152249654}
+  maxHands: 0
+  currentPickCard: 0
+  cardPopRate: []
+  cardRarityRate:
+  - 55
+  - 30
+  - 10
+  - 5
 --- !u!1 &192782501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,7 +1172,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7117972396796972611, guid: a6d8a822d9a78f74ababb394d3040ce9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 83422200}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d8a822d9a78f74ababb394d3040ce9, type: 3}
 --- !u!1 &898530241
@@ -1093,7 +1205,7 @@ Transform:
   m_GameObject: {fileID: 898530241}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.053, y: -0.378, z: 0}
+  m_LocalPosition: {x: -0.052999966, y: -0.37800002, z: 0}
   m_LocalScale: {x: 0.03563746, y: 0.06368325, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1309,8 +1421,8 @@ Transform:
   m_LocalScale: {x: 4.759, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 898530242}
   - {fileID: 28834105}
+  - {fileID: 898530242}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &994803506
@@ -1359,6 +1471,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &1070675605 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7117972396796972611, guid: a6d8a822d9a78f74ababb394d3040ce9, type: 3}
+  m_PrefabInstance: {fileID: 890230115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1118933088
 GameObject:
   m_ObjectHideFlags: 0
@@ -3884,7 +4001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a030263913346ab49a274284df94681b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombo
-  cardManager: {fileID: 152249655}
+  cardManager: {fileID: 0}
   attackTimer: 0
   comboTimer: 0
   comboCount: 0

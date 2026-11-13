@@ -59,7 +59,6 @@ public class Boss1StateJump : IBoss1State
     }
 
 
-    // Update is called once per frame
     public void Update()
     {
         if(chargeTimer>0.0f)
@@ -91,6 +90,10 @@ public class Boss1StateJump : IBoss1State
 
     }
 
+    /// <summary>
+    /// チャージ時間が0になると呼ばれるジャンプの処理
+    /// 高さが一定まで行くと、着地を呼ぶ
+    /// </summary>
     private void Jump()
     {
         if(!isJumping)
@@ -122,6 +125,9 @@ public class Boss1StateJump : IBoss1State
 
     }
 
+    /// <summary>
+    /// 着地の処理、着地地点に移動するまで呼ばれる
+    /// </summary>
     private void Landing()
     {
         isLanding = true;
