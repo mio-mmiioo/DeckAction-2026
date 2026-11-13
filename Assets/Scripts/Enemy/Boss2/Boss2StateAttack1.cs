@@ -16,6 +16,7 @@ public class Boss2StateAttack1 : IBoss2State
 
     public void Entry()
     {
+        Debug.Log("ボス2攻撃処理1の開始");
     }
 
     public void Update()

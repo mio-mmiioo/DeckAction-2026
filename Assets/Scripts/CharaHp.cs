@@ -15,11 +15,13 @@ public class CharaHp : MonoBehaviour
     [SerializeField] private float invincibleTimer;
 
     private CharaColor charaColor;
+    private int prevHP; // 前回の体力
 
     void Start()
     {
         currentHP = maxHP;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP); // 体力の最小と最大の値を決める
+        prevHP = currentHP;
         invincibleTimer = 0.0f;
 
         charaColor = GetComponent<CharaColor>();
@@ -35,6 +37,7 @@ public class CharaHp : MonoBehaviour
                 charaColor.ResetColor();
             }
         }
+        prevHP = currentHP;
     }
 
     /// <summary>
@@ -77,16 +80,25 @@ public class CharaHp : MonoBehaviour
     /// <summary>
     /// 現在の体力を返す
     /// </summary>
-    /// <returns></returns>
+    /// <returns>現在の体力</returns>
     public int GetHP()
     {
         return currentHP;
     }
 
     /// <summary>
+    /// 前回の体力を返す
+    /// </summary>
+    /// <returns>前回の体力</returns>
+    public int GetPrevHP()
+    {
+        return prevHP;
+    }
+
+    /// <summary>
     /// 最大体力を返す
     /// </summary>
-    /// <returns></returns>
+    /// <returns>最大体力</returns>
     public int GetMaxHP()
     {
         return maxHP;

@@ -2,15 +2,30 @@ using UnityEngine;
 
 public class Boss2 : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Boss2StateContext stateContext; // Boss2のStateを管理する
+
     void Start()
     {
-        
+        stateContext = GetComponent<Boss2StateContext>();
+        stateContext.Init(this, BOSS_2_STATE.B_2_STATE_MOVE);
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        stateContext.Update();
+    }
+
+    /// <summary>
+    /// 攻撃パターン1
+    /// </summary>
+    public void Attack1()
+    {
+        stateContext.ChangeState(BOSS_2_STATE.B_2_STATE_ATTACK_1);
+    }
+
+    public void Move()
+    {
+        stateContext.ChangeState(BOSS_2_STATE.B_2_STATE_MOVE);
     }
 }
