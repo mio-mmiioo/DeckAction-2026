@@ -412,6 +412,11 @@ MonoBehaviour:
   maxHands: 0
   currentPickCard: 0
   cardPopRate: []
+  cardRarityRate:
+  - 55
+  - 30
+  - 10
+  - 5
 --- !u!224 &476151038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2648,7 +2653,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1096995076}
   - component: {fileID: 1096995079}
+  - component: {fileID: 1096995082}
   - component: {fileID: 1096995081}
+  - component: {fileID: 1096995083}
   - component: {fileID: 1096995080}
   - component: {fileID: 1096995075}
   - component: {fileID: 1096995078}
@@ -2728,7 +2735,7 @@ Transform:
   m_GameObject: {fileID: 1096995074}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.31, y: 2.68, z: 0}
+  m_LocalPosition: {x: 3.25, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2808,7 +2815,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1096995079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2849,6 +2856,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6975a6a8f35fb40a7456f65a084f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss2StateContext
+--- !u!114 &1096995082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096995074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc9d88e1134fa2408969415222ee20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckHp
+--- !u!114 &1096995083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096995074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c55c6d1540c74438f1d2e413878c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Boss2
 --- !u!1 &1133212219
 GameObject:
   m_ObjectHideFlags: 0
