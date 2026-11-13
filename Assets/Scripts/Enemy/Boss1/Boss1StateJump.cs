@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss1StateJump : IBoss1State
@@ -15,14 +16,16 @@ public class Boss1StateJump : IBoss1State
     private Vector2 jumpingPoint;
     private float cameraOutHeight = 10.0f;//カメラの外に出れる高さ
 
-    private const float CHARGE_TIME = 5.0f; // 攻撃前のための時間
+    private const float CHARGE_TIME = 3.0f; // 攻撃前のための時間
     private float chargeTimer;
+    private const float LANDING_TIME = 1.0f; // 着地までのための時間
+    private float landingTimer;
     private const float JUMP_SPEED = 0.03f;//ジャンプの時間
     private float jumpSpeed;
 
-    private bool isEndJump = false;
-    private bool isJumping = false;
-    private bool isLanding = false;
+    private bool isEndJump ;
+    private bool isJumping ;
+    private bool isLanding ;
 
     public Boss1StateJump(Boss1 b) => boss1 = b;
 
@@ -37,10 +40,16 @@ public class Boss1StateJump : IBoss1State
         spriteRenderer = boss1.GetComponent<SpriteRenderer>();
         animator = boss1.GetComponent<Animator>();
         chargeTimer= CHARGE_TIME;
+        landingTimer= LANDING_TIME;
         jumpSpeed = JUMP_SPEED;
 
         SetLandingPoint();
         animator.SetTrigger("Charge");
+        Debug.Log("Boss1StateJump: Entry");
+
+        isEndJump = false;
+        isJumping = false;
+        isLanding = false;
 
     }
 
@@ -64,7 +73,7 @@ public class Boss1StateJump : IBoss1State
 
         if(isEndJump)
         {
-            boss1.Jump();
+            boss1.Idle();
         }
 
     }
@@ -84,16 +93,29 @@ public class Boss1StateJump : IBoss1State
 
     private void Jump()
     {
-        animator.SetTrigger("Jump");
-        if (boss1.transform.position.y!=cameraOutHeight&& !isJumping)
+        if(!isJumping)
         {
             isJumping = true;
+            animator.SetTrigger("Jump");
+        }
+
+
+        if (boss1.transform.position.y!=cameraOutHeight&&!isLanding)
+        {
             boss1.transform.position =Vector2.MoveTowards(boss1.transform.position, jumpingPoint, jumpSpeed);
         }
-        
-        if(boss1.transform.position.y==cameraOutHeight)
+        else if(boss1.transform.position.y<=cameraOutHeight)
         {
-            Landing();
+            if (landingTimer > 0.0f)
+            {
+                landingTimer -= Time.deltaTime;
+            }
+            else
+            {
+               Landing();
+            }
+
+            
         }
 
 
@@ -102,14 +124,17 @@ public class Boss1StateJump : IBoss1State
 
     private void Landing()
     {
-        if(boss1.transform.position.y!=landingPoint.y && !isLanding)
-        {
-            isLanding = true;
-            animator.SetTrigger("Idle");
-            boss1.transform.position = Vector2.MoveTowards(boss1.transform.position, landingPoint, jumpSpeed);
-        }
+        isLanding = true;
 
-        if(boss1.transform.position.y==landingPoint.y)
+        animator.SetTrigger("Idle");
+
+        boss1.transform.position = Vector2.MoveTowards(
+            boss1.transform.position,
+            landingPoint,
+            jumpSpeed
+        );
+
+        if (Vector2.Distance(boss1.transform.position, landingPoint) < 0.01f)
         {
             isEndJump = true;
         }

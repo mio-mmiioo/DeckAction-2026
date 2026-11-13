@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Boss1 : MonoBehaviour
 {
@@ -15,9 +16,9 @@ public class Boss1 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         stateContext = GetComponent<Boss1StateContext>();
-        stateContext.Init(this, BOSS_1_STATE.B_1_STATE_JUMP);
+        stateContext.Init(this, BOSS_1_STATE.B_1_STATE_IDLE);
         animator = GetComponent<Animator>();
-        //animator.Play("Jump");
+        animator.Play("Idle");
 
     }
 
@@ -30,6 +31,11 @@ public class Boss1 : MonoBehaviour
     public void Jump()
     {
         stateContext.ChangeState(BOSS_1_STATE.B_1_STATE_JUMP);
+    }
+
+    public void Idle()
+    {
+        stateContext.ChangeState(BOSS_1_STATE.B_1_STATE_IDLE);
     }
 
 }
