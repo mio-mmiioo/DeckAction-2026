@@ -20,7 +20,7 @@ public class Boss1StateContext : MonoBehaviour
         Dictionary<BOSS_1_STATE, IBoss1State> table = new()
         {
             { BOSS_1_STATE.B_1_STATE_JUMP, new Boss1StateJump(boss1) },
-            //{ BOSS_1_STATE.B_1_STATE_IDLE, new EnemyAStateMove(boss1) }
+            { BOSS_1_STATE.B_1_STATE_IDLE, new Boss1StateIdle(boss1) }
         };
         stateTable = table;
 
