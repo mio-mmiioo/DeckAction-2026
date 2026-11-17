@@ -37,20 +37,14 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     //[HideInInspector]
     public int cardID;//カードの種類を決定するID
 
-    [SerializeField]
-    public float cardDamage;//カードの攻撃力を決定する変数
-
-    public int cardAbility;//カードの特殊能力を決定する変数
-
-    [SerializeField]
-    public int cardRarity;//カードのレアリティを決定する変数
-
-
-
+    
     // カードの配置を記憶しておく変数
     private Vector3 localScale;// サイズ
     private Vector2 localPosition;// 位置
     private int prevSiblingIndex;// 表示順
+
+    [SerializeField]
+    private CardParameterData cardParameterData;// カードのパラメータを格納する構造体
 
 
 
@@ -60,6 +54,16 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     {
         startPos = new Vector2(transform.position.x, transform.position.y);
         transform.position=new Vector2(startPos.x, startPos.y+100);
+    }
+
+    /// <summary>
+    /// 生成時に呼ぶ関数。カードのパラメータを初期化する。
+    /// </summary>
+    /// <param name="data"></param>
+    public void Initialize(CardParameterData data)
+    {
+        cardParameterData = data;
+        SetCardType(cardParameterData.cardType);
     }
 
     /// <summary>
@@ -215,19 +219,9 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         cardVisual.SetCardImage(cardID);
     }
 
-
-    /// <summary>
-    /// カードの攻撃力を決定する
-    /// </summary>
-    /// <param name="damage"></param>
-    public void SetCardDamage(float damage)
+    public CardParameterData GetCardParameter()
     {
-        cardDamage = damage;
-    }
-
-    public void SetCardRarity(int rarity)
-    {
-        cardRarity = rarity;
+        return cardParameterData;
     }
 
 }

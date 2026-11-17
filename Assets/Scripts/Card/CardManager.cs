@@ -6,18 +6,16 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-
-
 public class CardManager : MonoBehaviour
 {
+    [Tooltip("カード情報のデーターベース")]
+    [SerializeField] CardDataBase cardDataBase;
+
     [Tooltip("BaseCardのプレハブ")]
     [SerializeField] private BaseCard baseCard;
 
     [Tooltip("プレイヤーの手札のTransform")]
     [SerializeField] private Transform playerHand;
-
-    [Tooltip("カード情報のデーターベース")]
-    [SerializeField] CardDataBase cardDataBase;
 
     [Tooltip("使用したカードの表示領域")]
     [SerializeField] GameObject useCardView;
@@ -40,28 +38,26 @@ public class CardManager : MonoBehaviour
 
     private float cooldownElapsedTime;//経過時間
 
+    // カードのパラメーターの確率用の変数
+    [SerializeField] private float[] cardPopRate;// カードの出現率
 
-    [SerializeField]private float[] cardPopRate;// カードの出現率
+    [SerializeField] private float[] cardRarityRate = { 55, 30, 10, 5 };// カードのレアリティの出現率
 
-    [SerializeField] private float[] cardRarityRate= { 55, 30, 10, 5 };// カードのレアリティの出現率
-
+    [SerializeField]
     private float maxRarityRate;// カードのレアリティの最大値
 
     private float maxRate;
 
-    private void Awake()
-    {
-            
-    }
-
+    CardParameterData cardParameterData = new CardParameterData();// カードのパラメータを格納する構造体
 
     /// <summary>
     /// 変数の初期化
     /// </summary>
     void Start()
     {
-        SetCardRate();
-        SetCardRarity();
+        CalculationCardRarity();
+        CalculationCardRate();
+
         drawCooldown = 3f;
         cooldownElapsedTime = 0;
         maxHands = 4;
@@ -145,14 +141,15 @@ public class CardManager : MonoBehaviour
     {
         for (int i = 0; i < value; i++)
         {
-            BaseCard obj = Instantiate(baseCard, playerHand,false);
-
-            obj.SetCardType(DetermineCardType());
-            obj.SetCardDamage(SetCardRandomDamage(obj.cardID));
-            obj.SetCardRarity(DetermineCardRarity());
+            BaseCard obj = Instantiate(baseCard, playerHand, false);
             CardLabel label = obj.GetComponent<CardLabel>();
             string text = labelCount.ToString();
-            //label.SetName(text);
+
+            SetCardParametor();
+            obj.Initialize(cardParameterData);
+
+
+            label.SetName(text);
 
             labelCount++;
 
@@ -205,36 +202,68 @@ public class CardManager : MonoBehaviour
         handsSort.CardViewSortMedian(hands);
     }
 
- 
+
+    private void SetCardParametor()
+    {
+        cardParameterData.cardType = DetermineCardType();
+        cardParameterData.cardDamage = SetCardRandomDamage(cardParameterData.cardType);
+        cardParameterData.cardRarity = DetermineCardRarity();
+        cardParameterData.cardAbility = DetermineCardAbility(cardParameterData.cardType, cardParameterData.cardRarity);
+    }
+
+
+    /// <summary>
+    /// カードタイプの確率を事前に計算する
+    /// </summary>
+    private void CalculationCardRate()
+   {
+        maxRate = 0;
+        cardPopRate = new float[cardDataBase.CardData.Count-1];
+        for (int i = 1; i < cardDataBase.CardData.Count; i++)
+        {
+            maxRate += cardDataBase.CardData[i].rate;
+            cardPopRate[i-1] = maxRate;
+        }
+    }
+
+
+    /// <summary>
+    /// カードのレア度を計算する
+    /// </summary>
+    private void CalculationCardRarity()
+    {
+        maxRarityRate = 0;
+        for (int i = 0; i < cardRarityRate.Length; i++)
+        {
+            maxRarityRate += cardRarityRate[i];
+            cardRarityRate[i] = maxRarityRate;
+        }
+    }
+
+    /// <summary>
+    /// 確率からカードタイプを決定する
+    /// </summary>
+    /// <returns></returns>
     private int DetermineCardType()
     {
-        float random = Random.Range(0,maxRate);
-        for(int i=0;i<cardPopRate.Length;i++)
+        float random = Random.Range(0, maxRate);
+        for (int i = 0; i < cardPopRate.Length; i++)
         {
             if (random < cardPopRate[i])
             {
-                return  i;
+                return i;
             }
         }
 
         return 0;
-        
     }
 
     /// <summary>
-    /// カードの確率を事前に計算する
+    /// カードの攻撃力をランダムに決定する
+    /// 最低値と最大値の間からランダムに決定する
     /// </summary>
-    private void SetCardRate()
-    {
-        maxRate=0;
-        cardPopRate = new float[cardDataBase.CardData.Count];
-        for (int i=1;i<cardDataBase.CardData.Count;i++)
-        {
-            maxRate+= cardDataBase.CardData[i].rate;
-            cardPopRate[i] = maxRate;
-        }
-    }
-
+    /// <param name="cardType"></param>
+    /// <returns></returns>
     private int SetCardRandomDamage(int cardType)
     {
         int random = Random.Range(cardDataBase.CardData[cardType].minDamage, cardDataBase.CardData[cardType].maxDamage);
@@ -242,6 +271,10 @@ public class CardManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// カードのレア度を決定する
+    /// </summary>
+    /// <returns></returns>
     private int DetermineCardRarity()
     {
         float random = Random.Range(0, maxRarityRate);
@@ -249,20 +282,29 @@ public class CardManager : MonoBehaviour
         {
             if (random < cardRarityRate[i])
             {
-                return i;
+                return i+1;
             }
         }
         return 0;
     }
 
-    private void SetCardRarity()
+
+    private int DetermineCardAbility(int cardType,int cardRarity)
     {
-        maxRarityRate = 0;
-        for (int i = 0; i < 4; i++)
+        switch (cardRarity)
         {
-            maxRarityRate += cardRarityRate[i];
-            cardRarityRate[i] = maxRarityRate;
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            case 3:
+                return 3;
         }
+
+        return 0;
     }
 }
+
 
