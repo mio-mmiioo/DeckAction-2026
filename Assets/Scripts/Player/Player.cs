@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private PlayerAttackType playerAttackType; // 攻撃の種類
     private CharaHp charaHp; // 体力を管理する
-
+    private Turn turn;
     private Stamina stamina; // スタミナ
 
     private bool isJump = false; // ジャンプするならtrue
@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
         checkOnGround = GetComponent<CheckOnGround>();
         playerAttackType = GetComponent<PlayerAttackType>();
         charaHp = GetComponent<CharaHp>();
+        turn = GetComponentInParent<Turn>();
         stamina = GetComponent<Stamina>();
     }
 
@@ -35,15 +36,20 @@ public class Player : MonoBehaviour
             return;
         }
 
-        Walk();
-
-        // ジャンプ
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && checkOnGround.onGround == true)
+        if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
         {
-            isJump = true;
+            playerAttackType.SetCardID(); // 攻撃の種類をセット
+        }
+        else if (turn.GetCurrentTurn() == Turn.TURN_TYPE.ENEMY_TURN)
+        {
+            Walk();
+            // ジャンプ
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && checkOnGround.onGround == true)
+            {
+                isJump = true;
+            }
         }
 
-        playerAttackType.SetCardID(); // 攻撃の種類をセット        
     }
 
     void FixedUpdate()
