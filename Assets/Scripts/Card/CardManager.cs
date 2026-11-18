@@ -20,6 +20,8 @@ public class CardManager : MonoBehaviour
     [Tooltip("使用したカードの表示領域")]
     [SerializeField] GameObject useCardView;
 
+    [SerializeField] PlayerUseCard playerUseCard;
+
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
     Queue<BaseCard> useCards = new Queue<BaseCard>();// 使用済みカードのリスト
 
@@ -120,6 +122,7 @@ public class CardManager : MonoBehaviour
                     hands[i].transform.SetParent(useCardView.transform);
                     hands.RemoveAt(i);
                     CardSort();
+                    playerUseCard.UseCard();
                 }
                 else
                 {
@@ -173,21 +176,21 @@ public class CardManager : MonoBehaviour
     /// 0は失敗
     /// </summary>
     /// <returns></returns>
-    public int GetUseCard()
+    public CardParameterData GetUseCard()
     {
+        CardParameterData param=new CardParameterData(0,0,0,0);
         if (useCards.Count != 0)
         {
             BaseCard card = useCards.Dequeue();
 
-            int num = card.cardID;
+            param = card.GetCardParameter();
 
             Destroy(card.gameObject);
 
-            return num;
         }
 
-        return 0;
 
+        return param;
 
     }
 
@@ -203,6 +206,9 @@ public class CardManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// カードのパラメーターを決める
+    /// </summary>
     private void SetCardParametor()
     {
         cardParameterData.cardType = DetermineCardType();
@@ -251,7 +257,7 @@ public class CardManager : MonoBehaviour
         {
             if (random < cardPopRate[i])
             {
-                return i;
+                return i+1;
             }
         }
 

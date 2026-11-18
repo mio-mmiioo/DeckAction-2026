@@ -36,33 +36,24 @@ public class PlayerAttackType : MonoBehaviour
     /// <summary>
     /// 使用したカードのIDを設定する
     /// </summary>
-    public void SetCardID()
+    public void SetCardID(int id,int power)
     {
-        (currentID,comboCount,isAttack)= playerCombo.ComboGet();
-
         if(isAttack)
         {
-            switch (currentID)
+            switch (id)
             {
-                case 1:
-                    physicalAttackObject.GetComponent<PlayerAttack>().SetAttackPower(SetAttackPower());
+                case 1:;
                     physicalAttackObject.GetComponent<PlayerEnableAttack>().Attack();
+                    physicalAttackObject.GetComponent<PlayerAttack>().SetAttackPower(power);
                     break;
 
                 case 2:
                     // 魔法攻撃を生成する
                     GameObject magic = Instantiate(magicAttackObject, magicPosition.GetCreatePosition().position, Quaternion.identity);
-                    magic.GetComponent<MagicAttack>().SetAttackPower(SetAttackPower());
+                    magic.GetComponent<MagicAttack>().SetAttackPower(power);
                     break;
             }
-            stamina.UseStamina(currentID);
             isAttack= false;
-            comboCountText.SetComboCount(comboCount);
-        }
-
-        if(comboCount==0)
-        {
-            comboCountText.SetComboCount(comboCount);
         }
         
     }
@@ -77,16 +68,24 @@ public class PlayerAttackType : MonoBehaviour
     }
 
     /// <summary>
-    /// 使用されたカードによってダメージをセットする
+    /// 使用されたカードのダメージを取得する
     /// </summary>
-    public int SetAttackPower()
+    /// <returns>ダメージ</returns>
+    public int GetAttackPower()
     {
-        int damage = cardDataBase.CardData[currentID].damage;
-        
-        // コンボの処理　攻撃を計算する処理
+        int ret = cardDataBase.CardData[currentID].damage;
+        // コンボの処理
 
-        return damage;
+
+
+        // 最終的なダメージ
+
+
+
+        return ret;
     }
+
+
 
     /// <summary>
     /// 使用されたカードの消費スタミナを取得する

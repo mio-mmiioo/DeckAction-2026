@@ -60,7 +60,7 @@ public class PlayerCombo : MonoBehaviour
     /// </summary>
   private void ComboJudge()
     {
-        currentCardID = cardManager.GetUseCard();// 使用したカードのIDを取得する
+        currentCardID = cardManager.GetUseCard().cardType;// 使用したカードのIDを取得する
 
         // コンボ判定
         if (currentCardID != 0)

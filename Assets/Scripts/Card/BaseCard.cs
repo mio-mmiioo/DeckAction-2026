@@ -224,4 +224,10 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         return cardParameterData;
     }
 
+    public void CardGoPlayer()
+    {
+
+    }
+
+
 }
