@@ -6,6 +6,8 @@ public class Boss2StateAttack1 : IBoss2State
     private Boss2 boss2;
     public BOSS_2_STATE state => BOSS_2_STATE.B_2_STATE_ATTACK_1;
 
+    private GameObject boss2Attack1;
+
     /// <summary>
     /// 敵を設定
     /// </summary>
@@ -13,18 +15,19 @@ public class Boss2StateAttack1 : IBoss2State
     public Boss2StateAttack1(Boss2 e)
     {
         boss2 = e;
+        boss2Attack1 = GameObject.Find("Boss2Attack1");
     }
 
     public void Entry()
     {
-        Debug.Log("ボス2攻撃処理1の開始");
+        Debug.Log("ボス2が剣を飛ばした");
+        boss2Attack1.GetComponent<CreateSword>().LaunchSword();
     }
 
     public void Update()
     {
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
-            Debug.Log("移動ボタンが押された");
             boss2.Move();
         }
     }

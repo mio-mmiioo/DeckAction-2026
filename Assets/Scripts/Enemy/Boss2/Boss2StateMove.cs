@@ -23,7 +23,6 @@ public class Boss2StateMove : IBoss2State
 
     public void Entry()
     {
-        Debug.Log("ボス2の移動処理開始");
         startPosition = boss2.transform.position;
     }
 
