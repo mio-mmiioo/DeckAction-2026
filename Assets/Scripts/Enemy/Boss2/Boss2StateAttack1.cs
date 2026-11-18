@@ -21,12 +21,12 @@ public class Boss2StateAttack1 : IBoss2State
     public void Entry()
     {
         Debug.Log("ボス2が剣を飛ばした");
-        boss2Attack1.GetComponent<CreateSword>().LaunchSword();
+        boss2Attack1.GetComponent<SwordManager>().CreateSword();
     }
 
     public void Update()
     {
-        if (Keyboard.current.mKey.wasPressedThisFrame)
+        if (boss2Attack1.GetComponent<SwordManager>().GetSwords() <= 0)
         {
             boss2.Move();
         }
