@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 public class Turn : MonoBehaviour
 {
@@ -13,13 +12,23 @@ public class Turn : MonoBehaviour
     }
 
     private TurnDisplay turnDisplay;
+    private DebugTurnDisplay debugTurnDisplay;
     private TURN_TYPE currentTurn; // 現在のターン
     private TURN_TYPE prevTurn; // 前回のターン
+
+    private const string PLAYER_TURN_MESSAGE = "PLAYER TURN"; // プレイヤーターン時に表示するメッセージ
+    private const string ENEMY_TURN_MESSAGE = "ENEMY TURN"; // エネミーターン時に表示するメッセージ
 
     void Start()
     {
         turnDisplay = GetComponent<TurnDisplay>();
+        debugTurnDisplay = GetComponent<DebugTurnDisplay>();
+        
+        // 最初はプレイヤーターンに設定する
         currentTurn = TURN_TYPE.PLAYER_TURN;
+        debugTurnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
+        turnDisplay.ShowPlayerTurn(PLAYER_TURN_MESSAGE);
+        
         prevTurn = currentTurn;
     }
 
@@ -41,18 +50,24 @@ public class Turn : MonoBehaviour
             if (currentTurn == TURN_TYPE.PLAYER_TURN)
             {
                 Debug.Log("プレイヤーターン開始");
-                turnDisplay.ShowPlayerTurn();
+                debugTurnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
+                turnDisplay.ShowPlayerTurn(PLAYER_TURN_MESSAGE);
             }
             else if (currentTurn == TURN_TYPE.ENEMY_TURN)
             {
                 Debug.Log("エネミーターン開始");
-                turnDisplay.ShowEnemyTurn();
+                debugTurnDisplay.SetTurnText(ENEMY_TURN_MESSAGE);
+                turnDisplay.ShowEnemyTurn(ENEMY_TURN_MESSAGE);
             }
         }
 
         prevTurn = currentTurn;
     }
 
+    /// <summary>
+    /// 現在のターンを取得する
+    /// </summary>
+    /// <returns>現在のターン</returns>
     public TURN_TYPE GetCurrentTurn()
     {
         return currentTurn;
@@ -63,6 +78,6 @@ public class Turn : MonoBehaviour
     /// </summary>
     public void SetPlayerTurn()
     {
-        currentTurn = Turn.TURN_TYPE.PLAYER_TURN;
+        currentTurn = TURN_TYPE.PLAYER_TURN;
     }
 }

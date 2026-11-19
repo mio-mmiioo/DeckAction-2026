@@ -2,6 +2,9 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// ターンを画面左右から中央へ移動して表示させる
+/// </summary>
 public class TurnDisplay : MonoBehaviour
 {
     [Tooltip("TrunTextを設定してください")]
@@ -10,7 +13,7 @@ public class TurnDisplay : MonoBehaviour
     [Tooltip("文字を移動させている時間")]
     [SerializeField] private float MoveTime = 0.8f;
 
-    [Tooltip("文字を中央にひょじさせている時間")]
+    [Tooltip("文字を中央に表示させている時間")]
     [SerializeField] private float StayTime = 0.8f;
 
     private const int START_X = 1500; // 文字の移動開始位置のx座標
@@ -20,17 +23,17 @@ public class TurnDisplay : MonoBehaviour
     /// <summary>
     /// プレイヤーターンと表示をする
     /// </summary>
-    public void ShowPlayerTurn()
+    public void ShowPlayerTurn(string turnMessage)
     {
-        StartTurn("PLAYER TURN", true);
+        StartTurn(turnMessage, true);
     }
 
     /// <summary>
     /// エネミーターンと表示する
     /// </summary>
-    public void ShowEnemyTurn()
+    public void ShowEnemyTurn(string turnMessage)
     {
-        StartTurn("ENEMY TURN", false);
+        StartTurn(turnMessage, false);
     }
 
     /// <summary>
