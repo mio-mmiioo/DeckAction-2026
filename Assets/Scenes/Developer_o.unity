@@ -409,6 +409,7 @@ MonoBehaviour:
   baseCard: {fileID: 9022132023511262334, guid: 5e4d812bf3540e746b4f53a943eca822, type: 3}
   playerHand: {fileID: 476151038}
   useCardView: {fileID: 558828477}
+  playerUseCard: {fileID: 0}
   maxHands: 0
   currentPickCard: 0
   cardPopRate: []
@@ -642,6 +643,7 @@ GameObject:
   - component: {fileID: 556870035}
   - component: {fileID: 556870034}
   - component: {fileID: 556870033}
+  - component: {fileID: 556870039}
   - component: {fileID: 556870032}
   - component: {fileID: 556870031}
   - component: {fileID: 556870030}
@@ -952,6 +954,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7137679, y: 1.8876338}
   m_EdgeRadius: 0
+--- !u!114 &556870039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556870023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2313efc3e7fb6dd40ab99290de95df07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUseCard
+  cardManager: {fileID: 476151037}
+  cardAbilityTable: {fileID: 11400000, guid: 926dd2bbcfd84bd498b84ef926d33940, type: 2}
+  cardDataBase: {fileID: 11400000, guid: 01c76f0181f30eb44b31e2a55de9daf9, type: 2}
+  playerAttack: {fileID: 999668591}
+  player: {fileID: 556870036}
+  stamina: {fileID: 556870033}
+  nextAttack: 0
+  nextStamina: 0
+  currentCombo: 0
+  comboPower: 
 --- !u!1 &558828477
 GameObject:
   m_ObjectHideFlags: 0
