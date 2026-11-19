@@ -1,11 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// ゲーム全体を管理する
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject character; // 画面上のキャラの親オブジェクト
+
+    private void Update()
+    {
+    }
 
     public bool GetIsGameOver()
     {

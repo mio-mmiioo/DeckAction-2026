@@ -13,6 +13,7 @@ public class SwordManager : MonoBehaviour
 
     [SerializeField] private float angleRange = 120.0f;
 
+    [SerializeField] private Vector2 BasePosition;
     private const int MAX_SWORD_NUMBER = 7; // 剣の本数
     private const float WAIT_TIME = 2.0f; // 剣を配置してから飛ばすまでの時間
     private const float LAUNCH_INTERVAL = 0.8f; // 剣を飛ばしてから次の剣を飛ばすまでの時間
@@ -20,7 +21,6 @@ public class SwordManager : MonoBehaviour
 
     void Start()
     {
-
     }
 
     void Update()
@@ -69,9 +69,4 @@ public class SwordManager : MonoBehaviour
     {
         return swords.Count;
     }
-
-    //public void LaunchSword()
-    //{
-    //    swordPrefab.GetComponent<Sword>().LaunchSword(player.position);
-    //}
 }
