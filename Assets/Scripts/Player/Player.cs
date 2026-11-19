@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 
         if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
         {
-            playerAttackType.SetCardID(); // 攻撃の種類をセット
+            //playerAttackType.SetCardID(); // 攻撃の種類をセット
         }
         else if (turn.GetCurrentTurn() == Turn.TURN_TYPE.ENEMY_TURN)
         {

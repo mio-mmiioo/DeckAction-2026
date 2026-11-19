@@ -122,7 +122,6 @@ public class CardManager : MonoBehaviour
                     hands[i].transform.SetParent(useCardView.transform);
                     hands.RemoveAt(i);
                     CardSort();
-                    playerUseCard.UseCard();
                 }
                 else
                 {
