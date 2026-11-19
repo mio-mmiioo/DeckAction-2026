@@ -2658,6 +2658,7 @@ GameObject:
   - component: {fileID: 999668592}
   - component: {fileID: 999668591}
   - component: {fileID: 999668590}
+  - component: {fileID: 999668593}
   - component: {fileID: 999668589}
   - component: {fileID: 999668588}
   m_Layer: 10
@@ -2812,6 +2813,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 556870037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &999668593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999668587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96046dc3d3990774f83fa21e9847d3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackPower
 --- !u!1 &1039662598
 GameObject:
   m_ObjectHideFlags: 0

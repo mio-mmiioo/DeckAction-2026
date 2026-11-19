@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private int attackPower; // 攻撃力
-    
-    /// <summary>
-    /// 攻撃力をセットする
-    /// </summary>
-    /// <param name="power">攻撃力</param>
-    public void SetAttackPower(int power)
+    private AttackPower attackPower; // 攻撃力
+
+    void Start()
     {
-        attackPower = power;
+        attackPower = GetComponent<AttackPower>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -18,7 +14,7 @@ public class PlayerAttack : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             CharaHp charaHp = other.GetComponent<CharaHp>();
-            charaHp.TakeDamage(attackPower);
+            charaHp.TakeDamage(attackPower.GetAttackPower());
         }
     }
 }
