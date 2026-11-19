@@ -43,10 +43,11 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     private Vector2 localPosition;// 位置
     private int prevSiblingIndex;// 表示順
 
-    [SerializeField]
-    private CardParameterData cardParameterData;// カードのパラメータを格納する構造体
+    [SerializeField]private CardParameterData cardParameterData;// カードのパラメータを格納する構造体
 
+    [SerializeField] private Turn turn;
 
+    private float enemyTurnHeight;
 
     Vector2 startPos;
 
@@ -77,7 +78,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         localScale = transform.localScale;
-
+        turn = FindAnyObjectByType<Turn>();
         while(transform.position.y>startPos.y)
         {
             transform.position = Vector2.MoveTowards(transform.position, startPos, 10f);
@@ -86,13 +87,18 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         
     }
 
+    void Update()
+    {
+
+    }
+
     /// <summary>
     /// ドラッグ開始時にレイキャストの判定をオフにする
     /// </summary>
     /// <param name="eventData"></param>
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!isUsed)
+        if (!isUsed&&turn.GetCurrentTurn()== Turn.TURN_TYPE.PLAYER_TURN)
         {
             GetComponent<CanvasGroup>().blocksRaycasts = false;
             isDrag = true;
@@ -106,7 +112,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
-        if(!isUsed)
+        if(!isUsed&&turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
         {
             transform.position = eventData.position;
         }
@@ -154,16 +160,19 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// </summary>
     private void OnDoubleClick()
     {
-        if(clickCount!=2)
+        if (!isUsed && turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
         {
-            clickCount = 0;
-        }
+            if (clickCount != 2)
+            {
+                clickCount = 0;
+            }
 
-        if (clickCount >= 2)
-        {
-            Debug.Log("カードがダブルクリックされました");
-            isUsed = true;
-            clickCount = 0;
+            if (clickCount >= 2)
+            {
+                Debug.Log("カードがダブルクリックされました");
+                isUsed = true;
+                clickCount = 0;
+            }
         }
         
     }

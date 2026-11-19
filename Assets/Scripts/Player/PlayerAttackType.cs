@@ -27,22 +27,18 @@ public class PlayerAttackType : MonoBehaviour
     /// </summary>
     public void SetCardID(int id,int power)
     {
-        if(isAttack)
+        switch (id)
         {
-            switch (id)
-            {
-                case 1:;
-                    physicalAttackObject.GetComponent<PlayerEnableAttack>().Attack();
-                    physicalAttackObject.GetComponent<AttackPower>().SetAttackPower(power);
-                    break;
+            case 1:;
+                physicalAttackObject.GetComponent<PlayerEnableAttack>().Attack();
+                physicalAttackObject.GetComponent<AttackPower>().SetAttackPower(power);
+                break;
 
-                case 2:
-                    // 魔法攻撃を生成する
-                    GameObject magic = Instantiate(magicAttackObject, magicPosition.GetCreatePosition().position, Quaternion.identity);
-                    magic.GetComponent<AttackPower>().SetAttackPower(power);
-                    break;
-            }
-            isAttack= false;
+            case 2:
+                // 魔法攻撃を生成する
+                GameObject magic = Instantiate(magicAttackObject, magicPosition.GetCreatePosition().position, Quaternion.identity);
+                magic.GetComponent<AttackPower>().SetAttackPower(power);
+                break;
         }
         
     }

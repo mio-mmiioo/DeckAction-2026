@@ -112,6 +112,12 @@ MonoBehaviour:
   isDrag: 0
   isPick: 0
   cardID: 0
+  cardParameterData:
+    cardDamage: 0
+    cardAbility: 0
+    cardRarity: 0
+    cardType: 0
+  turn: {fileID: 0}
 --- !u!114 &2322959807441065537
 MonoBehaviour:
   m_ObjectHideFlags: 0

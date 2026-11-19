@@ -12,8 +12,6 @@ public class PlayerUseCard : MonoBehaviour
 
     [SerializeField] CardDataBase cardDataBase;
 
-    [SerializeField] PlayerAttack playerAttack;
-
 
     public Player player;
 
@@ -34,29 +32,33 @@ public class PlayerUseCard : MonoBehaviour
 
     public int currentCombo;
 
-
+    [SerializeField]
     private CardParameterData cardParameterData;
 
     [SerializeField]
     private int[] comboPower;
 
+    public int texn;
+
+    public float limitTime;
 
     void Start()
     {
-        playerAttack = GetComponent<PlayerAttack>();
         playerAttackType = GetComponent<PlayerAttackType>();
         comboCount = GetComponent<ComboCount>();
         playerCombo = GetComponent<PlayerCombo>();
 
-
+        currentCombo = 0;
         comboPower = new int[4] { 1, 2, 3, 4 };
         nextStamina = 0;
         nextAttack = 0;
+        limitTime = 1.0f;
     }
 
     private void Update()
     {
-        
+        texn = cardParameterData.cardType;
+        limitTime -= Time.deltaTime;
     }
 
 
@@ -65,15 +67,21 @@ public class PlayerUseCard : MonoBehaviour
     /// </summary>
     public void UseCard()
     {
-        cardParameterData= cardManager.GetUseCard();//使用したカードのパラメーターを取得
-        if (cardParameterData.cardType != 0)
+        if (limitTime < 0)
         {
-            CardAbility cardAbility = cardAbilityTable.CardAbilityList_1[0];//カードの効果を発動
-            cardAbility.Execute(this, cardManager);
-            stamina.UseStamina(cardDataBase.CardData[cardParameterData.cardType].stamina - nextStamina);//ｽﾀﾐﾅを消費        
-            playerAttackType.SetCardID(cardParameterData.cardType, CalculationPower());//攻撃の種類を設定
-            nextAttack = 0;
-            nextStamina = 0;
+            cardParameterData = cardManager.GetUseCard();//使用したカードのパラメーターを取得
+
+            if (cardParameterData.cardType != 0)
+            {
+                CardAbility cardAbility = cardAbilityTable.CardAbilityList_1[0];//カードの効果を発動
+                cardAbility.Execute(this, cardManager);
+                stamina.UseStamina(cardDataBase.CardData[cardParameterData.cardType].stamina - nextStamina);//ｽﾀﾐﾅを消費        
+                playerAttackType.SetCardID(cardParameterData.cardType, CalculationPower());//攻撃の種類を設定
+
+                comboCount.SetComboCount(currentCombo);
+
+                limitTime = 1.0f;
+            }
         }
     }
 
@@ -87,6 +95,9 @@ public class PlayerUseCard : MonoBehaviour
         int cardPower = cardDataBase.CardData[cardParameterData.cardType].damage;
 
         power = (cardPower+nextAttack)*comboPower[currentCombo];
+
+        //nextAttack = 0;
+        //nextStamina = 0;
 
         return power;
     }

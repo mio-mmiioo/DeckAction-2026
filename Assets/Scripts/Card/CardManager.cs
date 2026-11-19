@@ -88,7 +88,7 @@ public class CardManager : MonoBehaviour
         if (hands.Count < maxHands)
         {
             cooldownElapsedTime += Time.deltaTime;
-            Debug.Log("一秒経過");
+            //Debug.Log("一秒経過");
             if (cooldownElapsedTime >= drawCooldown)
             {
                 AddHands(1, false);
@@ -186,6 +186,7 @@ public class CardManager : MonoBehaviour
 
             Destroy(card.gameObject);
 
+            return param;
         }
 
 

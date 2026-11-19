@@ -20,12 +20,16 @@ public class HandsSort : MonoBehaviour
     [Tooltip("カード全体の高さ")]
     [SerializeField] private float cardY = 25.0f;
 
-    
+    [Tooltip("エネミターンの時の高さ")]
+    [SerializeField] private float enemyTurnCardY = 10.0f;
+
     private float cardBaseX;
 
     private float centerX;
 
     Vector2 cardBasePos;
+
+    private Turn turn;
 
     private void Awake()
     {
@@ -33,6 +37,7 @@ public class HandsSort : MonoBehaviour
         cardBasePos = new Vector2(centerX, cardY);
         cardBaseX = centerX;
         cardUpperLeft = centerX;
+        turn = FindAnyObjectByType<Turn>();
     }
 
     /// <summary>
@@ -90,10 +95,22 @@ public class HandsSort : MonoBehaviour
                 BaseCard card = cards[i];
                 if (card == null) continue;
                 RectTransform pos = card.GetComponent<RectTransform>();
-                pos.position= new Vector2(
+
+                if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+                {
+                    pos.position = new Vector2(
                     cardBaseX + (i - count / 2) * spacing,
                     cardY
-                );
+                    );
+                }
+                else
+                {
+                    pos.position = new Vector2(
+                    cardBaseX + (i - count / 2) * spacing,
+                    enemyTurnCardY
+                    );
+                }
+                
                 pos.SetAsLastSibling();
                 pos.localRotation = Quaternion.identity;
             }
@@ -106,10 +123,22 @@ public class HandsSort : MonoBehaviour
                 BaseCard card = cards[i];
                 if (card == null) continue;
                 RectTransform pos = card.GetComponent<RectTransform>();
-                pos.position= new Vector2(
-                    cardBaseX + (i - count / 2f) * spacing,
+
+                if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+                {
+                    pos.position = new Vector2(
+                    cardBaseX + (i - count / 2) * spacing,
                     cardY
-                );
+                    );
+                }
+                else if (turn.GetCurrentTurn() == Turn.TURN_TYPE.ENEMY_TURN)
+                {
+                    pos.position = new Vector2(
+                    cardBaseX + (i - count / 2) * spacing,
+                    enemyTurnCardY
+                    );
+                }
+
                 pos.SetAsLastSibling();
                 pos.localRotation = Quaternion.identity;
             }
