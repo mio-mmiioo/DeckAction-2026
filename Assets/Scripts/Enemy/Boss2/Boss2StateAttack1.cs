@@ -7,7 +7,6 @@ public class Boss2StateAttack1 : IBoss2State
     public BOSS_2_STATE state => BOSS_2_STATE.B_2_STATE_ATTACK_1;
 
     private GameObject boss2Attack1;
-    private Turn turn;
 
     /// <summary>
     /// 敵を設定
@@ -17,7 +16,6 @@ public class Boss2StateAttack1 : IBoss2State
     {
         boss2 = e;
         boss2Attack1 = GameObject.Find("Boss2Attack1");
-        turn = e.GetComponentInParent<Turn>();
     }
 
     public void Entry()
@@ -29,7 +27,6 @@ public class Boss2StateAttack1 : IBoss2State
     {
         if (boss2Attack1.GetComponent<SwordManager>().GetSwords() <= 0)
         {
-            turn.SetPlayerTurn();
             boss2.Move();
         }
     }

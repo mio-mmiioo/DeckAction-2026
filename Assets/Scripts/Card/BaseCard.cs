@@ -45,7 +45,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     [SerializeField]private CardParameterData cardParameterData;// カードのパラメータを格納する構造体
 
-    [SerializeField] private Turn turn;
+    private CharaSetAttackTurn playerAttackTurn;
 
     private float enemyTurnHeight;
 
@@ -78,8 +78,8 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         localScale = transform.localScale;
-        turn = FindAnyObjectByType<Turn>();
-        while(transform.position.y>startPos.y)
+        playerAttackTurn = GameObject.FindGameObjectWithTag("Player").GetComponent<CharaSetAttackTurn>();
+        while (transform.position.y>startPos.y)
         {
             transform.position = Vector2.MoveTowards(transform.position, startPos, 10f);
         }
@@ -98,7 +98,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// <param name="eventData"></param>
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!isUsed&&turn.GetCurrentTurn()== Turn.TURN_TYPE.PLAYER_TURN)
+        if (!isUsed && playerAttackTurn.GetIsAttackTurn() == true)
         {
             GetComponent<CanvasGroup>().blocksRaycasts = false;
             isDrag = true;
@@ -112,7 +112,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
-        if(!isUsed&&turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+        if(!isUsed && playerAttackTurn.GetIsAttackTurn() == true)
         {
             transform.position = eventData.position;
         }
@@ -160,7 +160,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// </summary>
     private void OnDoubleClick()
     {
-        if (!isUsed && turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+        if (!isUsed && playerAttackTurn.GetIsAttackTurn() == true)
         {
             if (clickCount != 2)
             {

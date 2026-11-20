@@ -12,6 +12,8 @@ public class Boss2StateMove : IBoss2State
     private float HORIZONTAL_SPEED_FACTOR = 0.7f;
     private Vector3 startPosition; // 初期位置
 
+    private CharaSetAttackTurn attackTurn; // ターン管理
+
     /// <summary>
     /// 敵を設定
     /// </summary>
@@ -19,6 +21,7 @@ public class Boss2StateMove : IBoss2State
     public Boss2StateMove(Boss2 e)
     {
         boss2 = e;
+        attackTurn = e.GetComponent<CharaSetAttackTurn>();
     }
 
     public void Entry()
@@ -36,7 +39,10 @@ public class Boss2StateMove : IBoss2State
 
         if (Keyboard.current.nKey.wasPressedThisFrame)
         {
-            boss2.Attack1();
+            if (attackTurn.GetIsAttackTurn() == true)
+            {
+                boss2.Attack1();
+            }
         }
     }
 

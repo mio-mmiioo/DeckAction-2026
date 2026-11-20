@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
     private CharaHp charaHp; // 体力を管理する
-    private Turn turn;
+    private CharaSetAttackTurn attackTurn;
 
     private PlayerUseCard playerUseCard;
 
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         checkOnGround = GetComponent<CheckOnGround>();
         charaHp = GetComponent<CharaHp>();
-        turn = GetComponentInParent<Turn>();
+        attackTurn = GetComponentInParent<CharaSetAttackTurn>();
         playerUseCard = GetComponentInParent<PlayerUseCard>();
     }
 
@@ -35,11 +35,11 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+        if (attackTurn.GetIsAttackTurn() == true)
         {
             playerUseCard.UseCard();
         }
-        else if (turn.GetCurrentTurn() == Turn.TURN_TYPE.ENEMY_TURN)
+        else
         {
             Walk();
             // ジャンプ
