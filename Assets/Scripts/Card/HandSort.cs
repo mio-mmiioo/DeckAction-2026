@@ -29,7 +29,7 @@ public class HandsSort : MonoBehaviour
 
     Vector2 cardBasePos;
 
-    private Turn turn;
+    private CharaSetAttackTurn attackTurn;
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class HandsSort : MonoBehaviour
         cardBasePos = new Vector2(centerX, cardY);
         cardBaseX = centerX;
         cardUpperLeft = centerX;
-        turn = FindAnyObjectByType<Turn>();
+        attackTurn = GameObject.FindGameObjectWithTag("Player").GetComponent<CharaSetAttackTurn>();
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class HandsSort : MonoBehaviour
                 if (card == null) continue;
                 RectTransform pos = card.GetComponent<RectTransform>();
 
-                if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+                if (attackTurn.GetIsAttackTurn() == true)
                 {
                     pos.position = new Vector2(
                     cardBaseX + (i - count / 2) * spacing,
@@ -124,14 +124,14 @@ public class HandsSort : MonoBehaviour
                 if (card == null) continue;
                 RectTransform pos = card.GetComponent<RectTransform>();
 
-                if (turn.GetCurrentTurn() == Turn.TURN_TYPE.PLAYER_TURN)
+                if (attackTurn.GetIsAttackTurn() == true)
                 {
                     pos.position = new Vector2(
                     cardBaseX + (i - count / 2) * spacing,
                     cardY
                     );
                 }
-                else if (turn.GetCurrentTurn() == Turn.TURN_TYPE.ENEMY_TURN)
+                else
                 {
                     pos.position = new Vector2(
                     cardBaseX + (i - count / 2) * spacing,

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Turn : MonoBehaviour
+public class TurnManager : MonoBehaviour
 {
     // ターンの種類
     public enum TURN_TYPE
@@ -23,12 +23,12 @@ public class Turn : MonoBehaviour
     {
         turnDisplay = GetComponent<TurnDisplay>();
         debugTurnDisplay = GetComponent<DebugTurnDisplay>();
-        
+
         // 最初はプレイヤーターンに設定する
         currentTurn = TURN_TYPE.PLAYER_TURN;
         debugTurnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
         turnDisplay.ShowPlayerTurn(PLAYER_TURN_MESSAGE);
-        
+
         prevTurn = currentTurn;
     }
 
@@ -45,7 +45,7 @@ public class Turn : MonoBehaviour
         }
 
         // ターンが切り替わった演出
-        if (currentTurn != prevTurn)
+        if (IsChangeTurn() == true)
         {
             if (currentTurn == TURN_TYPE.PLAYER_TURN)
             {
@@ -79,5 +79,27 @@ public class Turn : MonoBehaviour
     public void SetPlayerTurn()
     {
         currentTurn = TURN_TYPE.PLAYER_TURN;
+    }
+
+    /// <summary>
+    /// エネミーターンにセットする( プレイヤーターン終了 )
+    /// </summary>
+    public void SetEnemyTurn()
+    {
+        currentTurn = TURN_TYPE.ENEMY_TURN;
+    }
+
+    /// <summary>
+    /// ターンが切り替わった瞬間を返す
+    /// </summary>
+    /// <returns>切り替わった瞬間ならtrue</returns>
+    public bool IsChangeTurn()
+    {
+        bool ret = false;
+        if (currentTurn != prevTurn)
+        {
+            ret = true;
+        }
+        return ret;
     }
 }
