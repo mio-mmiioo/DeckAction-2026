@@ -8,14 +8,15 @@ public class PlayerUseCard : MonoBehaviour
 {
     [SerializeField] CardManager cardManager;
 
-    [SerializeField] CardAbilityTable cardAbilityTable;
-
     [SerializeField] CardDataBase cardDataBase;
 
+    [SerializeField] CardAbilityTable cardAbilityTable;
 
-    public Player player;
+    [HideInInspector] public Player player;
 
-    public Stamina stamina;
+    [HideInInspector] public Stamina stamina;
+
+    [HideInInspector] public CharaHp charaHp;
 
     private PlayerAttackType playerAttackType;
     private ComboCount comboCount;
@@ -24,11 +25,11 @@ public class PlayerUseCard : MonoBehaviour
    
     private int attack;
 
-    [SerializeField]
-    public int nextAttack;
-    public int nextStamina;
+    [HideInInspector]public int nextAttack;
+    [HideInInspector] public int nextStamina;
+    [HideInInspector] public bool plusAttack;
 
-    private bool prevMaxCombo;
+    [HideInInspector]public bool prevMaxCombo;
 
     public int currentCombo;
 
@@ -38,15 +39,19 @@ public class PlayerUseCard : MonoBehaviour
     [SerializeField]
     private int[] comboPower;
 
-    public int texn;
+    [HideInInspector] public bool isNextMagicPower;
+    [HideInInspector] public bool isMagicPower;
 
-    public float limitTime;
+    [HideInInspector] public int turn;
+
+    [HideInInspector] public float limitTime;
 
     void Start()
     {
         playerAttackType = GetComponent<PlayerAttackType>();
         comboCount = GetComponent<ComboCount>();
         playerCombo = GetComponent<PlayerCombo>();
+        charaHp = GetComponent<CharaHp>();
 
         currentCombo = 0;
         comboPower = new int[4] { 1, 2, 3, 4 };
@@ -57,7 +62,7 @@ public class PlayerUseCard : MonoBehaviour
 
     private void Update()
     {
-        texn = cardParameterData.cardType;
+        turn = cardParameterData.cardType;
         limitTime -= Time.deltaTime;
     }
 
@@ -73,7 +78,8 @@ public class PlayerUseCard : MonoBehaviour
 
             if (cardParameterData.cardType != 0)
             {
-                CardAbility cardAbility = cardAbilityTable.CardAbilityList_1[0];//カードの効果を発動
+                //コンボの判定
+                CardAbility cardAbility = cardAbilityTable.CardAbilityList[cardParameterData.cardRarity].CardAbilities[cardParameterData.cardAbility];//カードの効果を発動
                 cardAbility.Execute(this, cardManager);
                 stamina.UseStamina(cardDataBase.CardData[cardParameterData.cardType].stamina - nextStamina);//ｽﾀﾐﾅを消費        
                 playerAttackType.SetCardID(cardParameterData.cardType, CalculationPower());//攻撃の種類を設定
@@ -102,7 +108,7 @@ public class PlayerUseCard : MonoBehaviour
         return power;
     }
 
-
+    
     
 
 

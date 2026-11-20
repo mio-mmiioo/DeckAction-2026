@@ -1,11 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "CardAbilityTable", menuName = "Scriptable Objects/CardAbilityTable")]
+[CreateAssetMenu(fileName = "AbilityTable", menuName = "Scriptable Objects/AbilityTable")]
 public class CardAbilityTable : ScriptableObject
 {
-    public List<CardAbility> CardAbilityList_1 = new List<CardAbility>();
-    public List<CardAbility> CardAbilityList_2 = new List<CardAbility>();
-    public List<CardAbility> CardAbilityList_3 = new List<CardAbility>();
-    public List<CardAbility> CardAbilityList_4 = new List<CardAbility>();
+    
+    public List<AbilityTable> CardAbilityList = new List<AbilityTable>();
 }
+
+[System.Serializable]
+public class AbilityTable
+{
+    public List<CardAbility> CardAbilities = new List<CardAbility>();
+}
+

@@ -11,6 +11,10 @@ public class CardManager : MonoBehaviour
     [Tooltip("カード情報のデーターベース")]
     [SerializeField] CardDataBase cardDataBase;
 
+    [Tooltip("アビリティ情報のデータベース")]
+    [SerializeField] CardAbilityTable cardAbilityTable;
+
+
     [Tooltip("BaseCardのプレハブ")]
     [SerializeField] private BaseCard baseCard;
 
@@ -20,13 +24,13 @@ public class CardManager : MonoBehaviour
     [Tooltip("使用したカードの表示領域")]
     [SerializeField] GameObject useCardView;
 
-    [SerializeField] PlayerUseCard playerUseCard;
 
     List<BaseCard> hands = new List<BaseCard>();// プレイヤーの手札のリスト
     Queue<BaseCard> useCards = new Queue<BaseCard>();// 使用済みカードのリスト
 
     [Tooltip("手札の最大枚数")]
     [SerializeField] private int maxHands;
+
 
     private int labelCount; //カードの仮の数字
 
@@ -51,6 +55,9 @@ public class CardManager : MonoBehaviour
     private float maxRate;
 
     CardParameterData cardParameterData = new CardParameterData();// カードのパラメータを格納する構造体
+
+    [HideInInspector] public bool isAllPhysical;//手札がすべて物理の時 true
+    [HideInInspector] public bool isAllMagic;//手札がすべて魔法の時 true
 
     /// <summary>
     /// 変数の初期化
@@ -163,6 +170,7 @@ public class CardManager : MonoBehaviour
             {
                 obj.canTrash = true;
             }
+
             hands.Add(obj);
         }
         Debug.Log("CardSort呼び出し前");
@@ -288,7 +296,7 @@ public class CardManager : MonoBehaviour
         {
             if (random < cardRarityRate[i])
             {
-                return i+1;
+                return i;
             }
         }
         return 0;
@@ -297,19 +305,15 @@ public class CardManager : MonoBehaviour
 
     private int DetermineCardAbility(int cardType,int cardRarity)
     {
-        switch (cardRarity)
+        int random = Random.Range(0, cardAbilityTable.CardAbilityList[cardRarity].CardAbilities.Count());
+        if(cardType!=1)
         {
-            case 0:
-                return 0;
-            case 1:
-                return 1;
-            case 2:
-                return 2;
-            case 3:
-                return 3;
+            if(random==2)
+            {
+                DetermineCardAbility(cardType, cardRarity);
+            }
         }
-
-        return 0;
+        return random;
     }
 }
 

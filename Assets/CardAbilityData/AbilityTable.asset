@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f629cd855e260e24db263a45f9146edc, type: 3}
+  m_Name: AbilityTable
+  m_EditorClassIdentifier: Assembly-CSharp::CardAbilityTable
+  CardAbilityList:
+  - CardAbilities:
+    - {fileID: 11400000, guid: 991a39e54029abe4eb0ef115d8f4d8bd, type: 2}
+    - {fileID: 11400000, guid: 96a65d5a1c88ac648bbf9e068c4277c7, type: 2}
+    - {fileID: 11400000, guid: 0cd65c0ec27d2f94bb63b903a0129ddc, type: 2}
+    - {fileID: 11400000, guid: d1ec7daf8355d2f4686de0b808be825f, type: 2}
+    - {fileID: 11400000, guid: 0a7fb2fcfe253004a8c4c30f8f0153c5, type: 2}
+    - {fileID: 11400000, guid: a75a580cdbdec0244b9ce65fd179c7a4, type: 2}
+  - CardAbilities:
+    - {fileID: 11400000, guid: e93f67321e6e4694f9b4714b05866cff, type: 2}
+    - {fileID: 11400000, guid: 61d0097968717534a861332d0fd20c85, type: 2}
+    - {fileID: 11400000, guid: 89198d10f259b444eb61e47b5d7611e8, type: 2}
+    - {fileID: 11400000, guid: acb8a3a3964912c40bec6f8bc821cbf1, type: 2}
+  - CardAbilities:
+    - {fileID: 11400000, guid: 3548587b12728244d86c312b8a938159, type: 2}
+    - {fileID: 11400000, guid: 4a5108b944e79e045a91bf986e41e464, type: 2}
+    - {fileID: 11400000, guid: c63c6622e4395b24582e2fa475527568, type: 2}
+  - CardAbilities:
+    - {fileID: 11400000, guid: d397de8a898ccb5429fe1bb8b89568ca, type: 2}
+    - {fileID: 11400000, guid: 5b1678148fd253f40a92bed0fceb0b50, type: 2}
