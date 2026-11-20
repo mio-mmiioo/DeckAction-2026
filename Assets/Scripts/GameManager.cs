@@ -5,6 +5,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Characterオブジェクトを設定してください")]
     [SerializeField] private GameObject character; // 画面上のキャラの親オブジェクト
     private TurnManager turnManager;
     private TurnManager.TURN_TYPE prevTurn;
@@ -21,7 +22,6 @@ public class GameManager : MonoBehaviour
         // ターンが切り替わった瞬間
         if (prevTurn != turnManager.GetCurrentTurn())
         {
-            Debug.Log("GameManagerがターン変更を検知");
             SetTurn();
         }
         prevTurn = turnManager.GetCurrentTurn();
@@ -51,18 +51,11 @@ public class GameManager : MonoBehaviour
     private void SetTurn()
     {
         CharaSetAttackTurn[] characters = GetComponentsInChildren<CharaSetAttackTurn>();
-        Debug.Log("取得したキャラクター数" + characters.Length);
-
-        Debug.Log("現在のターン:" + turnManager.GetCurrentTurn());
-
         // エネミーターン
         if (turnManager.GetCurrentTurn() == TurnManager.TURN_TYPE.ENEMY_TURN)
         {
-            Debug.Log("currentTypeにエネミーは入っている");
             foreach (CharaSetAttackTurn chara in characters)
             {
-                Debug.Log("名前" + chara.name);
-                Debug.Log("タグ" + chara.tag);
                 if (chara.CompareTag("Enemy"))
                 {
                     chara.SetIsAttackTurn(true); // 敵は攻撃ターンtrue
