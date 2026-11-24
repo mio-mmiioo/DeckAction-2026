@@ -37,11 +37,15 @@ public class Boss2StateMove : IBoss2State
 
         boss2.transform.position = startPosition + new Vector3(x, y, 0.0f);
 
-        if (Keyboard.current.nKey.wasPressedThisFrame)
+        if (attackTurn.GetIsAttackTurn() == true)
         {
-            if (attackTurn.GetIsAttackTurn() == true)
+            if (Keyboard.current.nKey.wasPressedThisFrame)
             {
                 boss2.Attack1();
+            }
+            if (Keyboard.current.bKey.wasPressedThisFrame)
+            {
+                boss2.Attack3();
             }
         }
     }

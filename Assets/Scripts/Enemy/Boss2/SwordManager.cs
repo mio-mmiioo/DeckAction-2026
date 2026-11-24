@@ -13,8 +13,7 @@ public class SwordManager : MonoBehaviour
 
     [SerializeField] private float angleRange = 120.0f;
 
-    // 剣生成の中心の位置
-    Vector3 viewportPosition;
+    Vector3 viewportPosition; // 剣生成の中心の位置
     private const float CENTER_X = 0.5f; // 画面に対するxの割合
     private const float TOP_Y = 0.9f; // 画面に対するyの割合
 
@@ -36,10 +35,10 @@ public class SwordManager : MonoBehaviour
     public void CreateSword()
     {
         // 剣を生成する処理
-        StartCoroutine(SwordAttackCoroutine());
+        StartCoroutine(SwordAttack());
     }
 
-    private IEnumerator SwordAttackCoroutine()
+    private IEnumerator SwordAttack()
     {
         for (int count = 0; count < MAX_SWORD_NUMBER; count++)
         {
