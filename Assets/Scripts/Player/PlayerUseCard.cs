@@ -6,17 +6,17 @@ using UnityEngine;
 /// </summary>
 public class PlayerUseCard : MonoBehaviour
 {
-    [SerializeField] CardManager cardManager;
+    [SerializeField] CardManager cardManager;//カードマネージャー
 
-    [SerializeField] CardDataBase cardDataBase;
+    [SerializeField] CardDataBase cardDataBase;//カードのデータ
 
-    [SerializeField] CardAbilityTable cardAbilityTable;
+    [SerializeField] CardAbilityTable cardAbilityTable;//カードの追加効果のデーター
 
-    [HideInInspector] public Player player;
+    [HideInInspector] public Player player;//プレイヤー
 
-    [HideInInspector] public Stamina stamina;
+    [HideInInspector] public Stamina stamina;//スタミナ
 
-    [HideInInspector] public CharaHp charaHp;
+    [HideInInspector] public CharaHp charaHp;//HP
 
     private PlayerAttackType playerAttackType;
     private ComboCount comboCount;
@@ -25,6 +25,7 @@ public class PlayerUseCard : MonoBehaviour
    
     private int attack;
 
+    //追加効果で設定される各種値
     [HideInInspector]public int nextAttack;
     [HideInInspector] public int nextStamina;
     [HideInInspector] public bool plusAttack;
@@ -45,6 +46,8 @@ public class PlayerUseCard : MonoBehaviour
     [HideInInspector] public int turn;
 
     [HideInInspector] public float limitTime;
+
+    private CharaHp targetHp;//ターゲットのHP
 
     void Start()
     {
@@ -72,6 +75,8 @@ public class PlayerUseCard : MonoBehaviour
     /// </summary>
     public void UseCard()
     {
+
+
         if (limitTime < 0)
         {
             cardParameterData = cardManager.GetUseCard();//使用したカードのパラメーターを取得
@@ -85,6 +90,8 @@ public class PlayerUseCard : MonoBehaviour
                 playerAttackType.SetCardID(cardParameterData.cardType, CalculationPower());//攻撃の種類を設定
 
                 comboCount.SetComboCount(currentCombo);
+
+
 
                 limitTime = 1.0f;
             }

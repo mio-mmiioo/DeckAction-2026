@@ -1,32 +1,75 @@
+using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Collections;
 
-public class EnemySetTarget : MonoBehaviour,IPointerClickHandler
+public class EnemySetTarget : MonoBehaviour
 {
     [SerializeField] private AttackTarget attackTarget;
 
-    private GameObject enemy;
+     List<Transform> enemyList=new List<Transform>();
 
-    private Image target;
+    private int currentTarget;
+
+    private Transform clickedTarget;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        target = GetComponentInChildren<Image>();
-        target.enabled = false;
+        currentTarget = 0;
         //enemy = transform.position;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+
+            if(child.CompareTag("Enemy"))
+            {
+                enemyList.Add(child);
+            }
+
+        }
+        
+       // attackTarget.SetTarget(enemyList[currentTarget]);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            ClickTarget();
+        }
+    }
+
+    public void sssm()
+    {
+        if(currentTarget<enemyList.Count)
+        {
+            currentTarget++;
+            attackTarget.SetTarget(enemyList[currentTarget]);
+        }
         
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void ClickTarget()
     {
-        //attackTarget.SetTarget(enemy);
-        target.enabled = true;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit2d = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
+
+        if (hit2d)
+        {
+            clickedTarget = hit2d.transform;
+            for(int i=0;i<enemyList.Count;i++)
+            {
+                if (enemyList[i]==clickedTarget)
+                {
+                    attackTarget.SetTarget(enemyList[i]);
+                    Debug.Log("ターゲットおん");
+                }
+            }
+        }
+
     }
+        
 }
