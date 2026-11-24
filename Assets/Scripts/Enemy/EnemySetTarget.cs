@@ -3,22 +3,24 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
+/// <summary>
+/// GameManagerのキャラクタークラスにつける
+/// エネミーをリストで管理、ターゲット指定するクラス
+/// </summary>
 public class EnemySetTarget : MonoBehaviour
 {
-    [SerializeField] private AttackTarget attackTarget;
+    [SerializeField] private AttackTarget attackTarget;// プレイヤーのアタック先
 
-     List<Transform> enemyList=new List<Transform>();
+     List<Transform> enemyList=new List<Transform>();// エネミーのリスト
 
-    private int currentTarget;
+    private int currentTarget;// 現在のターゲット
 
-    private Transform clickedTarget;
+    private Transform clickedTarget;// クリックしたターゲット
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentTarget = 0;
-        //enemy = transform.position;
+        // Enemyタグを全員リストに入れる
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -30,16 +32,32 @@ public class EnemySetTarget : MonoBehaviour
 
         }
         
-       // attackTarget.SetTarget(enemyList[currentTarget]);
+        // リストの先頭の敵をデフォルトのターゲットに指定。ヒエラルキー上で一番上
+        attackTarget.SetTarget(enemyList[currentTarget]);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //左クリックの入力をとる(デバッグでの仮実装)
         if(Input.GetMouseButtonDown(0))
         {
             ClickTarget();
         }
+
+        //エネミーリストでnullをすぐに削除
+        if(enemyList.RemoveAll(item => item == null)>0)        
+        {
+            //自動でターゲットの更新
+            // 指定してた敵がいなくなったら、リストの先頭を指定する
+            if (enemyList.Count > 0)
+            {
+                currentTarget = 0;
+                attackTarget.SetTarget(enemyList[currentTarget]);
+            }
+        }
+
+        
+        
     }
 
     public void sssm()
@@ -52,6 +70,9 @@ public class EnemySetTarget : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// クリックからレイを飛ばしてターゲットを決める
+    /// </summary>
     private void ClickTarget()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -64,8 +85,8 @@ public class EnemySetTarget : MonoBehaviour
             {
                 if (enemyList[i]==clickedTarget)
                 {
-                    attackTarget.SetTarget(enemyList[i]);
-                    Debug.Log("ターゲットおん");
+                    currentTarget = i;
+                    attackTarget.SetTarget(enemyList[currentTarget]);
                 }
             }
         }

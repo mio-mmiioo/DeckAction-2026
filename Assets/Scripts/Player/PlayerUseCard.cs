@@ -21,7 +21,7 @@ public class PlayerUseCard : MonoBehaviour
     private PlayerAttackType playerAttackType;
     private ComboCount comboCount;
     private PlayerCombo playerCombo;
-
+    private AttackTarget attackTarget;
    
     private int attack;
 
@@ -55,6 +55,7 @@ public class PlayerUseCard : MonoBehaviour
         comboCount = GetComponent<ComboCount>();
         playerCombo = GetComponent<PlayerCombo>();
         charaHp = GetComponent<CharaHp>();
+        attackTarget = GetComponent<AttackTarget>();
 
         currentCombo = 0;
         comboPower = new int[4] { 1, 2, 3, 4 };
@@ -75,23 +76,26 @@ public class PlayerUseCard : MonoBehaviour
     /// </summary>
     public void UseCard()
     {
-
-
-        if (limitTime < 0)
+        // ターゲットがいないなら、手札に戻す
+        if(!attackTarget.GetTargetHP())
+        {
+            cardManager.UseCardReturn();
+        }
+        else if (limitTime < 0)
         {
             cardParameterData = cardManager.GetUseCard();//使用したカードのパラメーターを取得
 
-            if (cardParameterData.cardType != 0)
+            if (cardParameterData.cardType != 0&&attackTarget.GetTargetHP())
             {
                 //コンボの判定
                 CardAbility cardAbility = cardAbilityTable.CardAbilityList[cardParameterData.cardRarity].CardAbilities[cardParameterData.cardAbility];//カードの効果を発動
                 cardAbility.Execute(this, cardManager);
                 stamina.UseStamina(cardDataBase.CardData[cardParameterData.cardType].stamina - nextStamina);//ｽﾀﾐﾅを消費        
-                playerAttackType.SetCardID(cardParameterData.cardType, CalculationPower());//攻撃の種類を設定
+
+                if(attackTarget.GetTargetHP())
+                attackTarget.GetTargetHP().TakeDamage(CalculationPower());
 
                 comboCount.SetComboCount(currentCombo);
-
-
 
                 limitTime = 1.0f;
             }

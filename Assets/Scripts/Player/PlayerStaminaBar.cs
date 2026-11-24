@@ -1,12 +1,14 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerStaminaBar : MonoBehaviour
 {
     private Slider staminaSlider;
    [SerializeField] private Stamina playerStamina;
     private RectTransform rectTransform;
+    private TextMeshProUGUI staminaText;
     private Vector3 originalScale;
     
 
@@ -15,6 +17,7 @@ public class PlayerStaminaBar : MonoBehaviour
     {
         staminaSlider = GetComponent<Slider>();
         rectTransform=GetComponent<RectTransform>();
+        staminaText = GetComponentInChildren<TextMeshProUGUI>();
         staminaSlider.maxValue = playerStamina.GetMaxStamina();
         originalScale= rectTransform.localScale;
     }
@@ -23,5 +26,11 @@ public class PlayerStaminaBar : MonoBehaviour
     void LateUpdate()
     {
         staminaSlider.value = playerStamina.GetCurrentStamina();
+        if(staminaText)
+        {
+            string text = playerStamina.GetCurrentStamina().ToString();
+            staminaText.text = text;
+        }
+        
     }
 }

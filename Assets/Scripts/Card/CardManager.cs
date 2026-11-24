@@ -45,9 +45,9 @@ public class CardManager : MonoBehaviour
     private float cooldownElapsedTime;//経過時間
 
     // カードのパラメーターの確率用の変数
-    [SerializeField] private float[] cardPopRate;// カードの出現率
+    private float[] cardPopRate;// カードの出現率
 
-    [SerializeField] private float[] cardRarityRate = { 55, 30, 10, 5 };// カードのレアリティの出現率
+    private float[] cardRarityRate = { 55, 30, 10, 5 };// カードのレアリティの出現率
 
     [SerializeField]
     private float maxRarityRate;// カードのレアリティの最大値
@@ -91,18 +91,7 @@ public class CardManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        //時間経過でカードを引く
-        if (hands.Count < maxHands)
-        {
-            cooldownElapsedTime += Time.deltaTime;
-            //Debug.Log("一秒経過");
-            if (cooldownElapsedTime >= drawCooldown)
-            {
-                AddHands(1, false);
-                cooldownElapsedTime = 0f;
-            }
-        }
-
+      
         if (Input.GetKeyDown(KeyCode.U))
         {
             AddHands(1, false);
@@ -176,6 +165,12 @@ public class CardManager : MonoBehaviour
         Debug.Log("CardSort呼び出し前");
         CardSort();
         Debug.Log("CardSort呼び出し後");
+    }
+
+    public void AddHands(BaseCard card)
+    {
+        hands.Add(card);
+        CardSort();
     }
 
     /// <summary>
@@ -302,7 +297,13 @@ public class CardManager : MonoBehaviour
         return 0;
     }
 
-
+    /// <summary>
+    /// カードタイプとレアリティからアビリティをランダムで決める
+    /// もし、特定のカードにしか付かない能力の時は再帰
+    /// </summary>
+    /// <param name="cardType"></param>
+    /// <param name="cardRarity"></param>
+    /// <returns></returns>
     private int DetermineCardAbility(int cardType,int cardRarity)
     {
         int random = Random.Range(0, cardAbilityTable.CardAbilityList[cardRarity].CardAbilities.Count());
@@ -315,6 +316,23 @@ public class CardManager : MonoBehaviour
         }
         return random;
     }
+
+    /// <summary>
+    /// 使用中のカードを手札に戻す
+    /// 攻撃途中で敵が倒れた時に使用
+    /// </summary>
+    public void UseCardReturn()
+    {
+        for(int i=0;i<useCards.Count;i++)
+        {
+            BaseCard obj = Instantiate(baseCard, playerHand, false);
+            cardParameterData = GetUseCard();
+            obj.Initialize(cardParameterData);
+            hands.Add(obj);
+            CardSort();
+        }
+    }
+    
 }
 
 

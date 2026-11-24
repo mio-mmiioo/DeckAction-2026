@@ -1,43 +1,60 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+
+/// <summary>
+/// プレイヤーの攻撃先を決定するスクリプト
+/// </summary>
 public class AttackTarget : MonoBehaviour
 {
-    private Transform targetEnemy;
+    private Transform targetEnemy;//攻撃する敵
 
-    private CharaHp targetHp;
+    private CharaHp targetHp;//敵のHP
 
-    private Image targetImage;
+    private Image targetImage;//画像
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //targetEnemy.transform.position = new Vector2(0, 0);
+        
     }
 
+
+    /// <summary>
+    /// ターゲットをセットする
+    /// セットされたターゲットの照準画像をオンにし、攻撃対象とする
+    /// </summary>
+    /// <param name="enemy"></param>
     public void SetTarget(Transform enemy)
     {
         if(targetEnemy)
-        targetImage.enabled = false;        
+        targetImage.enabled = false;
 
         targetEnemy = enemy;
 
-        Image[] images = targetEnemy.GetComponentsInChildren<Image>(true);
+        if (targetEnemy)
+        {
+            Image[] images = targetEnemy.GetComponentsInChildren<Image>(true);
 
-        targetHp = targetEnemy.GetComponent<CharaHp>();
+            targetHp = targetEnemy.GetComponent<CharaHp>();
 
-        targetImage = images.FirstOrDefault(img => img.gameObject.name == "Target");
+            targetImage = images.FirstOrDefault(img => img.gameObject.name == "Target");
 
-        targetImage.enabled = true;
+            targetImage.enabled = true;
+        }
+        
     }
+
+    /// <summary>
+    /// 攻撃先を返す
+    /// </summary>
+    /// <returns></returns>
     public CharaHp GetTargetHP()
     {
-        return targetEnemy.GetComponent<CharaHp>();
+        return targetHp;
     }
 }

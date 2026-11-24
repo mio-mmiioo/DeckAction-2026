@@ -45,6 +45,8 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
 
     [SerializeField]private CardParameterData cardParameterData;// カードのパラメータを格納する構造体
 
+    private CardEffectExplainer cardEffectExplainer;
+
     private CharaSetAttackTurn playerAttackTurn;
 
     private float enemyTurnHeight;
@@ -79,6 +81,10 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         Debug.Log("BaseCard OK");// 確認用ログ
         localScale = transform.localScale;
         playerAttackTurn = GameObject.FindGameObjectWithTag("Player").GetComponent<CharaSetAttackTurn>();
+
+        //タグで説明欄を検索して取得する
+        cardEffectExplainer = GameObject.FindGameObjectWithTag("Explainer").GetComponent<CardEffectExplainer>();
+
         while (transform.position.y>startPos.y)
         {
             transform.position = Vector2.MoveTowards(transform.position, startPos, 10f);
@@ -198,6 +204,13 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
             }
             
         }
+
+        if(cardEffectExplainer)
+        {
+            //マウスを乗せたとき、説明欄に情報を送る
+            cardEffectExplainer.SetCardParameter(cardParameterData);
+        }
+        
         
     }
 

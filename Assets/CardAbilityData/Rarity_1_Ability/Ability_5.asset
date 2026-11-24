@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed459cba7fd2c204b866310e70e29e3e, type: 3}
   m_Name: Ability_5
   m_EditorClassIdentifier: Assembly-CSharp::Ability_5
-  explation: 
+  explation: "\u3053\u306E\u30AB\u30FC\u30C9\u3092\u4F7F\u3046\u3068\u7269\u7406\u30AB\u30FC\u30C9\u3092\u5F15\u304F"
   value: 0

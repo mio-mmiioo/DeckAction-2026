@@ -39,6 +39,8 @@ public class PlayerAttackType : MonoBehaviour
                 GameObject magic = Instantiate(magicAttackObject, magicPosition.GetCreatePosition().position, Quaternion.identity);
                 magic.GetComponent<AttackPower>().SetAttackPower(power);
                 break;
+
+
         }
         
     }

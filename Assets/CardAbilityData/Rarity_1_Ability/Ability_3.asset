@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a0449a2c5644540ac9c9dbce06f873, type: 3}
   m_Name: Ability_3
   m_EditorClassIdentifier: Assembly-CSharp::Ability_3
-  explation: 
+  explation: "HP\u309210%\u56DE\u5FA9"
   value: 0
