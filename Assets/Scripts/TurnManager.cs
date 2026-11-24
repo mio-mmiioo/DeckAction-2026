@@ -11,8 +11,11 @@ public class TurnManager : MonoBehaviour
         MAX_TURN_TYPE
     }
 
+    [SerializeField] private float playerTurnTime = 20.0f;
+    [SerializeField] private float enemyTurnTime = 20.0f;
+    private float turnTimer = 0.0f;
+
     private TurnDisplay turnDisplay;
-    private DebugTurnDisplay debugTurnDisplay;
     private TURN_TYPE currentTurn; // 現在のターン
     private TURN_TYPE prevTurn; // 前回のターン
 
@@ -22,11 +25,10 @@ public class TurnManager : MonoBehaviour
     void Start()
     {
         turnDisplay = GetComponent<TurnDisplay>();
-        debugTurnDisplay = GetComponent<DebugTurnDisplay>();
 
         // 最初はプレイヤーターンに設定する
         currentTurn = TURN_TYPE.PLAYER_TURN;
-        debugTurnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
+        turnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
         turnDisplay.ShowPlayerTurn(PLAYER_TURN_MESSAGE);
 
         prevTurn = currentTurn;
@@ -34,7 +36,7 @@ public class TurnManager : MonoBehaviour
 
     void Update()
     {
-        // 現在のターンをセット
+        // 現在のターンをセット( キー入力 )
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
             currentTurn = TURN_TYPE.PLAYER_TURN;
@@ -44,20 +46,38 @@ public class TurnManager : MonoBehaviour
             currentTurn = TURN_TYPE.ENEMY_TURN;
         }
 
+        // 時間経過
+        turnTimer -= Time.deltaTime;
+        if (turnTimer <= 0.0f)
+        {
+            if (currentTurn == TURN_TYPE.ENEMY_TURN)
+            {
+                currentTurn = TURN_TYPE.PLAYER_TURN;
+            }
+            else if (currentTurn == TURN_TYPE.PLAYER_TURN)
+            {
+                currentTurn = TURN_TYPE.ENEMY_TURN;
+            }
+        }
+        
+        turnDisplay.SetTurnTimer(turnTimer); // 秒数の表示
+
         // ターンが切り替わった演出
         if (IsChangeTurn() == true)
         {
             if (currentTurn == TURN_TYPE.PLAYER_TURN)
             {
                 Debug.Log("プレイヤーターン開始");
-                debugTurnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
+                turnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
                 turnDisplay.ShowPlayerTurn(PLAYER_TURN_MESSAGE);
+                turnTimer = playerTurnTime;
             }
             else if (currentTurn == TURN_TYPE.ENEMY_TURN)
             {
                 Debug.Log("エネミーターン開始");
-                debugTurnDisplay.SetTurnText(ENEMY_TURN_MESSAGE);
+                turnDisplay.SetTurnText(ENEMY_TURN_MESSAGE);
                 turnDisplay.ShowEnemyTurn(ENEMY_TURN_MESSAGE);
+                turnTimer = enemyTurnTime;
             }
         }
 
@@ -101,5 +121,14 @@ public class TurnManager : MonoBehaviour
             ret = true;
         }
         return ret;
+    }
+
+    /// <summary>
+    /// 各ターンの残りの秒数を取得する
+    /// </summary>
+    /// <returns>秒数</returns>
+    public float GetTimer()
+    {
+        return turnTimer;
     }
 }
