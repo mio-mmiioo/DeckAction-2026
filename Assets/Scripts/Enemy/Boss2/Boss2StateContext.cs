@@ -20,7 +20,8 @@ public class Boss2StateContext : MonoBehaviour
         Dictionary<BOSS_2_STATE, IBoss2State> table = new()
         {
             { BOSS_2_STATE.B_2_STATE_MOVE, new Boss2StateMove(boss2) },
-            { BOSS_2_STATE.B_2_STATE_ATTACK_1, new Boss2StateAttack1(boss2) }
+            { BOSS_2_STATE.B_2_STATE_ATTACK_1, new Boss2StateAttack1(boss2) },
+            { BOSS_2_STATE.B_2_STATE_ATTACK_3, new Boss2StateAttack3(boss2) }
         };
         stateTable = table;
         Debug.Log("ボス2のステートの初期化");

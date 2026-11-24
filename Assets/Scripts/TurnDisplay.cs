@@ -10,6 +10,12 @@ public class TurnDisplay : MonoBehaviour
     [Tooltip("TrunTextを設定してください")]
     [SerializeField] private TextMeshProUGUI turnText;
 
+    [Tooltip("TrunTimerを設定してください")]
+    [SerializeField] private TextMeshProUGUI turnTimer;
+
+    [Tooltip("DebugTrunTextを設定してください")]
+    [SerializeField] private TextMeshProUGUI debugTurnText;
+
     [Tooltip("文字を移動させている時間")]
     [SerializeField] private float MoveTime = 0.8f;
 
@@ -90,5 +96,25 @@ public class TurnDisplay : MonoBehaviour
         yield return new WaitForSeconds(StayTime);
 
         turnText.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// タイマーを表示する
+    /// </summary>
+    /// <param name="timer">時間</param>
+    public void SetTurnTimer(float timer)
+    {
+        string str = timer.ToString("F0"); // 小数点以下を無視して表示
+        turnTimer.text = str;
+    }
+
+
+    /// <summary>
+    /// デバッグ用、ターンを表示し続ける
+    /// </summary>
+    /// <param name="turnMessage">表示したいメッセージ</param>
+    public void SetTurnText(string turnMessage)
+    {
+        debugTurnText.text = turnMessage;
     }
 }
