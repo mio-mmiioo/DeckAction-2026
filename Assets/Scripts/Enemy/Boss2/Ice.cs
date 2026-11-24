@@ -6,11 +6,8 @@ public class Ice : MonoBehaviour
     [Tooltip("成長速度")]
     [SerializeField] private float growInterval = 0.5f;
 
-    [SerializeField]
-    private float[] growScales =
-    {
-        0.1f, 0.2f, 0.4f
-    };
+    [Tooltip("各成長段階での大きさ")]
+    [SerializeField] private float[] growScales = { 0.1f, 0.2f, 0.4f };
 
     [Tooltip("落下速度")]
     [SerializeField] private float fallSpeed = 5.0f;

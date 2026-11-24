@@ -15,7 +15,7 @@ public class SwordManager : MonoBehaviour
 
     Vector3 viewportPosition; // 剣生成の中心の位置
     private const float CENTER_X = 0.5f; // 画面に対するxの割合
-    private const float TOP_Y = 0.9f; // 画面に対するyの割合
+    private const float TOP_Y = 0.5f; // 画面に対するyの割合
 
     private const int MAX_SWORD_NUMBER = 7; // 剣の本数
     private const float WAIT_TIME = 2.0f; // 剣を配置してから飛ばすまでの時間
@@ -24,7 +24,7 @@ public class SwordManager : MonoBehaviour
 
     void Start()
     {
-        Vector3 viewportPosition = Camera.main.ViewportToWorldPoint(new Vector3(CENTER_X, TOP_Y, 0.0f));
+        viewportPosition = Camera.main.ViewportToWorldPoint(new Vector3(CENTER_X, TOP_Y, 0.0f));
     }
 
     void Update()
