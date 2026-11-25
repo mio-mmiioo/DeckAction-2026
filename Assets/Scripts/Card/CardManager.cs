@@ -91,11 +91,10 @@ public class CardManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-      
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            AddHands(1, false);
-        }
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                AddHands(1, false);
+            }
 
         // 手札の状態を確認するfor文
         for (int i = 0; i < hands.Count; i++)
@@ -333,6 +332,17 @@ public class CardManager : MonoBehaviour
         }
     }
     
+    public void AddCardTypeSet(int i)
+    {
+        BaseCard obj = Instantiate(baseCard, playerHand, false);
+        cardParameterData.cardType = i;
+        cardParameterData.cardDamage = SetCardRandomDamage(cardParameterData.cardType);
+        cardParameterData.cardRarity = DetermineCardRarity();
+        cardParameterData.cardAbility = DetermineCardAbility(cardParameterData.cardType, cardParameterData.cardRarity);
+        AddHands(obj);
+    }
+
+
 }
 
 

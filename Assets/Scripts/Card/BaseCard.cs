@@ -131,7 +131,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
     /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!isUsed)
+        if (!isUsed && playerAttackTurn.GetIsAttackTurn() == true)
         {
             GetComponent<CanvasGroup>().blocksRaycasts = true;
             isDrag = false;
@@ -226,6 +226,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
             transform.position = localPosition;
             transform.SetSiblingIndex(prevSiblingIndex);
         }
+        cardEffectExplainer.ResetCardParameter();
             
     }
 

@@ -46,8 +46,20 @@ public class Player : MonoBehaviour
             if (Keyboard.current.spaceKey.wasPressedThisFrame && checkOnGround.onGround == true)
             {
                 isJump = true;
+                GetComponent<Animator>().SetBool("IsJump", true);
             }
         }
+
+        if(checkOnGround.onGround==true)
+        {
+            GetComponent<Animator>().SetBool("IsJump", false);
+        }
+
+        if(!Input.anyKey)
+        {
+            GetComponent<Animator>().SetBool("IsDush", false);
+        }
+        
 
     }
 
@@ -66,11 +78,13 @@ public class Player : MonoBehaviour
         {
             direction = -1.0f;
             isRight = false;
+            GetComponent<Animator>().SetBool("IsDush", true);
         }
         else if (Keyboard.current.dKey.isPressed)
         {
             direction = 1.0f;
             isRight = true;
+            GetComponent<Animator>().SetBool("IsDush", true);
         }
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
 

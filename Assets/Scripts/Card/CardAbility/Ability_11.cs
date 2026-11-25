@@ -5,12 +5,14 @@ public class Ability_11 : CardAbility
 {
     public override void Execute(PlayerUseCard user, CardManager cardManager)
     {
-        //if(cardManager.isAllMagic)
-        //{
-        //user.magicPowerUp=true;
-        //
-        //
-        //}
+        if(cardManager.isAllMagic)
+        {
+            user.isMagicPower=true;
+        }
+        else
+        {
+
+        }
     }
 }
 

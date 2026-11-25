@@ -22,7 +22,9 @@ public class PlayerUseCard : MonoBehaviour
     private ComboCount comboCount;
     private PlayerCombo playerCombo;
     private AttackTarget attackTarget;
-   
+    private CharaSetAttackTurn charaSetAttackTurn;
+
+
     private int attack;
 
     //追加効果で設定される各種値
@@ -38,7 +40,7 @@ public class PlayerUseCard : MonoBehaviour
     private CardParameterData cardParameterData;
 
     [SerializeField]
-    private int[] comboPower;
+    private int[] comboPower= { };
 
     [HideInInspector] public bool isNextMagicPower;
     [HideInInspector] public bool isMagicPower;
@@ -51,14 +53,16 @@ public class PlayerUseCard : MonoBehaviour
 
     void Start()
     {
+
+
         playerAttackType = GetComponent<PlayerAttackType>();
         comboCount = GetComponent<ComboCount>();
         playerCombo = GetComponent<PlayerCombo>();
         charaHp = GetComponent<CharaHp>();
         attackTarget = GetComponent<AttackTarget>();
+        charaSetAttackTurn = GetComponent<CharaSetAttackTurn>();
 
         currentCombo = 0;
-        comboPower = new int[4] { 1, 2, 3, 4 };
         nextStamina = 0;
         nextAttack = 0;
         limitTime = 1.0f;
@@ -76,29 +80,41 @@ public class PlayerUseCard : MonoBehaviour
     /// </summary>
     public void UseCard()
     {
-        // ターゲットがいないなら、手札に戻す
-        if(!attackTarget.GetTargetHP())
+        if (charaSetAttackTurn.GetIsAttackTurn())
         {
-            cardManager.UseCardReturn();
-        }
-        else if (limitTime < 0)
-        {
-            cardParameterData = cardManager.GetUseCard();//使用したカードのパラメーターを取得
 
-            if (cardParameterData.cardType != 0&&attackTarget.GetTargetHP())
+            // ターゲットがいないなら、手札に戻す
+            if (!attackTarget.GetTargetHP())
             {
-                //コンボの判定
-                CardAbility cardAbility = cardAbilityTable.CardAbilityList[cardParameterData.cardRarity].CardAbilities[cardParameterData.cardAbility];//カードの効果を発動
-                cardAbility.Execute(this, cardManager);
-                stamina.UseStamina(cardDataBase.CardData[cardParameterData.cardType].stamina - nextStamina);//ｽﾀﾐﾅを消費        
-
-                if(attackTarget.GetTargetHP())
-                attackTarget.GetTargetHP().TakeDamage(CalculationPower());
-
-                comboCount.SetComboCount(currentCombo);
-
-                limitTime = 1.0f;
+                cardManager.UseCardReturn();
             }
+            else if (limitTime < 0)
+            {
+                cardParameterData = cardManager.GetUseCard();//使用したカードのパラメーターを取得
+
+                if (cardParameterData.cardType != 0 && attackTarget.GetTargetHP())
+                {
+                    currentCombo = playerCombo.ComboJudge(cardParameterData.cardType);
+
+                    //コンボの判定
+                    CardAbility cardAbility = cardAbilityTable.CardAbilityList[cardParameterData.cardRarity].CardAbilities[cardParameterData.cardAbility];//カードの効果を発動
+                    cardAbility.Execute(this, cardManager);
+                    stamina.UseStamina(cardDataBase.CardData[cardParameterData.cardType].stamina - nextStamina);//ｽﾀﾐﾅを消費        
+
+                    if (attackTarget.GetTargetHP())
+                        attackTarget.GetTargetHP().TakeDamage(CalculationPower());
+
+                    comboCount.SetComboCount(currentCombo);
+
+                    nextStamina = 0;
+
+                    limitTime = 1.0f;
+                }
+            }
+        }
+        else
+        {
+            playerCombo.ResetCombo();
         }
     }
 
@@ -111,10 +127,26 @@ public class PlayerUseCard : MonoBehaviour
         int power = 0;
         int cardPower = cardDataBase.CardData[cardParameterData.cardType].damage;
 
-        power = (cardPower+nextAttack)*comboPower[currentCombo];
+        power = (cardPower)*comboPower[currentCombo];
+        power += nextAttack;
+        if(isNextMagicPower&&cardParameterData.cardType==(int)CardType.MAGIC)        
+        {
+            power += cardPower / 10;
+        }
 
-        //nextAttack = 0;
-        //nextStamina = 0;
+        if(prevMaxCombo)
+        {
+            power += cardPower / 10;
+        }
+
+        if(isMagicPower&&cardParameterData.cardType==(int)CardType.MAGIC)
+        {
+            power += 2;
+        }
+        
+
+        nextAttack = 0;
+        isNextMagicPower = false;
 
         return power;
     }

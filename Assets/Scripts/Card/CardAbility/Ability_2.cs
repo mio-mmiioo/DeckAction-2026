@@ -5,7 +5,7 @@ public class Ability_2 : CardAbility
 {
     public override void Execute(PlayerUseCard user, CardManager cardManager)
     {
-        user.nextStamina = -2;
+        user.nextAttack += 5;
     }
 }
 

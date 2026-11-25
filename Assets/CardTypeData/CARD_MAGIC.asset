@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   image: {fileID: 7780264574027006942, guid: e181dc43935f48c4885007e7cc52f6b6, type: 3}
   ID: 2
-  cardName: Magic
+  cardName: "\u9B54\u6CD5"
   stamina: 10
   maxDamage: 40
   minDamage: 30
   damage: 35
   rate: 50
+  RGB: 87ceeb

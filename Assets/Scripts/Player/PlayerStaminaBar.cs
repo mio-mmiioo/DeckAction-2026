@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// スタミナの見た目を決めるスクリプト
+/// </summary>
 public class PlayerStaminaBar : MonoBehaviour
 {
     private Slider staminaSlider;

@@ -12,5 +12,6 @@ public class CardData : ScriptableObject
     [Header("最低ダメージ")] public int minDamage;
     [Header("基礎ダメージ")] public int damage;
     [Header("出現率")] public float rate;
+    [Header("色")] public byte[] RGB=new byte[3];
 
 }
