@@ -13,7 +13,6 @@ public class Boss2StateAttack4 : IBoss2State
     private Vector3 offset1 = new Vector3(-2.0f, -2.0f, 0.0f);
     private Vector3 offset2 = new Vector3(-2.5f, -2.5f, 0.0f);
 
-    //private const float CREATE_TIME = 3.0f; // 生成時間
     private const float WAIT_TIME = 2.0f; // 生成後の待ち時間
     private float timer = 0.0f; // タイマー
 
