@@ -32,6 +32,14 @@ public class Boss2 : MonoBehaviour
         stateContext.ChangeState(BOSS_2_STATE.B_2_STATE_ATTACK_3);
     }
 
+    /// <summary>
+    /// 攻撃パターン4
+    /// </summary>
+    public void Attack4()
+    {
+        stateContext.ChangeState(BOSS_2_STATE.B_2_STATE_ATTACK_4);
+    }
+
     public void Move()
     {
         stateContext.ChangeState(BOSS_2_STATE.B_2_STATE_MOVE);

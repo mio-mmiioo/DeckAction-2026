@@ -47,6 +47,10 @@ public class Boss2StateMove : IBoss2State
             {
                 boss2.Attack3();
             }
+            if (Keyboard.current.mKey.wasPressedThisFrame)
+            {
+                boss2.Attack4();
+            }
         }
     }
 

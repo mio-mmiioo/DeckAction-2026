@@ -36,12 +36,12 @@ public class CheckOnGround : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// レイキャストの線を表示
-    /// </summary>
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(t.position, t.position + Vector3.down * rayLength);
-    }
+    ///// <summary>
+    ///// レイキャストの線を表示
+    ///// </summary>
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawLine(t.position, t.position + Vector3.down * rayLength);
+    //}
 }

@@ -22,5 +22,6 @@ public enum BOSS_2_STATE
     B_2_STATE_MOVE,
     B_2_STATE_ATTACK_1,
     B_2_STATE_ATTACK_3,
+    B_2_STATE_ATTACK_4,
     MAX_B_2_STATE
 }
