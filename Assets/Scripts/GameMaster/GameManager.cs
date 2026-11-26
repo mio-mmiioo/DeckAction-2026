@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// ゲーム全体を管理する
@@ -7,18 +9,40 @@ public class GameManager : MonoBehaviour
 {
     [Tooltip("Characterオブジェクトを設定してください")]
     [SerializeField] private GameObject character; // 画面上のキャラの親オブジェクト
+
+    [Tooltip("WaveManagerを設定してください")]
+    [SerializeField] private WaveManager waveManager;
+
     private TurnManager turnManager;
     private TurnManager.TURN_TYPE prevTurn;
 
+    private GameObject waveBoss;
+    public int enemyNum; // 敵の数
+    public bool isStartWave; // ウェーブが開始されているならtrue
+
     void Start()
     {
+        enemyNum = 0;
+        isStartWave = false;
         turnManager = GetComponent<TurnManager>();
-
-        SetTurn(); // 現在のターンを各キャラに伝える
     }
 
     void Update()
     {
+        if (Keyboard.current.wKey.wasPressedThisFrame)
+        {
+            isStartWave = true;
+            waveManager.CreateWave2();
+            SetTurn();
+        }
+
+        // 雑魚敵がいない場合
+        if (character.transform.childCount == 1 && isStartWave == true)
+        {
+            Debug.Log("ボスの生成");
+            waveBoss = waveManager.CreateWave2Boss();
+        }
+
         // ターンが切り替わった瞬間
         if (prevTurn != turnManager.GetCurrentTurn())
         {
@@ -39,9 +63,10 @@ public class GameManager : MonoBehaviour
     public bool GetIsGameClear()
     {
         bool ret = false;
-
-        // 敵の数を把握する処理など
-
+        if (waveBoss.GetComponent<CharaHp>().GetHP() <= 0)
+        {
+            ret = true;
+        }
         return ret;
     }
 

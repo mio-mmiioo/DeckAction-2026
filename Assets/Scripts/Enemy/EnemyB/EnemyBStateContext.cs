@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyBStateContext : MonoBehaviour
 {
+    [SerializeField] private CharaHp charaHp;
     private IEnemyBState currentState; // 現在の状態
     private IEnemyBState prevState; // 前回の状態
 
@@ -50,6 +51,10 @@ public class EnemyBStateContext : MonoBehaviour
 
     public void Update()
     {
+        if (charaHp.GetHP() <= 0)
+        {
+            Destroy(gameObject);
+        }
         if (currentState != null)
         {
             currentState.Update();
