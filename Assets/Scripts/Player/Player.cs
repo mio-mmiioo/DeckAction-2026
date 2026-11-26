@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;
 
     [Tooltip("プレイヤーのジャンプ力を設定してください")]
-    [SerializeField] private float jumpForce = 3.0f; // ジャンプ力
+    [SerializeField] private float jumpForce = 1.0f; // ジャンプ力
 
     private Rigidbody2D rb; // Rigidbody2Dの情報を取得するための変数
     private CheckOnGround checkOnGround; // 地面との当たり判定をする
@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
     private bool isJump = false; // ジャンプするならtrue
     private bool isRight = true; // 右方向を向いているならtrue
 
+    private float DUSH_TIME = 0.1f;
+    private float dushToIdle;//ダッシュからアイドルに移行するまでの時間
+
+    private Animator playerAnimator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,6 +31,8 @@ public class Player : MonoBehaviour
         charaHp = GetComponent<CharaHp>();
         attackTurn = GetComponentInParent<CharaSetAttackTurn>();
         playerUseCard = GetComponentInParent<PlayerUseCard>();
+        playerAnimator = GetComponent<Animator>();
+        dushToIdle = DUSH_TIME;
     }
 
     void Update()
@@ -46,20 +53,32 @@ public class Player : MonoBehaviour
             if (Keyboard.current.spaceKey.wasPressedThisFrame && checkOnGround.onGround == true)
             {
                 isJump = true;
-                GetComponent<Animator>().SetBool("IsJump", true);
             }
         }
 
         if(checkOnGround.onGround==true)
         {
-            GetComponent<Animator>().SetBool("IsJump", false);
+            playerAnimator.SetBool("IsJump", false);
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("IsJump", true);
         }
 
-        if(!Input.anyKey)
+        if (!Input.anyKey)
         {
-            GetComponent<Animator>().SetBool("IsDush", false);
+            dushToIdle -= Time.deltaTime;
+        }
+        else
+        {
+            dushToIdle = DUSH_TIME;
         }
         
+        if(dushToIdle<0)
+        {
+            playerAnimator.SetBool("IsDush", false);
+        }
+
 
     }
 
@@ -78,12 +97,14 @@ public class Player : MonoBehaviour
         {
             direction = -1.0f;
             isRight = false;
+            if(!isJump&&checkOnGround.onGround)
             GetComponent<Animator>().SetBool("IsDush", true);
         }
         else if (Keyboard.current.dKey.isPressed)
         {
             direction = 1.0f;
             isRight = true;
+            if (!isJump&&checkOnGround.onGround)
             GetComponent<Animator>().SetBool("IsDush", true);
         }
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);

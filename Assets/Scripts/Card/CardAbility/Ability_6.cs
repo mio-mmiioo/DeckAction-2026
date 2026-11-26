@@ -5,7 +5,7 @@ public class Ability_6 : CardAbility
 {
     public override void Execute(PlayerUseCard user, CardManager cardManager)
     {
-        cardManager.AddCardTypeSet(2);
+        cardManager.AddCardTypeSet(CardType.MAGIC);
     }
 }
 

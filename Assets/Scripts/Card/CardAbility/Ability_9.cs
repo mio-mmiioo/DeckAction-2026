@@ -7,7 +7,7 @@ public class Ability_9 : CardAbility
     {
         if(user.currentCombo == 4)
         {
-            int hp = user.charaHp.GetMaxHP();
+            float hp = user.charaHp.GetMaxHP();
             hp = hp / 5;
             user.charaHp.AddHP(hp);
         }

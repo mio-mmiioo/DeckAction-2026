@@ -38,12 +38,6 @@ public class CardManager : MonoBehaviour
 
     private HandsSort handsSort;// プレイヤーの手札を並べる
 
-    [SerializeField] private int currentPickCard;// 現在拡大中のカード
-
-    private float drawCooldown;//ドローのクールダウン時間(秒)
-
-    private float cooldownElapsedTime;//経過時間
-
     // カードのパラメーターの確率用の変数
     private float[] cardPopRate;// カードの出現率
 
@@ -59,6 +53,11 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool isAllPhysical;//手札がすべて物理の時 true
     [HideInInspector] public bool isAllMagic;//手札がすべて魔法の時 true
 
+    public int enemyTurnDrawCard;//エネミターンの間に集めたカードの枚数。プレイヤーターン開始時にドローする
+
+    private CharaSetAttackTurn charaSetAttackTurn;
+    private bool turnStart;
+
     /// <summary>
     /// 変数の初期化
     /// </summary>
@@ -67,8 +66,6 @@ public class CardManager : MonoBehaviour
         CalculationCardRarity();
         CalculationCardRate();
 
-        drawCooldown = 3f;
-        cooldownElapsedTime = 0;
         maxHands = 4;
         MAX_USE_CARD = 4;
         labelCount = 1;
@@ -80,10 +77,7 @@ public class CardManager : MonoBehaviour
         {
             hands[i].isPassive = true;
         }
-
-        //currentPickCard = 0;
-        hands[currentPickCard].isPick = true;
-
+        charaSetAttackTurn = FindAnyObjectByType<CharaSetAttackTurn>();
     }
 
     /// <summary>
@@ -124,6 +118,17 @@ public class CardManager : MonoBehaviour
                 }
             }
 
+        }
+
+        if (charaSetAttackTurn.GetIsAttackTurn() == true && turnStart)
+        {
+            turnStart = false;
+            AddHands(enemyTurnDrawCard,false);
+            enemyTurnDrawCard = 0;
+        }
+        else if (charaSetAttackTurn.GetIsAttackTurn() == false)
+        {
+            turnStart = true;
         }
 
     }
@@ -332,17 +337,21 @@ public class CardManager : MonoBehaviour
         }
     }
     
-    public void AddCardTypeSet(int i)
+    /// <summary>
+    /// カードタイプを指定してドローする
+    /// </summary>
+    /// <param name="i"></param>
+    public void AddCardTypeSet(CardType i)
     {
         BaseCard obj = Instantiate(baseCard, playerHand, false);
-        cardParameterData.cardType = i;
+        cardParameterData.cardType = (int)i;
         cardParameterData.cardDamage = SetCardRandomDamage(cardParameterData.cardType);
         cardParameterData.cardRarity = DetermineCardRarity();
         cardParameterData.cardAbility = DetermineCardAbility(cardParameterData.cardType, cardParameterData.cardRarity);
         AddHands(obj);
     }
 
-
+   
 }
 
 

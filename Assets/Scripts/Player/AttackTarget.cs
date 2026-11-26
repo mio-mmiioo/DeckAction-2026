@@ -7,22 +7,11 @@ using UnityEngine.UI;
 /// </summary>
 public class AttackTarget : MonoBehaviour
 {
-    private Transform targetEnemy;//攻撃する敵
+    private Transform targetEnemy;// 攻撃する敵
 
-    private CharaHp targetHp;//敵のHP
+    private CharaHp targetHp;// 敵のHP
 
-    private Image targetImage;//画像
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
+    private Image targetImage;// 画像
 
     /// <summary>
     /// ターゲットをセットする
@@ -31,7 +20,7 @@ public class AttackTarget : MonoBehaviour
     /// <param name="enemy"></param>
     public void SetTarget(Transform enemy)
     {
-        if(targetEnemy)
+        if(targetEnemy&&targetImage)
         targetImage.enabled = false;
 
         targetEnemy = enemy;
@@ -44,6 +33,7 @@ public class AttackTarget : MonoBehaviour
 
             targetImage = images.FirstOrDefault(img => img.gameObject.name == "Target");
 
+            if(targetImage)
             targetImage.enabled = true;
         }
         

@@ -1,21 +1,47 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
+/// <summary>
+/// エネミターン中に拾うカード
+/// </summary>
 public class ItemCard : MonoBehaviour
 {
-    ItemCard itemCard;
-    List<ItemCard> itemCardList = new List<ItemCard>();
+    private CardManager cardManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private float DELETE_TIME = 5.0f;
+
+    private float deleteTimer;
+
+
     void Start()
     {
-        
+        cardManager = FindAnyObjectByType<CardManager>();
+        deleteTimer = DELETE_TIME;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (deleteTimer > 0)
+        {
+            deleteTimer -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag==("Player"))
+        {
+            cardManager.enemyTurnDrawCard++;
+
+            Destroy(gameObject);
+        }
+
     }
 }

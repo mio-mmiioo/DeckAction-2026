@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using TMPro;
 
 /// <summary>
 /// GameManagerのキャラクタークラスにつける
@@ -11,29 +12,20 @@ public class EnemySetTarget : MonoBehaviour
 {
     [SerializeField] private AttackTarget attackTarget;// プレイヤーのアタック先
 
-     List<Transform> enemyList=new List<Transform>();// エネミーのリスト
+    [SerializeField] List<Transform> enemyList=new List<Transform>();// エネミーのリスト
 
-    private int currentTarget;// 現在のターゲット
+    [SerializeField] private int currentTarget;// 現在のターゲット
 
     private Transform clickedTarget;// クリックしたターゲット
 
+    private CharaSetAttackTurn charaSetAttack;
+
+    private bool turnStart;
+
     void Start()
     {
-        currentTarget = 0;
-        // Enemyタグを全員リストに入れる
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-
-            if(child.CompareTag("Enemy"))
-            {
-                enemyList.Add(child);
-            }
-
-        }
-        
-        // リストの先頭の敵をデフォルトのターゲットに指定。ヒエラルキー上で一番上
-        attackTarget.SetTarget(enemyList[currentTarget]);
+        charaSetAttack = FindAnyObjectByType<CharaSetAttackTurn>();
+        SetEnemyList();
     }
 
     void Update()
@@ -56,8 +48,35 @@ public class EnemySetTarget : MonoBehaviour
             }
         }
 
-        
-        
+        if(charaSetAttack.GetIsAttackTurn()==true&&turnStart)
+        {
+            turnStart = false;
+            SetEnemyList();
+        }
+        else if(charaSetAttack.GetIsAttackTurn() == false)
+        {
+            turnStart = true;
+        }    
+    }
+
+    private void SetEnemyList()
+    {
+        currentTarget = 0;
+        enemyList.Clear();
+        // Enemyタグを全員リストに入れる
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+
+            if (child.CompareTag("Enemy"))
+            {
+                enemyList.Add(child);
+            }
+        }
+
+        // リストの先頭の敵をデフォルトのターゲットに指定。ヒエラルキー上で一番上
+        if (enemyList.Count > 0)
+            attackTarget.SetTarget(enemyList[currentTarget]);
     }
 
     public void sssm()

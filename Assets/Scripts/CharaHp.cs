@@ -3,10 +3,10 @@ using UnityEngine;
 public class CharaHp : MonoBehaviour
 {
     [Tooltip("最大の体力を設定してください")]
-    [SerializeField] private int maxHP = 100;
+    [SerializeField] private float maxHP = 100;
 
     [Tooltip("現在の体力")]
-    [SerializeField] private int currentHP;
+    [SerializeField] private float currentHP;
 
     [Tooltip("無敵時間を設定してください")]
     [SerializeField] public float invincibleTime = 4.0f;
@@ -15,7 +15,7 @@ public class CharaHp : MonoBehaviour
     [SerializeField] private float invincibleTimer;
 
     private CharaColor charaColor;
-    private int prevHP; // 前回の体力
+    private float prevHP; // 前回の体力
 
     void Start()
     {
@@ -44,7 +44,7 @@ public class CharaHp : MonoBehaviour
     /// 体力を減らす処理
     /// </summary>
     /// <param name="damage">攻撃力( a > 0 )</param>
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         // ダメージがマイナスor無敵時間の場合はHPを減らさない
         if (damage <= 0 || invincibleTimer > 0.0f)
@@ -72,7 +72,7 @@ public class CharaHp : MonoBehaviour
     /// 体力を加算する
     /// </summary>
     /// <param name="hp">加算される体力</param>
-    public void AddHP(int hp)
+    public void AddHP(float hp)
     {
         currentHP += hp;
     }
@@ -81,7 +81,7 @@ public class CharaHp : MonoBehaviour
     /// 現在の体力を返す
     /// </summary>
     /// <returns>現在の体力</returns>
-    public int GetHP()
+    public float GetHP()
     {
         return currentHP;
     }
@@ -90,7 +90,7 @@ public class CharaHp : MonoBehaviour
     /// 前回の体力を返す
     /// </summary>
     /// <returns>前回の体力</returns>
-    public int GetPrevHP()
+    public float GetPrevHP()
     {
         return prevHP;
     }
@@ -99,7 +99,7 @@ public class CharaHp : MonoBehaviour
     /// 最大体力を返す
     /// </summary>
     /// <returns>最大体力</returns>
-    public int GetMaxHP()
+    public float GetMaxHP()
     {
         return maxHP;
     }

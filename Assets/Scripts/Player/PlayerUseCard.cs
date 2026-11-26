@@ -6,18 +6,22 @@ using UnityEngine;
 /// </summary>
 public class PlayerUseCard : MonoBehaviour
 {
-    [SerializeField] CardManager cardManager;//カードマネージャー
+    [Tooltip("カードマネジャー")]
+    [SerializeField] CardManager cardManager;// カードマネージャー
 
-    [SerializeField] CardDataBase cardDataBase;//カードのデータ
+    [Tooltip("カードのデータベース")]
+    [SerializeField] CardDataBase cardDataBase;// カードのデータ
 
-    [SerializeField] CardAbilityTable cardAbilityTable;//カードの追加効果のデーター
+    [Tooltip("追加効果のデータベース")]
+    [SerializeField] CardAbilityTable cardAbilityTable;// カードの追加効果のデーター
 
-    [HideInInspector] public Player player;//プレイヤー
+    [HideInInspector] public Player player;// プレイヤー
 
-    [HideInInspector] public Stamina stamina;//スタミナ
+    [HideInInspector] public Stamina stamina;// スタミナ
 
-    [HideInInspector] public CharaHp charaHp;//HP
+    [HideInInspector] public CharaHp charaHp;// HP
 
+    // 各種プレイヤー攻撃にしようするスクリプト
     private PlayerAttackType playerAttackType;
     private ComboCount comboCount;
     private PlayerCombo playerCombo;
@@ -31,30 +35,23 @@ public class PlayerUseCard : MonoBehaviour
     [HideInInspector]public int nextAttack;
     [HideInInspector] public int nextStamina;
     [HideInInspector] public bool plusAttack;
-
-    [HideInInspector]public bool prevMaxCombo;
-
-    public int currentCombo;
-
-    [SerializeField]
-    private CardParameterData cardParameterData;
-
-    [SerializeField]
-    private int[] comboPower= { };
-
     [HideInInspector] public bool isNextMagicPower;
     [HideInInspector] public bool isMagicPower;
+    [HideInInspector]public bool prevMaxCombo;// 前回マックスコンボならtrue
 
-    [HideInInspector] public int turn;
+    public int currentCombo;// 現在のコンボ数
 
-    [HideInInspector] public float limitTime;
+    private CardParameterData cardParameterData;// カードごとのパラメータ
 
-    private CharaHp targetHp;//ターゲットのHP
+    [SerializeField]
+    private float[] comboPower = { 1, 2.5f, 4, 5.5f };// コンボごとにかかる倍率
+
+    [HideInInspector] public float limitTime; //攻撃の間の間隔
+
+    private CharaHp targetHp;// ターゲットのHP
 
     void Start()
     {
-
-
         playerAttackType = GetComponent<PlayerAttackType>();
         comboCount = GetComponent<ComboCount>();
         playerCombo = GetComponent<PlayerCombo>();
@@ -70,7 +67,6 @@ public class PlayerUseCard : MonoBehaviour
 
     private void Update()
     {
-        turn = cardParameterData.cardType;
         limitTime -= Time.deltaTime;
     }
 
@@ -110,6 +106,10 @@ public class PlayerUseCard : MonoBehaviour
 
                     limitTime = 1.0f;
                 }
+                else
+                {
+                    comboCount.SetComboCount(0);
+                }
             }
         }
         else
@@ -122,10 +122,10 @@ public class PlayerUseCard : MonoBehaviour
     /// 攻撃力の計算
     /// </summary>
     /// <returns></returns>
-    private int CalculationPower()
+    private float CalculationPower()
     {
-        int power = 0;
-        int cardPower = cardDataBase.CardData[cardParameterData.cardType].damage;
+        float power = 0;
+        float cardPower = cardDataBase.CardData[cardParameterData.cardType].damage;
 
         power = (cardPower)*comboPower[currentCombo];
         power += nextAttack;
