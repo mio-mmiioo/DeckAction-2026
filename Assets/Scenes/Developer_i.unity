@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 38478103}
   - component: {fileID: 38478104}
+  - component: {fileID: 38478105}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -170,6 +171,21 @@ MonoBehaviour:
   attackTarget: {fileID: 467050468}
   enemyList: []
   currentTarget: 0
+--- !u!114 &38478105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38478102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa60f169220ba84ba3a4ef855b92888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaveManager
+  enemyAPrefab: {fileID: 2527810663538078344, guid: a6d8a822d9a78f74ababb394d3040ce9, type: 3}
+  enemyBPrefab: {fileID: 8323969748718769506, guid: 0e210e9dc505ffc4280ae2ab78c61fdd, type: 3}
+  boss2Prefab: {fileID: 8571534523261014355, guid: 3cf642356184d9440a4be5fd2a49bb89, type: 3}
 --- !u!4 &101572220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3364334482586323492, guid: 0e210e9dc505ffc4280ae2ab78c61fdd, type: 3}
@@ -338,7 +354,7 @@ GameObject:
   - component: {fileID: 138365604}
   m_Layer: 0
   m_Name: ItemManager
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -372,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
   itemCard: {fileID: -1515399407324346389, guid: c1ec0936850a1ff469bd487228cfb3d4, type: 3}
+  playerTransform: {fileID: 467050452}
   itemCardList: []
   itemSpawnTimer: 0
 --- !u!1 &152249654
@@ -387,9 +404,10 @@ GameObject:
   - component: {fileID: 152249658}
   - component: {fileID: 152249660}
   - component: {fileID: 152249661}
+  - component: {fileID: 152249662}
   m_Layer: 5
   m_Name: Hands
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -490,6 +508,19 @@ MonoBehaviour:
   isAllPhysical: 0
   isAllMagic: 0
   enemyTurnDrawCard: 0
+--- !u!114 &152249662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152249654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544924ffde00e8344a1618a06fa67fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharaSetAttackTurn
+  isAttackTurn: 0
 --- !u!1 &221515547
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,7 +3249,7 @@ RectTransform:
   - {fileID: 152249656}
   - {fileID: 1212814743}
   - {fileID: 402037293}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2142319181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4616,9 +4647,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2142319181}
-  - component: {fileID: 2142319180}
+  - component: {fileID: 2142319182}
   - component: {fileID: 2142319179}
-  - component: {fileID: 2142319178}
   - component: {fileID: 2142319177}
   m_Layer: 0
   m_Name: GameMaster
@@ -4641,18 +4671,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   playerTurnTime: 20
   enemyTurnTime: 20
---- !u!114 &2142319178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142319176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a722ed1e27cd2494a9781332bd580708, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DebugTurnDisplay
 --- !u!114 &2142319179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4670,22 +4688,6 @@ MonoBehaviour:
   debugTurnText: {fileID: 1604560764}
   MoveTime: 0.8
   StayTime: 0.8
---- !u!114 &2142319180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142319176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e13effbfd600648a4b50620fe0e200, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  character: {fileID: 38478102}
-  waveManager: {fileID: 0}
-  enemyNum: 0
-  isStartWave: 0
 --- !u!4 &2142319181
 Transform:
   m_ObjectHideFlags: 0
@@ -4699,11 +4701,28 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1500561383}
   - {fileID: 1956540096}
   - {fileID: 38478103}
   - {fileID: 138365603}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2142319182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142319176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ffab3b6a161b42a8266e250fa4a00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  character: {fileID: 38478102}
+  waveManager: {fileID: 38478105}
+  enemyNum: 0
+  isStartWave: 0
 --- !u!1 &2144109096
 GameObject:
   m_ObjectHideFlags: 0
@@ -5996,7 +6015,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1485172575}
-  - {fileID: 1500561383}
   - {fileID: 1128524708}
   - {fileID: 340399530}
   - {fileID: 2067541939}

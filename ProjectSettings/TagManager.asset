@@ -9,6 +9,7 @@ TagManager:
   - EnemyAttack
   - Target
   - Explainer
+  - Item
   layers:
   - Default
   - TransparentFX

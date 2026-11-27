@@ -80,7 +80,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
         isTrash = false;
         Debug.Log("BaseCard OK");// 確認用ログ
         localScale = transform.localScale;
-        playerAttackTurn = GameObject.FindGameObjectWithTag("Player").GetComponent<CharaSetAttackTurn>();
+        playerAttackTurn = GetComponent<CharaSetAttackTurn>();
 
         //タグで説明欄を検索して取得する
         cardEffectExplainer = GameObject.FindGameObjectWithTag("Explainer").GetComponent<CardEffectExplainer>();
@@ -123,6 +123,7 @@ public class BaseCard : MonoBehaviour, IDragHandler,IBeginDragHandler,IEndDragHa
             transform.position = eventData.position;
         }
         
+
     }
 
     /// <summary>

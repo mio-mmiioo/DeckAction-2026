@@ -18,13 +18,13 @@ public class EnemySetTarget : MonoBehaviour
 
     private Transform clickedTarget;// クリックしたターゲット
 
-    private CharaSetAttackTurn charaSetAttack;
+    private TurnManager turnManager;
 
     private bool turnStart;
 
     void Start()
     {
-        charaSetAttack = FindAnyObjectByType<CharaSetAttackTurn>();
+        turnManager = FindAnyObjectByType<TurnManager>();
         SetEnemyList();
     }
 
@@ -48,12 +48,12 @@ public class EnemySetTarget : MonoBehaviour
             }
         }
 
-        if(charaSetAttack.GetIsAttackTurn()==true&&turnStart)
+        if(turnManager.GetCurrentTurn()==TurnManager.TURN_TYPE.PLAYER_TURN&&turnStart)
         {
             turnStart = false;
             SetEnemyList();
         }
-        else if(charaSetAttack.GetIsAttackTurn() == false)
+        else if(turnManager.GetCurrentTurn() == TurnManager.TURN_TYPE.ENEMY_TURN)
         {
             turnStart = true;
         }    

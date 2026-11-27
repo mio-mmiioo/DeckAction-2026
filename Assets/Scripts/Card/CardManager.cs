@@ -34,7 +34,7 @@ public class CardManager : MonoBehaviour
 
     private int labelCount; //カードの仮の数字
 
-    private int MAX_USE_CARD; //カードを同時に使える最大枚数
+    private int MAX_USE_CARD=4; //カードを同時に使える最大枚数
 
     private HandsSort handsSort;// プレイヤーの手札を並べる
 
@@ -57,7 +57,7 @@ public class CardManager : MonoBehaviour
 
     private CharaSetAttackTurn charaSetAttackTurn;
     private bool turnStart;
-
+    private int usedCard;//このターンに使ったカードの枚数
     /// <summary>
     /// 変数の初期化
     /// </summary>
@@ -67,17 +67,13 @@ public class CardManager : MonoBehaviour
         CalculationCardRate();
 
         maxHands = 4;
-        MAX_USE_CARD = 4;
         labelCount = 1;
         handsSort = GetComponent<HandsSort>();
         AddHands(maxHands, false);
         Debug.Log("CardManager OK");
 
-        for (int i = 0; i < hands.Count; i++)
-        {
-            hands[i].isPassive = true;
-        }
-        charaSetAttackTurn = FindAnyObjectByType<CharaSetAttackTurn>();
+        charaSetAttackTurn = GetComponent<CharaSetAttackTurn>();
+        enemyTurnDrawCard = 0;
     }
 
     /// <summary>
@@ -348,6 +344,7 @@ public class CardManager : MonoBehaviour
         cardParameterData.cardDamage = SetCardRandomDamage(cardParameterData.cardType);
         cardParameterData.cardRarity = DetermineCardRarity();
         cardParameterData.cardAbility = DetermineCardAbility(cardParameterData.cardType, cardParameterData.cardRarity);
+        obj.Initialize(cardParameterData);
         AddHands(obj);
     }
 
