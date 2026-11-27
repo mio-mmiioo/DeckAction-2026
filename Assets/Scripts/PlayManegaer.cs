@@ -1,24 +1,33 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayManegaer : MonoBehaviour
 {
-    [Tooltip("プレイヤーのゲームオブジェクトを設定してください")]
-    [SerializeField] private GameObject player;
+    private GameManager gameManager;
+
+    void Start()
+    {
+        gameManager = GetComponent<GameManager>();
+    }
 
     private void Update()
     {
-        if (player.GetComponent<CharaHp>().GetHP() <= 0)
+        // とりあえずキー入力、後でタイマーをセットする
+        if (Keyboard.current.sKey.wasPressedThisFrame)
         {
-            Invoke("PlayerDied", 1.0f);
+            gameManager.SetIsStartWave(true);
         }
 
-        if(transform.childCount == 0)
+        if (gameManager.GetIsGameClear() == true)
         {
             Invoke("EnemyDied", 1.0f);
         }
 
-
+        if (gameManager.GetIsGameOver() == true)
+        {
+            Invoke("PlayerDied", 1.0f);
+        }
     }
 
 

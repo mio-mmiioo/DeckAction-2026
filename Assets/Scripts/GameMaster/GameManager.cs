@@ -13,35 +13,41 @@ public class GameManager : MonoBehaviour
     [Tooltip("WaveManagerを設定してください")]
     [SerializeField] private WaveManager waveManager;
 
+    [SerializeField] private CharaHp playerHp;
+
+    // ターン関連
     private TurnManager turnManager;
     private TurnManager.TURN_TYPE prevTurn;
 
+    // 敵の生成関連
     private GameObject waveBoss;
-    public int enemyNum; // 敵の数
-    public bool isStartWave; // ウェーブが開始されているならtrue
+    private bool isStartWave; // ウェーブが開始されているならtrue
+    private bool isCreateBoss; // ボスを生成したならtrue
 
     void Start()
     {
-        enemyNum = 0;
         isStartWave = false;
+        isCreateBoss = false;
         turnManager = GetComponent<TurnManager>();
     }
 
     void Update()
     {
-        if (Keyboard.current.wKey.wasPressedThisFrame)
+        // ウェーブが開始されていないなら次の処理はしない
+        if (isStartWave == false)
         {
-            isStartWave = true;
-            waveManager.CreateWave2();
-            SetTurn();
+            return;
         }
 
         // 雑魚敵がいない場合
-        if (character.transform.childCount == 1 && isStartWave == true)
+        if (character.transform.childCount == 1 && isCreateBoss == false)
         {
             Debug.Log("ボスの生成");
             waveBoss = waveManager.CreateWave2Boss();
+            isCreateBoss = true;
         }
+
+        turnManager.TurnUpdate(); // ターンの更新処理
 
         // ターンが切り替わった瞬間
         if (prevTurn != turnManager.GetCurrentTurn())
@@ -56,6 +62,10 @@ public class GameManager : MonoBehaviour
         bool ret = false;
 
         // プレイヤーの体力が0など
+        if (playerHp.GetHP() <= 0)
+        {
+            ret = true;
+        }
 
         return ret;
     }
@@ -63,11 +73,31 @@ public class GameManager : MonoBehaviour
     public bool GetIsGameClear()
     {
         bool ret = false;
-        if (waveBoss.GetComponent<CharaHp>().GetHP() <= 0)
+        if (waveBoss != null)
         {
-            ret = true;
+            if (waveBoss.GetComponent<CharaHp>().GetHP() <= 0)
+            {
+                ret = true;
+            }
         }
         return ret;
+    }
+
+    /// <summary>
+    /// waveを開始していいかセットする
+    /// </summary>
+    /// <param name="flag"></param>
+    public void SetIsStartWave(bool flag)
+    {
+        isStartWave = flag;
+
+        if (isStartWave == true)
+        {
+            Debug.Log("ウェーブ開始");
+            waveManager.CreateWave2();
+            SetTurn();
+        }
+
     }
 
     /// <summary>

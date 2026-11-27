@@ -142,7 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordManager
   swordPrefab: {fileID: 3029174893828789286, guid: 941ef41357feaac43b705d9e57e5d050, type: 3}
-  player: {fileID: 0}
   angleRange: 60
 --- !u!114 &1933243317071628923
 MonoBehaviour:
@@ -278,7 +277,6 @@ GameObject:
   - component: {fileID: 1862051885318700426}
   - component: {fileID: 4173425387287757921}
   - component: {fileID: 766987192971486778}
-  - component: {fileID: 4517163971698670152}
   m_Layer: 9
   m_Name: Boss2
   m_TagString: Enemy
@@ -294,7 +292,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8571534523261014355}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.5, y: -0.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -513,28 +511,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6389027, y: 2.1603346}
   m_EdgeRadius: 0
---- !u!95 &4517163971698670152
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8571534523261014355}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 56849a2d6e672614487e3230124ec8f1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8843415402200732340
 GameObject:
   m_ObjectHideFlags: 0

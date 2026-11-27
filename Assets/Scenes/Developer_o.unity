@@ -757,10 +757,10 @@ MonoBehaviour:
   playerHand: {fileID: 476151038}
   useCardView: {fileID: 558828477}
   maxHands: 0
-  currentPickCard: 0
   maxRarityRate: 0
   isAllPhysical: 0
   isAllMagic: 0
+  enemyTurnDrawCard: 0
 --- !u!224 &476151038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1580,6 +1580,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySetTarget
   attackTarget: {fileID: 1492592261}
+  enemyList: []
+  currentTarget: 0
 --- !u!114 &935427252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5372,17 +5374,15 @@ MonoBehaviour:
   nextAttack: 0
   nextStamina: 0
   plusAttack: 0
-  prevMaxCombo: 0
-  currentCombo: 0
-  cardParameterData:
-    cardDamage: 0
-    cardAbility: 0
-    cardRarity: 0
-    cardType: 0
-  comboPower: 00000000
   isNextMagicPower: 0
   isMagicPower: 0
-  turn: 0
+  prevMaxCombo: 0
+  currentCombo: 0
+  comboPower:
+  - 1
+  - 2
+  - 3
+  - 4
   limitTime: 0
 --- !u!114 &1492592264
 MonoBehaviour:

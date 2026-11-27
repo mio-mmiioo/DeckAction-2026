@@ -8,9 +8,6 @@ public class SwordManager : MonoBehaviour
     [Tooltip("剣のプレハブを設定してください")]
     [SerializeField] private GameObject swordPrefab;
 
-    [Tooltip("プレイヤーのトランスフォームを設定してください")]
-    [SerializeField] private Transform player;
-
     [SerializeField] private float angleRange = 120.0f;
 
     Vector3 viewportPosition; // 剣生成の中心の位置
@@ -40,6 +37,7 @@ public class SwordManager : MonoBehaviour
 
     private IEnumerator SwordAttack()
     {
+        Transform player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         for (int count = 0; count < MAX_SWORD_NUMBER; count++)
         {
             float angle = -angleRange / 2.0f + angleRange / (MAX_SWORD_NUMBER - 1) * count + 90.0f;

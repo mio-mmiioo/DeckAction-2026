@@ -25,7 +25,13 @@ public class TurnManager : MonoBehaviour
     void Start()
     {
         turnDisplay = GetComponent<TurnDisplay>();
+    }
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    void Init()
+    {
         // 最初はプレイヤーターンに設定する
         currentTurn = TURN_TYPE.PLAYER_TURN;
         turnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
@@ -34,7 +40,10 @@ public class TurnManager : MonoBehaviour
         prevTurn = currentTurn;
     }
 
-    void Update()
+    /// <summary>
+    /// 更新処理
+    /// </summary>
+    public void TurnUpdate()
     {
         // 現在のターンをセット( キー入力 )
         if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -59,7 +68,7 @@ public class TurnManager : MonoBehaviour
                 currentTurn = TURN_TYPE.ENEMY_TURN;
             }
         }
-        
+
         turnDisplay.SetTurnTimer(turnTimer); // 秒数の表示
 
         // ターンが切り替わった演出
