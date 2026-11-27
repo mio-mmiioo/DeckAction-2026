@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    private const float MOVE_SPEED = 3.0f; // 剣の移動速度
+    [SerializeField] private float moveSpeed = 5.0f; // 剣の移動速度
 
     private Vector2 direction; // 剣を飛ばす方向
     private Rigidbody2D rb;
@@ -32,6 +32,6 @@ public class Sword : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90.0f; // 剣の向きを進行方向に合わせる
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        rb.linearVelocity = direction * MOVE_SPEED;
+        rb.linearVelocity = direction * moveSpeed;
     }
 }
