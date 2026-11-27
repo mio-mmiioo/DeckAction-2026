@@ -50,6 +50,8 @@ public class PlayerUseCard : MonoBehaviour
 
     private CharaHp targetHp;// ターゲットのHP
 
+    private int usedCard;//このターンに使ったカードの枚数
+
     void Start()
     {
         playerAttackType = GetComponent<PlayerAttackType>();
@@ -103,6 +105,8 @@ public class PlayerUseCard : MonoBehaviour
                     comboCount.SetComboCount(currentCombo);
 
                     nextStamina = 0;
+
+                    usedCard++;
 
                     limitTime = 1.0f;
                 }

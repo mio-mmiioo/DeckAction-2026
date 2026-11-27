@@ -57,7 +57,6 @@ public class CardManager : MonoBehaviour
 
     private CharaSetAttackTurn charaSetAttackTurn;
     private bool turnStart;
-    private int usedCard;//このターンに使ったカードの枚数
     /// <summary>
     /// 変数の初期化
     /// </summary>
@@ -188,6 +187,8 @@ public class CardManager : MonoBehaviour
             param = card.GetCardParameter();
 
             Destroy(card.gameObject);
+
+
 
             return param;
         }
