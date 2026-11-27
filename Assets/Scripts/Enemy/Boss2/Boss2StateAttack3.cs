@@ -6,6 +6,7 @@ public class Boss2StateAttack3 : IBoss2State
     public BOSS_2_STATE state => BOSS_2_STATE.B_2_STATE_ATTACK_3;
 
     private GameObject boss2Attack;
+    private Boss2Float boss2Float;
 
     /// <summary>
     /// 敵を設定
@@ -15,6 +16,7 @@ public class Boss2StateAttack3 : IBoss2State
     {
         boss2 = e;
         boss2Attack = GameObject.Find("Boss2Attack");
+        boss2Float = boss2.GetComponent<Boss2Float>();
     }
 
     public void Entry()
@@ -24,6 +26,7 @@ public class Boss2StateAttack3 : IBoss2State
 
     public void Update()
     {
+        boss2.transform.position = boss2Float.GetMovePosition();
         if (boss2Attack.GetComponent<IceManager>().GetIsAttaking() == false)
         {
             boss2.Move();

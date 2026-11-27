@@ -13,12 +13,6 @@ public class PlayManegaer : MonoBehaviour
 
     private void Update()
     {
-        // とりあえずキー入力、後でタイマーをセットする
-        if (Keyboard.current.sKey.wasPressedThisFrame)
-        {
-            gameManager.SetIsStartWave(true);
-        }
-
         if (gameManager.GetIsGameClear() == true)
         {
             Invoke("EnemyDied", 1.0f);

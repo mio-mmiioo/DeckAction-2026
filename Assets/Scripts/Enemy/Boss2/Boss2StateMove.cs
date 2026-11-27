@@ -6,13 +6,12 @@ public class Boss2StateMove : IBoss2State
     private Boss2 boss2;
     public BOSS_2_STATE state => BOSS_2_STATE.B_2_STATE_MOVE;
 
-    private float FLOAT_HEIGHT = 0.3f; // 浮く高さ
-    private float FLOAT_WIDTH = 0.2f; // 浮く横幅
-    private float MOVE_SPEED = 1.5f; // 移動速度
-    private float HORIZONTAL_SPEED_FACTOR = 0.7f;
-    private Vector3 startPosition; // 初期位置
 
+    private Boss2Float boss2Float;
     private CharaSetAttackTurn attackTurn; // ターン管理
+
+    private const float ATTACK_INTERVAL_TIME = 2.0f;
+    private float attackIntervalTimer;
 
     /// <summary>
     /// 敵を設定
@@ -22,23 +21,38 @@ public class Boss2StateMove : IBoss2State
     {
         boss2 = e;
         attackTurn = e.GetComponent<CharaSetAttackTurn>();
+        boss2Float = e.GetComponent<Boss2Float>();
     }
 
     public void Entry()
     {
-        startPosition = boss2.transform.position;
+        boss2Float.Init(boss2.transform.position);
+        attackIntervalTimer = ATTACK_INTERVAL_TIME;
     }
 
     public void Update()
     {
-        // 上下の揺れ
-        float y = Mathf.Sin(Time.time * MOVE_SPEED) * FLOAT_HEIGHT;
-        float x = Mathf.Sin(Time.time * MOVE_SPEED * HORIZONTAL_SPEED_FACTOR) * FLOAT_WIDTH;
-
-        boss2.transform.position = startPosition + new Vector3(x, y, 0.0f);
-
+        boss2.transform.position = boss2Float.GetMovePosition();
+        
         if (attackTurn.GetIsAttackTurn() == true)
         {
+            attackIntervalTimer -= Time.deltaTime;
+            if (attackIntervalTimer <= 0.0f)
+            {
+                Debug.Log("ボス2が攻撃を選択");
+                int randomNumber = Random.Range(0, 2);
+                if (randomNumber == 0)
+                {
+                    Debug.Log("ボス2が攻撃1を開始");
+                    boss2.Attack1();
+                }
+                if (randomNumber == 1)
+                {
+                    boss2.Attack3();
+                    Debug.Log("ボス2が攻撃3を開始");
+                }
+            }
+
             if (Keyboard.current.nKey.wasPressedThisFrame)
             {
                 boss2.Attack1();
@@ -47,10 +61,10 @@ public class Boss2StateMove : IBoss2State
             {
                 boss2.Attack3();
             }
-            if (Keyboard.current.mKey.wasPressedThisFrame)
-            {
-                boss2.Attack4();
-            }
+            //if (Keyboard.current.mKey.wasPressedThisFrame)
+            //{
+            //    boss2.Attack4();
+            //}
         }
     }
 

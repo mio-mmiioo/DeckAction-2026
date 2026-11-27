@@ -269,11 +269,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6424780385368191512}
   - component: {fileID: 2507999533956893578}
-  - component: {fileID: 6115360932196125871}
   - component: {fileID: 6333499243028007340}
   - component: {fileID: 8114025956792932950}
   - component: {fileID: 6596383521352057769}
   - component: {fileID: 3940324242568075052}
+  - component: {fileID: 6188536534581557582}
   - component: {fileID: 1862051885318700426}
   - component: {fileID: 4173425387287757921}
   - component: {fileID: 766987192971486778}
@@ -318,18 +318,6 @@ MonoBehaviour:
   currentHP: 0
   invincibleTime: 0.01
   invincibleTimer: 0
---- !u!114 &6115360932196125871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8571534523261014355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc9d88e1134fa2408969415222ee20b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CheckHp
 --- !u!114 &6333499243028007340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +367,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharaSetAttackTurn
   isAttackTurn: 0
+--- !u!114 &6188536534581557582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8571534523261014355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3430c84b1d91048b03a5db8bc9509b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Boss2Float
 --- !u!212 &1862051885318700426
 SpriteRenderer:
   serializedVersion: 2
@@ -495,7 +495,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

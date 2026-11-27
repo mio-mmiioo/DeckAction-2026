@@ -22,30 +22,31 @@ public class GameManager : MonoBehaviour
     // 敵の生成関連
     private GameObject waveBoss;
     private bool isStartWave; // ウェーブが開始されているならtrue
-    private bool isCreateBoss; // ボスを生成したならtrue
+    //private bool isCreateBoss; // ボスを生成したならtrue
 
     void Start()
     {
         isStartWave = false;
-        isCreateBoss = false;
+        //isCreateBoss = false;
         turnManager = GetComponent<TurnManager>();
+        SetIsStartWave(true);
     }
 
     void Update()
     {
-        // ウェーブが開始されていないなら次の処理はしない
-        if (isStartWave == false)
-        {
-            return;
-        }
+        //// ウェーブが開始されていないなら次の処理はしない
+        //if (isStartWave == false)
+        //{
+        //    return;
+        //}
 
-        // 雑魚敵がいない場合
-        if (character.transform.childCount == 1 && isCreateBoss == false)
-        {
-            Debug.Log("ボスの生成");
-            waveBoss = waveManager.CreateWave2Boss();
-            isCreateBoss = true;
-        }
+        //// 雑魚敵がいない場合
+        //if (character.transform.childCount == 1 && isCreateBoss == false)
+        //{
+        //    Debug.Log("ボスの生成");
+        //    waveBoss = waveManager.CreateWave2Boss();
+        //    isCreateBoss = true;
+        //}
 
         turnManager.TurnUpdate(); // ターンの更新処理
 
@@ -93,8 +94,10 @@ public class GameManager : MonoBehaviour
 
         if (isStartWave == true)
         {
-            Debug.Log("ウェーブ開始");
-            waveManager.CreateWave2();
+            turnManager.Init();
+            Debug.Log("ウェーブ作成");
+            waveBoss = waveManager.CreateWave2Boss();
+            //waveManager.CreateWave2();
             SetTurn();
         }
 
@@ -111,7 +114,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (CharaSetAttackTurn chara in characters)
             {
-                if (chara.CompareTag("Enemy"))
+                if (chara.CompareTag("Enemy") || chara.CompareTag("Boss"))
                 {
                     chara.SetIsAttackTurn(true); // 敵は攻撃ターンtrue
                 }
@@ -127,7 +130,7 @@ public class GameManager : MonoBehaviour
             // プレイヤーに攻撃できるよって伝える
             foreach (CharaSetAttackTurn chara in characters)
             {
-                if (chara.CompareTag("Enemy"))
+                if (chara.CompareTag("Enemy") || chara.CompareTag("Boss"))
                 {
                     chara.SetIsAttackTurn(false); // 敵は攻撃ターンfalse
                 }

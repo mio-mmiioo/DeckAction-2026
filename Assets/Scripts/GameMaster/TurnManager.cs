@@ -30,12 +30,14 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// 初期化
     /// </summary>
-    void Init()
+    public void Init()
     {
+        Debug.Log("最初のプレイヤーターン呼び出し");
         // 最初はプレイヤーターンに設定する
         currentTurn = TURN_TYPE.PLAYER_TURN;
         turnDisplay.SetTurnText(PLAYER_TURN_MESSAGE);
         turnDisplay.ShowPlayerTurn(PLAYER_TURN_MESSAGE);
+        turnTimer = playerTurnTime;
 
         prevTurn = currentTurn;
     }
