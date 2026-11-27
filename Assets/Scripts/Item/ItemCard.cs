@@ -17,12 +17,15 @@ public class ItemCard : MonoBehaviour
     private float startPos;//スタート時点でのY座標    
 
     private float updownSpeed;//上下の速度
+
+    private bool isEnter;// プレイヤーと接触していたらtrue:
     void Start()
     {
         cardManager = FindAnyObjectByType<CardManager>();
         deleteTimer = DELETE_TIME;
         startPos = transform.position.y;
         updownSpeed = 2.0f;
+        isEnter = false;
     }
 
     void Update()
@@ -46,8 +49,9 @@ public class ItemCard : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag==("Player"))
+        if(collision.gameObject.tag==("Player")&&!isEnter)
         {
+            isEnter = true;
             cardManager.enemyTurnDrawCard += 1;
 
             Destroy(gameObject);

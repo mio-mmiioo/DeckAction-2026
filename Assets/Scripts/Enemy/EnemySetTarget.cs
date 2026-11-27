@@ -68,7 +68,7 @@ public class EnemySetTarget : MonoBehaviour
         {
             Transform child = transform.GetChild(i);
 
-            if (child.CompareTag("Enemy"))
+            if (child.CompareTag("Enemy")&&child.CompareTag("Boss"))
             {
                 enemyList.Add(child);
             }
